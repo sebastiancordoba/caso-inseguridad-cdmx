@@ -40,10 +40,27 @@ municipio_hecho, latitud, longitud
   (`archivo.datos.cdmx.gob.mx/…/carpetas_ss_junio2020.csv`). Es exactamente el «cambio de
   clasificación entre períodos» que el caso menciona: cualquier serie que cruce julio de
   2020 sin tratarlo tiene un salto que no es del mundo, es del catálogo.
-- **El portal dice actualización mensual, pero el último anual publicado es 2024** y el
-  acumulado se llama `_2025_01`. Verificar la cobertura real antes de prometer un
-  análisis «hasta hoy». *(Comprobado el 2026-09-08 sobre la lista de recursos; falta
-  confirmar la última fecha dentro del archivo.)*
+- **La cobertura real, medida el 2026-09-09 dentro de los archivos, no en las etiquetas.**
+  Se muestreó cada CSV por rangos de bytes (`curl -r`) en varios puntos; las fechas suben
+  de forma monótona, así que los archivos están ordenados y el muestreo es concluyente:
+
+  | Archivo | Lo que dice la etiqueta | Lo que trae de verdad |
+  |---|---|---|
+  | `carpetasFGJ_acumulado_2025_01.csv` | «acumulado 2016-2024» | **enero 2016 – diciembre 2021** |
+  | `carpetasFGJ_2022.csv` | 2022 | 2022 completo |
+  | `carpetasFGJ_2023.csv` | 2023 | 2023 completo |
+  | `carpetasFGJ_2024.csv` | 2024 | **enero – julio 2024** |
+
+  **El acumulado miente por tres años en su propio nombre y en su propia etiqueta.**
+  Quien lo baje creyendo el rótulo y no mire las fechas trabaja con 2016–2021 pensando
+  que tiene hasta 2024. Es el modo de falla que no grita: no falla, desaparece.
+
+- **El portal dice «se actualiza mensualmente» y el último dato es de julio de 2024:
+  veintiséis meses de atraso** al 2026-09-09. No hay archivos de 2025 ni de 2026, y el
+  dataset gemelo de víctimas (`victimasFGJ_*`) se detiene igual, con acumulado
+  `victimasFGJ_acumulado_2024_09.csv`. Los metadatos sí se tocaron el 2026-08-31, lo que
+  hace la trampa peor: el dataset *parece* vivo. **Cualquier promesa de análisis
+  «actual» hay que retirarla, y la fecha de corte hay que declararla en el escrito.**
 - **Columnas duplicadas `_hecho` / `_catalogo`** para colonia y alcaldía: una es el texto
   capturado, otra la normalizada contra catálogo. `municipio_hecho` viene vacío en las
   primeras filas. Hay que medir cuánto difieren antes de escoger.
@@ -55,41 +72,52 @@ municipio_hecho, latitud, longitud
 ## 2. ENSU — INEGI (percepción)
 
 - <https://www.inegi.org.mx/programas/ensu/>
-- Trimestral, representativa a nivel de ciudad. Aquí vive la tensión central del caso:
-  la percepción no coincide con la incidencia reportada.
-- **DESAGREGACIÓN — respuesta al 2026-09-08, con el nivel de confianza dicho.**
-  **La ENSU llega a ALCALDÍA y no baja de ahí.** En la CDMX publica las 16 demarcaciones
-  por separado, cada trimestre, con el porcentaje de población de 18+ que se siente
-  insegura en su demarcación. Evidencia: los boletines trimestrales del INEGI reportan el
-  dato alcaldía por alcaldía —Benito Juárez e Iztapalapa en los extremos— y la prensa los
-  cita con esa estructura de forma consistente desde hace años.
-  **Lo que NO se pudo hacer y hay que decirlo:** `inegi.org.mx` está bloqueado desde la
-  sesión de la nube, así que esto **no se leyó del documento metodológico**. Se sostiene en
-  fuentes secundarias convergentes, no en la fuente primaria. **Se cierra abriendo dos
-  archivos** — quince minutos, desde cualquier navegador:
-  - *Diseño muestral*: <https://www.inegi.org.mx/contenidos/programas/ensu/doc/889463922926.pdf>
-    → su apartado de **dominios de estudio** es la respuesta definitiva.
-  - *Tabulados* del trimestre más reciente en <https://www.inegi.org.mx/programas/ensu/>
-    → si la tabla de CDMX trae 16 renglones, está confirmado; si trae uno, no.
-  Y **la pregunta que de verdad decide el diseño no es «¿llega a alcaldía?» sino «¿con qué
-  error?»**: el tabulado publica intervalos o coeficientes de variación por dominio. Una
-  estimación de alcaldía con CV alto no sostiene una comparación entre alcaldías, y eso es
-  un supuesto explícito que la rúbrica premia declarar y verificar.
+- Trimestral. Aquí vive la tensión central del caso: la percepción no coincide con la
+  incidencia reportada.
 
-**Consecuencia inmediata sobre el encuadre, que es para lo que se preguntó:**
+**Desagregación: cerrado el 2026-09-09 contra la fuente primaria.** La sesión anterior lo
+respondió bien pero desde fuentes secundarias, y dejó dicho cómo cerrarlo: abrir el diseño
+muestral. Se abrió. Fuente: *ENSU 2024. Diseño muestral. Información complementaria al 4°
+trimestre* (<https://www.inegi.org.mx/contenidos/programas/ensu/doc/889463922926.pdf>),
+más la presentación ejecutiva de septiembre de 2021.
+
+- **Confirmado: la ENSU llega a alcaldía y ahí se detiene.** Y el documento dice algo más
+  fuerte que «publica las 16 por separado»: las demarcaciones **no son un desglose** de
+  una muestra diseñada para la ciudad. Cada una es un **«área urbana (ciudad) de interés»**
+  por derecho propio, con su propio tamaño de muestra — el anexo lista las dieciséis con
+  **300 viviendas cada una, cada trimestre**. Por debajo de alcaldía la encuesta no estima
+  nada.
+- **Refutado, y era el supuesto que sostenía el diseño del panel:** ~~dieciséis por unos
+  cuarenta trimestres es un panel~~. **La serie por alcaldía empieza en 2021-T3, no antes.**
+  El mismo documento traza la cobertura: la ENSU nace en 2013 con 32 ciudades; en 2016 se
+  reformula a 35 **con la CDMX partida en cuatro regiones**, no en dieciséis; las 16
+  demarcaciones entran hasta el tercer trimestre de 2021 —la presentación ejecutiva de
+  septiembre de 2021 reporta «75 ciudades (con la Ciudad de México dividida en 16
+  demarcaciones territoriales)»—. Antes de esa fecha **el dato por alcaldía no existe**.
+- **Precisión: el paso dos, medio cerrado.** El INEGI publica error estándar, CV e
+  intervalo por dominio desde 2018-T2, con umbral oficial: precisión **alta** con CV en
+  (0, 15 %), **moderada** en [15, 30 %), **baja** de ahí en adelante.
+  *Inferencia propia, no leída —los CV por alcaldía viven en los tabulados trimestrales,
+  que no se localizaron en el portal—:* con n = 300 y una proporción cerca de 0.6, el
+  error estándar bajo muestreo simple es 2.8 pp (CV ≈ 4.7 %); con efecto de diseño 1.5,
+  3.5 pp (CV ≈ 5.8 %). **El indicador grueso de percepción aguanta la comparación entre
+  alcaldías.** Para un evento de prevalencia 5 % el CV se va a ~25 % simple y ~31 % con
+  deff 1.5: **precisión baja**. Desagregar dentro de la alcaldía —por sexo, edad o delito
+  específico— rompe la estimación. Leer los CV reales del tabulado sigue pendiente.
+
+**Consecuencia sobre el encuadre:**
 
 - **Cruzar ENSU con carpetas a nivel COLONIA queda descartado.** No es que sea difícil: la
-  encuesta no estima ahí. Hacerlo sería falacia ecológica, y del tipo caro — la
-  heterogeneidad intraalcaldía en la CDMX es enorme.
-- **A nivel ALCALDÍA el cruce sí es legítimo, y la unidad de análisis natural deja de ser
-  la alcaldía sola: es la alcaldía-trimestre.** Dieciséis unidades es poco para una sección
-  cruzada; dieciséis por cuarenta trimestres es un panel. Eso cambia la técnica —efectos
-  fijos por alcaldía, estacionalidad, la reclasificación de julio de 2020 como quiebre— y
-  esa es exactamente la clase de decisión que D4 pide justificar y verificar.
-- **La colonia sigue viva para lo que no necesita ENSU:** las carpetas sí traen colonia y
+  encuesta no estima ahí. Sería falacia ecológica, y del tipo caro — la heterogeneidad
+  intraalcaldía en la CDMX es enorme.
+- **A nivel ALCALDÍA el cruce es legítimo y la unidad natural es la alcaldía-trimestre**,
+  con efectos fijos por alcaldía y estacionalidad. **Pero el panel es corto y hay que
+  decir de qué tamaño:** ver la cuenta de doce trimestres en «Preguntas» al final.
+  **Y la reclasificación de julio de 2020 deja de ser el quiebre a modelar: cae fuera de
+  la ventana**, porque la ventana empieza en 2021-T3.
+- **La colonia sigue viva para lo que no necesita ENSU:** las carpetas traen colonia y
   coordenadas, y el censo da denominadores a nivel AGEB. Un encuadre de priorización
   operativa puede vivir a nivel colonia sin tocar la encuesta.
-- Complemento a considerar: **ENVIPE** (<https://www.inegi.org.mx/programas/envipe/2025/>),
   que estima la **cifra negra** directamente — el porcentaje de delitos no denunciados.
   Es la pieza que permite hablar de subregistro con un número en vez de con un adjetivo.
   Anual y de menor desagregación geográfica que la ENSU.
@@ -117,11 +145,19 @@ municipio_hecho, latitud, longitud
 
 ## Preguntas que las fuentes no contestan
 
-1. ~~¿A qué unidad geográfica se puede llegar de verdad con **todas** las fuentes a la
-   vez?~~ **Contestada el 2026-09-08: alcaldía.** Es el mínimo común de las cuatro, y lo
-   fija la ENSU. Falta el segundo piso de la misma pregunta: con qué precisión estima la
-   ENSU en cada alcaldía.
-2. ¿Qué período común cubren las cuatro? La intersección puede ser más corta que
-   cualquiera de ellas por separado.
-3. ¿La percepción de la ENSU se puede pegar a la incidencia sin cometer una falacia
-   ecológica? Si no, el diseño cambia.
+~~1. ¿A qué unidad geográfica se puede llegar de verdad con todas las fuentes a la vez?~~
+**Contestado el 2026-09-08 y confirmado contra el diseño muestral el 2026-09-09: alcaldía.**
+
+~~2. ¿Qué período común cubren las cuatro?~~ **Contestado el 2026-09-09, y es la
+restricción que de verdad aprieta.** La serie por alcaldía de la ENSU empieza en
+**2021-T3**; las carpetas de la FGJ terminan en **julio de 2024**. La intersección son
+**doce trimestres completos** —2021-T3 y T4, 2022, 2023, 2024-T1 y T2— por 16 alcaldías:
+**192 observaciones**, más un julio suelto que no completa trimestre. Es un panel, pero
+uno corto: con efectos fijos por alcaldía se van dieciséis grados de libertad antes de
+estimar nada.
+
+3. ¿La percepción de la ENSU se puede pegar a la incidencia sin cometer falacia ecológica?
+   A nivel alcaldía el cruce es legítimo. **A nivel colonia no**, y eso cierra esa puerta.
+4. **Nueva, y es la que hoy no tiene respuesta:** ¿doce trimestres alcanzan para sostener
+   una afirmación causal, o solo descriptiva? Con estacionalidad y un post-pandemia de por
+   medio son pocos. Conviene decidirlo antes de prometer un modelo, no después.
