@@ -57,9 +57,38 @@ municipio_hecho, latitud, longitud
 - <https://www.inegi.org.mx/programas/ensu/>
 - Trimestral, representativa a nivel de ciudad. Aquí vive la tensión central del caso:
   la percepción no coincide con la incidencia reportada.
-- **Pendiente de verificar:** desagregación geográfica disponible. Si la ENSU no baja de
-  «ciudad» o «demarcación», cualquier cruce con carpetas a nivel colonia es una
-  imputación, y como tal se declara.
+- **DESAGREGACIÓN — respuesta al 2026-09-08, con el nivel de confianza dicho.**
+  **La ENSU llega a ALCALDÍA y no baja de ahí.** En la CDMX publica las 16 demarcaciones
+  por separado, cada trimestre, con el porcentaje de población de 18+ que se siente
+  insegura en su demarcación. Evidencia: los boletines trimestrales del INEGI reportan el
+  dato alcaldía por alcaldía —Benito Juárez e Iztapalapa en los extremos— y la prensa los
+  cita con esa estructura de forma consistente desde hace años.
+  **Lo que NO se pudo hacer y hay que decirlo:** `inegi.org.mx` está bloqueado desde la
+  sesión de la nube, así que esto **no se leyó del documento metodológico**. Se sostiene en
+  fuentes secundarias convergentes, no en la fuente primaria. **Se cierra abriendo dos
+  archivos** — quince minutos, desde cualquier navegador:
+  - *Diseño muestral*: <https://www.inegi.org.mx/contenidos/programas/ensu/doc/889463922926.pdf>
+    → su apartado de **dominios de estudio** es la respuesta definitiva.
+  - *Tabulados* del trimestre más reciente en <https://www.inegi.org.mx/programas/ensu/>
+    → si la tabla de CDMX trae 16 renglones, está confirmado; si trae uno, no.
+  Y **la pregunta que de verdad decide el diseño no es «¿llega a alcaldía?» sino «¿con qué
+  error?»**: el tabulado publica intervalos o coeficientes de variación por dominio. Una
+  estimación de alcaldía con CV alto no sostiene una comparación entre alcaldías, y eso es
+  un supuesto explícito que la rúbrica premia declarar y verificar.
+
+**Consecuencia inmediata sobre el encuadre, que es para lo que se preguntó:**
+
+- **Cruzar ENSU con carpetas a nivel COLONIA queda descartado.** No es que sea difícil: la
+  encuesta no estima ahí. Hacerlo sería falacia ecológica, y del tipo caro — la
+  heterogeneidad intraalcaldía en la CDMX es enorme.
+- **A nivel ALCALDÍA el cruce sí es legítimo, y la unidad de análisis natural deja de ser
+  la alcaldía sola: es la alcaldía-trimestre.** Dieciséis unidades es poco para una sección
+  cruzada; dieciséis por cuarenta trimestres es un panel. Eso cambia la técnica —efectos
+  fijos por alcaldía, estacionalidad, la reclasificación de julio de 2020 como quiebre— y
+  esa es exactamente la clase de decisión que D4 pide justificar y verificar.
+- **La colonia sigue viva para lo que no necesita ENSU:** las carpetas sí traen colonia y
+  coordenadas, y el censo da denominadores a nivel AGEB. Un encuadre de priorización
+  operativa puede vivir a nivel colonia sin tocar la encuesta.
 - Complemento a considerar: **ENVIPE** (<https://www.inegi.org.mx/programas/envipe/2025/>),
   que estima la **cifra negra** directamente — el porcentaje de delitos no denunciados.
   Es la pieza que permite hablar de subregistro con un número en vez de con un adjetivo.
@@ -88,8 +117,10 @@ municipio_hecho, latitud, longitud
 
 ## Preguntas que las fuentes no contestan
 
-1. ¿A qué unidad geográfica se puede llegar de verdad con **todas** las fuentes a la vez?
-   Es la restricción que amarra el diseño entero, y hoy no está medida.
+1. ~~¿A qué unidad geográfica se puede llegar de verdad con **todas** las fuentes a la
+   vez?~~ **Contestada el 2026-09-08: alcaldía.** Es el mínimo común de las cuatro, y lo
+   fija la ENSU. Falta el segundo piso de la misma pregunta: con qué precisión estima la
+   ENSU en cada alcaldía.
 2. ¿Qué período común cubren las cuatro? La intersección puede ser más corta que
    cualquiera de ellas por separado.
 3. ¿La percepción de la ENSU se puede pegar a la incidencia sin cometer una falacia
