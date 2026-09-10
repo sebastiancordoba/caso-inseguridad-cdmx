@@ -105,6 +105,23 @@ más la presentación ejecutiva de septiembre de 2021.
   deff 1.5: **precisión baja**. Desagregar dentro de la alcaldía —por sexo, edad o delito
   específico— rompe la estimación. Leer los CV reales del tabulado sigue pendiente.
 
+**De qué lado de la ecuación va la percepción — agregado el 2026-09-10, y no es cosmético.**
+Los dos hechos de arriba se componen: el panel es **corto** (192 observaciones, menos 16
+efectos fijos) **y** su variable de percepción viene medida con error de muestreo de unos
+3.5 pp. Eso obliga a decidir algo antes de escribir el modelo:
+
+- Si la percepción entra como **variable dependiente** —que es el caso si el objeto es la
+  brecha— el error de medición clásico **infla los errores estándar y no sesga los
+  coeficientes**. Se pierde potencia, que ya es escasa, pero lo estimado sigue apuntando a
+  donde debe.
+- Si entrara como **regresor**, el mismo error **atenúa los coeficientes hacia cero**. Con
+  192 observaciones eso es la diferencia entre un efecto que se detecta y uno que no
+  aparece nunca — y el fracaso se vería como «no hay relación», que es la conclusión
+  equivocada por la razón equivocada.
+
+**Conclusión operativa: la brecha va del lado izquierdo, y se dice por qué.** Es un supuesto
+explícito, verificable, y de los que la rúbrica premia — no una preferencia de forma.
+
 **Consecuencia sobre el encuadre:**
 
 - **Cruzar ENSU con carpetas a nivel COLONIA queda descartado.** No es que sea difícil: la
