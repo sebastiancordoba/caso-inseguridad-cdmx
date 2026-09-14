@@ -20,3 +20,9 @@ __pycache__/
 
 # macOS
 .DS_Store
+
+# Documentos del ITAM y datos de otros alumnos: locales, nunca públicos
+referencias/itam/
+
+# Archivos temporales de Office (se crean al abrir un .pptx o .docx)
+~$*
