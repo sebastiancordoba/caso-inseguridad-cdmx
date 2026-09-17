@@ -3,3 +3,5 @@ numpy>=1.26
 matplotlib>=3.8
 geopandas>=1.0
 jupyter>=1.0
+certifi
+dbfread>=2.0

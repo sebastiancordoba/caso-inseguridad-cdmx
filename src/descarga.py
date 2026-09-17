@@ -8,8 +8,8 @@ de que el cambio pase en silencio.
 
 Uso:
     python src/descarga.py --lista
-    python src/descarga.py --fuente fgj
-    python src/descarga.py --fuente fgj --fuente c5
+    python src/descarga.py --fuente acotado      # todo lo del problema acotado
+    python src/descarga.py --fuente fgj --fuente ensu
 """
 
 from __future__ import annotations
@@ -17,27 +17,115 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import hashlib
+import ssl
 import sys
+import time
 import urllib.request
 from pathlib import Path
+
+import certifi
 
 RAIZ = Path(__file__).resolve().parent.parent
 CRUDOS = RAIZ / "datos" / "crudos"
 MANIFIESTO = CRUDOS / "MANIFIESTO.md"
 
-# URLs verificadas contra los portales el 2026-09-08. Ver datos/FUENTES.md.
+# URLs verificadas contra los portales el 2026-09-14 y comprobadas el 2026-09-17.
+# Ver datos/FUENTES.md y docs/problema.md.
 FUENTES: dict[str, list[tuple[str, str]]] = {
+    # 1. Delito: Carpetas de investigación FGJ CDMX
     "fgj": [
         (
-            "carpetasFGJ_acumulado_2016_2024.csv",
+            "carpetasFGJ_acumulado_2025_01.csv",
             "https://archivo.datos.cdmx.gob.mx/FGJ/carpetas/carpetasFGJ_acumulado_2025_01.csv",
         ),
+    ],
+    # 2. Percepción: ENSU microdatos trimestrales (2019 a 2024), sus diccionarios de datos
+    #    (descriptores FD, para confirmar que BP1_2_03 no cambia entre años) y el catálogo
+    "ensu": [
         (
-            "carpetasFGJ_previo_reclasificacion_jun2020.csv",
-            "https://archivo.datos.cdmx.gob.mx/fiscalia-general-de-justicia/"
-            "carpetas-de-investigacion-fgj-de-la-ciudad-de-mexico/carpetas_ss_junio2020.csv",
+            "ensu_bd_2019_dbf.zip",
+            "https://www.inegi.org.mx/contenidos/programas/ensu/microdatos/ensu_bd_2019_dbf.zip",
+        ),
+        (
+            "ensu_bd_2020_dbf.zip",
+            "https://www.inegi.org.mx/contenidos/programas/ensu/microdatos/ensu_bd_2020_dbf.zip",
+        ),
+        (
+            "ensu_bd_2021_csv.zip",
+            "https://www.inegi.org.mx/contenidos/programas/ensu/microdatos/ensu_bd_2021_csv.zip",
+        ),
+        (
+            "ensu_bd_2022_csv.zip",
+            "https://www.inegi.org.mx/contenidos/programas/ensu/microdatos/ensu_bd_2022_csv.zip",
+        ),
+        (
+            "ensu_bd_2023_csv.zip",
+            "https://www.inegi.org.mx/contenidos/programas/ensu/microdatos/ensu_bd_2023_csv.zip",
+        ),
+        (
+            "ensu_bd_2024_csv.zip",
+            "https://www.inegi.org.mx/contenidos/programas/ensu/microdatos/ensu_bd_2024_csv.zip",
+        ),
+        *[
+            (
+                f"ensu_fd_{anio}_pdf.zip",
+                f"https://www.inegi.org.mx/contenidos/programas/ensu/doc/ensu_fd_{anio}_pdf.zip",
+            )
+            for anio in range(2019, 2025)
+        ],
+        (
+            "ensu2024_catalogo_ciudades_interes.pdf",
+            "https://www.inegi.org.mx/contenidos/programas/ensu/doc/ensu2024_catalogo_ciudades_interes.pdf",
         ),
     ],
+    # 3. Denominadores: Población por alcaldía Censo 2020 (ITER CDMX)
+    "censo": [
+        (
+            "iter_09_cpv2020_csv.zip",
+            "https://www.inegi.org.mx/contenidos/programas/ccpv/2020/datosabiertos/iter/iter_09_cpv2020_csv.zip",
+        ),
+    ],
+    # 4. Cartografía: Límites de alcaldías de la CDMX
+    "geografia": [
+        (
+            "alcaldias_cdmx.geojson",
+            "https://datos.cdmx.gob.mx/dataset/bae265a8-d1f6-4614-b399-4184bc93e027/resource/deb5c583-84e2-4e07-a706-1b3a0dbc99b0/download/deb5c583-84e2-4e07-a706-1b3a0dbc99b0.json",
+        ),
+    ],
+    # 5. Documentación metodológica (D2): Notas técnicas oficiales de la FGJ
+    "notas_fgj": [
+        (
+            "nota_fgj_reclasificacion_feb2020.pdf",
+            "https://datos.cdmx.gob.mx/dataset/250f29c0-31c7-44dc-9d31-f7e6cc78b79e/resource/360e2aa0-77e0-463c-b20d-345ef1c1d95b/download/360e2aa0-77e0-463c-b20d-345ef1c1d95b.pdf",
+        ),
+        (
+            "nota_fgj_actualizaciones_retroactivas_jul2020.pdf",
+            "https://datos.cdmx.gob.mx/dataset/250f29c0-31c7-44dc-9d31-f7e6cc78b79e/resource/1128fb92-59af-452f-ae38-36b4d835d23e/download/1128fb92-59af-452f-ae38-36b4d835d23e.pdf",
+        ),
+        (
+            "nota_fgj_diferencias_sesnsp_ene2020.pdf",
+            "https://datos.cdmx.gob.mx/dataset/250f29c0-31c7-44dc-9d31-f7e6cc78b79e/resource/bcb29264-91fa-4cc6-8c7e-561d8eb771e9/download/bcb29264-91fa-4cc6-8c7e-561d8eb771e9.pdf",
+        ),
+    ],
+    # 6. Desagregación por género y edad: Víctimas en carpetas de investigación FGJ
+    "victimas": [
+        (
+            "victimasFGJ_acumulado_2024_09.csv",
+            "https://archivo.datos.cdmx.gob.mx/FGJ/victimas/victimasFGJ_acumulado_2024_09.csv",
+        ),
+        (
+            "nota_victimas_actualizacion_pgj.pdf",
+            "https://datos.cdmx.gob.mx/dataset/7593b324-6010-44f7-8132-cb8b2276c842/resource/8ec51d06-b430-4722-a811-2cd396c4ba66/download/8ec51d06-b430-4722-a811-2cd396c4ba66.pdf",
+        ),
+    ],
+    # 7. Infraestructura disuasiva: Postes y cámaras de videovigilancia C5
+    "postes_c5": [
+        (
+            "postes_c5_cdmx.xlsx",
+            "https://datos.cdmx.gob.mx/dataset/d5410ea3-dbdd-437d-9def-91f30ec9a390/resource/9bb1debb-15e9-4d48-baec-07c9edd87a23/download/9bb1debb-15e9-4d48-baec-07c9edd87a23.xlsx",
+        ),
+    ],
+    # Fuentes complementarias / secundarias
     "c5": [
         (
             "c5_incidentes_viales_2022_2024.csv",
@@ -48,11 +136,36 @@ FUENTES: dict[str, list[tuple[str, str]]] = {
             "https://archivo.datos.cdmx.gob.mx/C5/incidentes_viales/inViales_2019_2021.csv",
         ),
     ],
+    "fgj_previo": [
+        (
+            "carpetasFGJ_previo_reclasificacion_jun2020.csv",
+            "https://archivo.datos.cdmx.gob.mx/fiscalia-general-de-justicia/"
+            "carpetas-de-investigacion-fgj-de-la-ciudad-de-mexico/carpetas_ss_junio2020.csv",
+        ),
+    ],
 }
 
-# ENSU, ENVIPE y el marco geoestadístico del INEGI no tienen liga estable de descarga
-# directa: se bajan a mano desde el portal. Cuando se bajen, se anotan igual en el
-# manifiesto, con la fecha y el hash. Ver datos/FUENTES.md.
+# Conjuntos predefinidos
+GRUPOS = {
+    # Todo lo necesario para el problema acotado (docs/problema.md)
+    "acotado": ["fgj", "ensu", "censo", "geografia", "notas_fgj"],
+    # Todas las fuentes disponibles
+    "todas": list(FUENTES.keys()),
+}
+
+
+# INEGI responde 200 con una página HTML de «no encontrada» cuando el archivo no existe:
+# el código de estado no basta, se revisan los primeros bytes.
+FIRMAS = {".zip": b"PK", ".xlsx": b"PK", ".pdf": b"%PDF"}
+
+
+def contenido_valido(ruta: Path) -> bool:
+    with ruta.open("rb") as f:
+        inicio = f.read(512)
+    firma = FIRMAS.get(Path(ruta.name.removesuffix(".part")).suffix)
+    if firma is not None:
+        return inicio.startswith(firma)
+    return not inicio.lstrip().lower().startswith((b"<!doctype", b"<html"))
 
 
 def sha256(ruta: Path) -> str:
@@ -63,20 +176,95 @@ def sha256(ruta: Path) -> str:
     return h.hexdigest()
 
 
-def descarga(nombre: str, url: str) -> Path | None:
+def descarga(nombre: str, url: str) -> tuple[Path, bool] | None:
+    """Devuelve (ruta, recién_bajado), o None si falló."""
     destino = CRUDOS / nombre
-    if destino.exists():
-        print(f"  ya existe, se respeta: {nombre}")
-        return destino
+    if destino.exists() and destino.stat().st_size > 0:
+        mb = destino.stat().st_size / 1024 / 1024
+        print(f"  ya existe, se respeta: {nombre} ({mb:.1f} MB)")
+        return destino, False
+
     print(f"  bajando {nombre} …", flush=True)
-    try:
-        urllib.request.urlretrieve(url, destino)
-    except Exception as e:  # el fallo se grita, no se traga
-        print(f"  FALLÓ {nombre}: {e}", file=sys.stderr)
-        if destino.exists():
-            destino.unlink()
-        return None
-    return destino
+    # El Python de python.org no trae certificados raíz; certifi los pone. Si aun así el
+    # certificado no valida, se falla: nunca se baja sin verificar.
+    ctx = ssl.create_default_context(cafile=certifi.where())
+    tmp_destino = destino.with_suffix(destino.suffix + ".part")
+
+    max_intentos = 15
+    intentos = 0
+    bloque_tam = 1024 * 1024  # 1 MB
+
+    while intentos < max_intentos:
+        intentos += 1
+        bajados_iniciales = tmp_destino.stat().st_size if tmp_destino.exists() else 0
+
+        req = urllib.request.Request(
+            url,
+            headers={
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
+            },
+        )
+        if bajados_iniciales > 0:
+            req.add_header("Range", f"bytes={bajados_iniciales}-")
+            print(f"    reanudando desde {bajados_iniciales / 1024 / 1024:.1f} MB …", flush=True)
+
+        try:
+            with urllib.request.urlopen(req, context=ctx, timeout=30) as resp:
+                status = resp.status
+                # Si el servidor responde 206 (Partial Content), agregamos; si responde 200, empezamos de cero
+                modo = "ab" if (status == 206 and bajados_iniciales > 0) else "wb"
+                if modo == "wb":
+                    bajados_iniciales = 0
+
+                content_range = resp.headers.get("Content-Range")
+                if content_range and "/" in content_range:
+                    total = int(content_range.split("/")[-1])
+                else:
+                    len_header = resp.headers.get("Content-Length")
+                    total = int(len_header) + bajados_iniciales if len_header else None
+
+                bajados = bajados_iniciales
+                with tmp_destino.open(modo) as f:
+                    while True:
+                        bloque = resp.read(bloque_tam)
+                        if not bloque:
+                            break
+                        f.write(bloque)
+                        bajados += len(bloque)
+                        mb_bajados = bajados / 1024 / 1024
+                        if total:
+                            mb_total = total / 1024 / 1024
+                            pct = (bajados / total) * 100
+                            print(
+                                f"\r    {mb_bajados:.1f} / {mb_total:.1f} MB ({pct:.1f}%)",
+                                end="",
+                                flush=True,
+                            )
+                        else:
+                            print(f"\r    {mb_bajados:.1f} MB", end="", flush=True)
+
+                if total is None:
+                    # Sin tamaño declarado no hay forma de saber si llegó completo.
+                    print(f"\n  FALLÓ {nombre}: el servidor no declaró el tamaño.", file=sys.stderr)
+                    tmp_destino.unlink(missing_ok=True)
+                    return None
+                if bajados >= total:
+                    print()
+                    if not contenido_valido(tmp_destino):
+                        print(f"  FALLÓ {nombre}: no es el archivo esperado (¿página de error?).", file=sys.stderr)
+                        tmp_destino.unlink()
+                        return None
+                    tmp_destino.rename(destino)
+                    return destino, True
+
+        except Exception as e:
+            if isinstance(e, ssl.SSLError) or isinstance(getattr(e, "reason", None), ssl.SSLError):
+                raise  # un certificado inválido no se reintenta ni se ignora
+            print(f"\n    [intento {intentos}/{max_intentos}] interrupción: {e}. Reconectando en 3s …", flush=True)
+            time.sleep(3)
+
+    print(f"\n  FALLÓ {nombre} tras {max_intentos} intentos.", file=sys.stderr)
+    return None
 
 
 def anota(entradas: list[tuple[str, str, Path]]) -> None:
@@ -102,31 +290,51 @@ def anota(entradas: list[tuple[str, str, Path]]) -> None:
 
 
 def main() -> int:
+    opciones_fuente = sorted(list(FUENTES.keys()) + list(GRUPOS.keys()))
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--fuente", action="append", choices=sorted(FUENTES), default=None)
+    p.add_argument(
+        "--fuente",
+        action="append",
+        choices=opciones_fuente,
+        default=None,
+        help="Fuente o grupo a descargar (ej: acotado, fgj, ensu, censo, geografia, notas_fgj, todas)",
+    )
     p.add_argument("--lista", action="store_true", help="muestra las fuentes y sale")
     args = p.parse_args()
 
     if args.lista or not args.fuente:
-        print("Fuentes con descarga automática:\n")
+        print("Fuentes disponibles:\n")
         for clave, archivos in FUENTES.items():
-            print(f"  {clave}:")
+            print(f"  [{clave}]:")
             for nombre, url in archivos:
-                print(f"    {nombre}\n      {url}")
-        print("\nENSU, ENVIPE y marco geoestadístico: descarga manual, ver datos/FUENTES.md")
+                print(f"    - {nombre}\n        {url}")
+        print("\nGrupos predefinidos:")
+        for grp, fuentes in GRUPOS.items():
+            print(f"  --fuente {grp} -> descarga: {', '.join(fuentes)}")
         return 0
+
+    # Expandir grupos
+    fuentes_a_bajar: list[str] = []
+    for f in args.fuente:
+        if f in GRUPOS:
+            for sub_f in GRUPOS[f]:
+                if sub_f not in fuentes_a_bajar:
+                    fuentes_a_bajar.append(sub_f)
+        else:
+            if f not in fuentes_a_bajar:
+                fuentes_a_bajar.append(f)
 
     CRUDOS.mkdir(parents=True, exist_ok=True)
     hechas: list[tuple[str, str, Path]] = []
     fallos = 0
-    for clave in args.fuente:
+    for clave in fuentes_a_bajar:
         print(f"\n[{clave}]")
         for nombre, url in FUENTES[clave]:
-            ruta = descarga(nombre, url)
-            if ruta is None:
+            resultado = descarga(nombre, url)
+            if resultado is None:
                 fallos += 1
-            else:
-                hechas.append((nombre, url, ruta))
+            elif resultado[1]:  # al manifiesto solo va lo que se bajó en esta corrida
+                hechas.append((nombre, url, resultado[0]))
 
     if hechas:
         anota(hechas)
