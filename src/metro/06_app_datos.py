@@ -20,7 +20,7 @@ import math
 import geopandas as gpd
 import pandas as pd
 
-from comun import CRUDOS, PANEL, RAIZ, TABLAS, lee_estaciones, linea_corta
+from comun import CRUDOS, PANEL, PROCESADOS, RAIZ, TABLAS, lee_estaciones, linea_corta
 
 SALIDA = RAIZ / "docs" / "app" / "datos.json"
 LINEAS_SHP = f"zip://{CRUDOS / 'stc_metro_shp.zip'}!stcmetro_shp/STC_Metro_lineas_utm14n.shp"
@@ -52,6 +52,19 @@ def main() -> int:
     t7 = pd.read_csv(TABLAS / "t7_transbordos_necesarios.csv").set_index("estacion")
     t2 = pd.read_csv(TABLAS / "t2_pares_resumen.csv").set_index("estacion_con_agencia")
     assert len(t5) == 124 and len(t7) == 28 and len(firmes) == 39
+    # La magnitud que manda en la app es la tasa ENCOGIDA del modelo (docs/modelo.md); la cruda va de secundaria.
+    mod = pd.read_csv(PROCESADOS / "modelo_estaciones.csv").set_index("estacion")
+    diag = json.loads((TABLAS / "modelo_diagnostico.json").read_text(encoding="utf-8"))
+    cob = pd.read_csv(TABLAS / "modelo_fuera_de_muestra_cobertura.csv")
+    cob = cob[cob["estaciones"] == 10].set_index("regla")
+    assert len(mod) == 124 and (mod["distinguible_modelo"] != "no").sum() == 25
+    # El bloque «dos reglas» está escrito a mano en index.html: si el modelo cambia, que truene aquí y no mienta allá.
+    m_, c_ = cob.loc["tasa predicha (modelo)"], cob.loc["conteo 2019–2023"]
+    assert (int(m_["robos_denunciados_2024_cubiertos"]), float(m_["denuncias_2024_por_millon_de_entradas"]),
+            int(c_["robos_denunciados_2024_cubiertos"]), float(c_["denuncias_2024_por_millon_de_entradas"]),
+            round(float(m_["entradas_2024_M"])), round(float(c_["entradas_2024_M"])),
+            int((mod["distinguible_modelo"] == "arriba").sum()), int((mod["distinguible_modelo"] == "abajo").sum())) == (41, 0.77, 92, 0.57, 53, 160, 14, 11), \
+        "cambió el modelo: actualiza los números escritos a mano en docs/app/index.html (bloque «dos reglas» y «qué mide esto»)"
 
     # --- geometría: metros UTM → viewBox, norte arriba
     est = lee_estaciones()
@@ -103,11 +116,15 @@ def main() -> int:
         if estrato == "a":
             f, g = t5.loc[nombre], std.loc[nombre]
             assert int(f["robos_denunciados"]) == d
-            s.update({"razon_obs_esp": r(g["razon_observadas_esperadas"]), "razon_ic95": [r(g["razon_ic95_inf"]), r(g["razon_ic95_sup"])],
-                      "denuncias_esperadas": r(g["robos_denunciados_esperados"], 1),
-                      "pos_conteo": int(f["posicion_conteo"]), "pos_tasa": int(f["posicion_tasa"]),
-                      "cambio": int(f["cambio_de_posicion"]), "firme": firmes.get(nombre),
-                      "evidencia_insuficiente": d < MIN_DENUNCIAS})
+            fila = mod.loc[nombre]
+            assert int(fila["robos_denunciados"]) == d and bool(fila["evidencia_insuficiente"]) == (d < MIN_DENUNCIAS)
+            s.update({"tasa_encogida_mm": r(fila["tasa_encogida_mm"]), "tasa_encogida_ic95": [r(fila["tasa_ic95_inf"]), r(fila["tasa_ic95_sup"])],
+                      "razon_encogida": r(fila["razon_encogida"]), "razon_encogida_ic95": [r(fila["razon_ic95_inf"]), r(fila["razon_ic95_sup"])],
+                      "estatus": str(fila["distinguible_modelo"]),  # arriba / abajo / no: IC 95 % de la razón fuera de 1
+                      "pos_conteo": int(fila["posicion_conteo"]), "pos_encogida": int(fila["posicion_encogida"]),
+                      "cambio": int(fila["posicion_conteo"]) - int(fila["posicion_encogida"]),  # positivo: sube al pasar de conteo a tasa
+                      "evidencia_insuficiente": bool(fila["evidencia_insuficiente"]),
+                      "sensible_al_umbral": bool(fila["sensible_al_umbral_de_asignacion"])})
         elif estrato in ("b", "c"):
             s.update({"transbordos_necesarios_M": r(t7.loc[nombre, "transbordos_necesarios_M"], 0),
                       "transbordos_multiplo_de_entradas": r(t7.loc[nombre, "como_multiplo_de_sus_entradas"], 1)})
@@ -135,6 +152,9 @@ def main() -> int:
         "carpetas_en_la_ventana": 8366,
         "pct_sin_asignar": 19.1,
         "tasa_de_paso_usada_en_t7": 0.71,
+        "modelo": {"nombre": "binomial negativa con efecto aleatorio de estación y efecto de año",
+                   "tasa_de_la_estacion_tipica_mm": r(diag["tasa_base_mm"], 2), "distinguibles": 25,
+                   "arriba": int((mod["distinguible_modelo"] == "arriba").sum()), "abajo": int((mod["distinguible_modelo"] == "abajo").sum())},
         "fuentes": {"carpetas": "https://archivo.datos.cdmx.gob.mx/FGJ/carpetas/carpetasFGJ_acumulado_2025_01.csv",
                     "afluencia": "https://datos.cdmx.gob.mx/dataset/afluencia-diaria-del-metro-cdmx",
                     "estaciones": "https://datos.cdmx.gob.mx/dataset/lineas-y-estaciones-del-metro"},
