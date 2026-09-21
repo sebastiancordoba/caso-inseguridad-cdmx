@@ -25,6 +25,7 @@ LLAVE = PROCESADOS / "llave_estaciones.csv"
 DENUNCIAS = PROCESADOS / "denuncias_metro_asignadas.csv"
 PANEL = PROCESADOS / "panel_estacion.csv"
 TABLAS = PROCESADOS / "metro_tablas"
+AGENCIAS_CSV = PROCESADOS / "agencias_mp_metro.csv"
 
 INICIO, FIN = "2019-01-01", "2024-12-31"
 UMBRAL_M = 150
@@ -88,6 +89,58 @@ FUERA_CDMX_ESPERADAS = {
     "Cuatro Caminos", "Los Reyes", "La Paz", "Nezahualcóyotl", "Impulsora",
     "Río de los Remedios", "Múzquiz", "Ecatepec", "Olímpica", "Plaza Aragón", "Ciudad Azteca",
 }
+
+
+# Agencias del Ministerio Público del Metro. QUÉ agencias existen sale de dos fuentes
+# oficiales, abiertas el 2026-09-20: la página de la Fiscalía de Investigación en Agencias
+# de Atención Especializada de la FGJ (FGJ) y el catálogo de agencias de Denuncia Digital
+# (DD), que da la clave que traen las carpetas. NINGUNA de las dos da fechas: la vigencia
+# sale de la actividad de cada clave en las propias carpetas (04_agencias.py la mide y
+# avisa si no coincide con lo escrito aquí). `desde`/`hasta` son meses, dentro de la ventana.
+FUENTE_FGJ = ("https://www.fgjcdmx.gob.mx/nuestros-servicios/fiscalias-desconcentradas-y-coordinaciones-"
+              "territoriales/fiscalia-desconcentrada-de-investigacion-en-agencias-de-atencion-especializada")
+FUENTE_DD = "https://denunciadigital.cdmx.gob.mx/agencias-ministerio-publico"
+AGENCIAS = [
+    {"clave": "STCMH", "nombre_oficial": "METRO HIDALGO", "estacion": "Hidalgo", "ubicacion": "dentro de la estación",
+     "desde": "2019-01", "hasta": "2024-12", "cuenta_como_agencia": True, "fuentes": "FGJ; DD",
+     "nota": "FGJ: acceso por Puente de Alvarado, lunes a viernes de 9 a 19 h."},
+    {"clave": "STCMP", "nombre_oficial": "METRO PANTITLAN", "estacion": "Pantitlán", "ubicacion": "dentro de la estación",
+     "desde": "2019-01", "hasta": "2024-12", "cuenta_como_agencia": True, "fuentes": "FGJ; DD",
+     "nota": "FGJ: turno con detenido."},
+    {"clave": "STCMOB", "nombre_oficial": "METRO OBSERVATORIO", "estacion": "Observatorio", "ubicacion": "dentro de la estación",
+     "desde": "2019-01", "hasta": "2019-08", "cuenta_como_agencia": True, "fuentes": "DD",
+     "nota": "Ya no aparece en la página de la FGJ. Su última carpeta, de cualquier delito, es del 2019-08-02: "
+             "dejó de operar a mitad del periodo."},
+    {"clave": "STCMZV", "nombre_oficial": "ZARCO Y VIOLETA", "estacion": "Guerrero", "ubicacion": "adyacente, fuera de la estación",
+     "desde": "2019-01", "hasta": "2024-12", "cuenta_como_agencia": True, "fuentes": "DD",
+     "nota": "No está en una estación: es la esquina de Zarco y Violeta, colonia Guerrero, a unas cuadras de "
+             "Guerrero y de Hidalgo (distancia no medida). Es la «agencia de Guerrero» de la hipótesis."},
+    {"clave": "STCMTS", "nombre_oficial": "TREN SUBURBANO BUENAVISTA", "estacion": "Buenavista", "ubicacion": "estación del Tren Suburbano",
+     "desde": "2019-01", "hasta": "2024-12", "cuenta_como_agencia": False, "fuentes": "FGJ; DD",
+     "nota": "Atiende al Tren Suburbano, no al Metro; abrió 18 carpetas del delito en la ventana. No cuenta."},
+    {"clave": "", "nombre_oficial": "METRO PINO SUAREZ", "estacion": "Pino Suárez", "ubicacion": "salida de la estación",
+     "desde": "", "hasta": "", "cuenta_como_agencia": False, "fuentes": "FGJ",
+     "nota": "Está hoy en la página de la FGJ (turno con detenido), pero ninguna clave STCM de las carpetas le "
+             "corresponde hasta enero de 2025. No se sabe desde cuándo opera ni con qué clave registra: NO se "
+             "marca como agencia, y se dice."},
+]
+
+
+def tiene_agencia(estacion: pd.Series, anio_mes: pd.Series) -> pd.Series:
+    r = pd.Series(False, index=estacion.index)
+    for a in AGENCIAS:
+        if a["cuenta_como_agencia"]:
+            r |= estacion.eq(a["estacion"]) & anio_mes.between(a["desde"], a["hasta"])
+    return r
+
+
+def canal(fiscalia: pd.Series, agencia: pd.Series) -> pd.Series:
+    """Por dónde entró la denuncia: agencia del Metro, Denuncia Digital u otra agencia."""
+    c = pd.Series("otra agencia", index=agencia.index)
+    stc = agencia.fillna("").str.startswith("STCM")
+    c[stc] = agencia[stc]
+    c[fiscalia.eq("AGENCIA DE DENUNCIA DIGITAL")] = "DIGITAL"
+    return c
 
 
 def arregla(s: str) -> str:

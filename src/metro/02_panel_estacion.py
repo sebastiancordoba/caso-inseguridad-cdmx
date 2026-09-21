@@ -22,7 +22,7 @@ import pandas as pd
 
 from comun import (
     CARPETAS, DELITO, DENUNCIAS, FIN, INICIO, LLAVE, PANEL, UMBRAL_M, UTM,
-    arregla, lee_afluencia, lee_estaciones, normaliza,
+    arregla, canal, lee_afluencia, lee_estaciones, normaliza, tiene_agencia,
 )
 
 
@@ -78,7 +78,7 @@ def entradas_mensuales(llave: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
 def denuncias() -> tuple[pd.DataFrame, dict[str, int]]:
     df = pd.read_csv(
         CARPETAS, dtype=str,
-        usecols=["fecha_hecho", "hora_hecho", "fecha_inicio", "delito", "alcaldia_hecho", "latitud", "longitud"],
+        usecols=["fecha_hecho", "hora_hecho", "fecha_inicio", "delito", "fiscalia", "agencia", "alcaldia_hecho", "latitud", "longitud"],
     )
     df = df[df["delito"].str.startswith(DELITO, na=False)].copy()
     cuenta = {"carpetas del delito, todos los años": len(df)}
@@ -88,6 +88,7 @@ def denuncias() -> tuple[pd.DataFrame, dict[str, int]]:
     df["fecha"] = fecha[fecha.between(INICIO, FIN)]
     cuenta["en la ventana 2019-2024 por fecha del hecho"] = len(df)
 
+    df["canal"] = canal(df["fiscalia"], df["agencia"])
     df["con_violencia"] = df["delito"].str.endswith("CON VIOLENCIA")
     assert (df["con_violencia"] | df["delito"].str.endswith("SIN VIOLENCIA")).all()
     lat = pd.to_numeric(df["latitud"], errors="coerce")
@@ -111,7 +112,7 @@ def denuncias() -> tuple[pd.DataFrame, dict[str, int]]:
     df["dia_semana"] = df["fecha"].dt.dayofweek  # 0 = lunes
     df["hora"] = pd.to_numeric(df["hora_hecho"].str[:2], errors="coerce")
     df["minuto"] = pd.to_numeric(df["hora_hecho"].str[3:5], errors="coerce")
-    cols = ["fecha", "anio_mes", "dia_semana", "hora", "minuto", "fecha_inicio", "delito", "con_violencia",
+    cols = ["fecha", "anio_mes", "dia_semana", "hora", "minuto", "fecha_inicio", "delito", "con_violencia", "fiscalia", "agencia", "canal",
             "alcaldia_hecho", "latitud", "longitud", "con_coordenadas", "estacion_mas_cercana",
             "linea_punto_mas_cercano", "distancia_m", "asignada"]
     return df[cols], cuenta
@@ -127,6 +128,8 @@ def main() -> int:
     n = a.groupby(["estacion_mas_cercana", "anio_mes"]).agg(
         robos_denunciados_total=("asignada", "size"),
         robos_denunciados_con_violencia=("con_violencia", "sum"),
+        robos_denunciados_canal_digital=("canal", lambda s: int((s == "DIGITAL").sum())),
+        robos_denunciados_canal_agencia_metro=("canal", lambda s: int(s.str.startswith("STCM").sum())),
     ).reset_index().rename(columns={"estacion_mas_cercana": "estacion"})
 
     attrs = llave.groupby("nombre_shp").agg(
@@ -137,14 +140,17 @@ def main() -> int:
     ).reset_index().rename(columns={"nombre_shp": "estacion"})
 
     panel = entradas.merge(n, on=["estacion", "anio_mes"], how="left").merge(attrs, on="estacion", validate="m:1")
-    cuentas = ["robos_denunciados_total", "robos_denunciados_con_violencia"]
+    cuentas = ["robos_denunciados_total", "robos_denunciados_con_violencia",
+               "robos_denunciados_canal_digital", "robos_denunciados_canal_agencia_metro"]
     panel[cuentas] = panel[cuentas].fillna(0).astype(int)  # sin carpeta asignada ese mes = cero denuncias, no dato faltante
     panel["robos_denunciados_sin_violencia"] = panel["robos_denunciados_total"] - panel["robos_denunciados_con_violencia"]
+    panel["tiene_agencia"] = tiene_agencia(panel["estacion"], panel["anio_mes"])  # con vigencia por mes
     panel["anio"] = panel["anio_mes"].str[:4].astype(int)
     panel["mes"] = panel["anio_mes"].str[5:].astype(int)
     panel = panel[[
-        "estacion", "anio_mes", "anio", "mes", "lineas", "n_lineas", "es_correspondencia", "fuera_cdmx",
+        "estacion", "anio_mes", "anio", "mes", "lineas", "n_lineas", "es_correspondencia", "fuera_cdmx", "tiene_agencia",
         "robos_denunciados_total", "robos_denunciados_con_violencia", "robos_denunciados_sin_violencia",
+        "robos_denunciados_canal_digital", "robos_denunciados_canal_agencia_metro",
         "entradas", "dias_con_dato", "dias_sin_entradas", "entradas_dudosas",
     ]].sort_values(["estacion", "anio_mes"])
 
