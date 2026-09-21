@@ -8,6 +8,7 @@ C2  falla si 7 o más de las 10 primeras por tasa son de correspondencia, o 12 o
     las 20 primeras. Las correspondencias son 28 de 163 (17 %): por azar se esperan 1.7
     en un top-10 y 3.4 en un top-20.
 C3  no mata: describe si la tasa de la red se sostuvo cuando la afluencia se desplomó.
+    Como C2 falla, aquí nunca llega a correr: la versión que corre está en 05_estrato_paso.py.
 
 Tasa cruda = 1e6 × robos denunciados / entradas, sobre los meses en que la estación tuvo
 entradas conocidas y mayores que cero. Código de salida: 0 pasa, 2 falla una prueba.
