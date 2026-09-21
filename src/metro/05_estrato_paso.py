@@ -223,15 +223,23 @@ def c3(panel: pd.DataFrame, den: pd.DataFrame) -> None:
     fig.savefig(FIGURAS / "c3_tasa_vs_afluencia.png", dpi=150)
     plt.close(fig)
 
-    fig, ax = plt.subplots(1, 2, figsize=(11, 4.6))
+    fig, ax = plt.subplots(1, 2, figsize=(12, 5))
     for a_, (nombre, s) in zip(ax, series.items()):
-        anio = s["anio_mes"].str[:4].astype(int)
-        for etiqueta, m, c in [("2019", anio == 2019, "#33658a"), ("2020–2021", anio.isin([2020, 2021]), "#b3412c"),
-                               ("2022–2024", anio >= 2022, "#888888")]:
-            a_.scatter(s.loc[m, "entradas"] / 1e6, s.loc[m, "robos_denunciados"], color=c, s=20, label=etiqueta)
-        k = s.loc[anio == 2019, "robos_denunciados"].sum() / s.loc[anio == 2019, "entradas"].sum()
+        # Los mismos tramos de la tabla. La recta es la tasa de la BASE prepandemia (2019-09 a
+        # 2020-02), no la de 2019 completo: 2019 trae un quiebre propio, con la afluencia plana.
+        mes = s["anio_mes"]
+        grupos = [("2019-01 a 2019-08: antes del quiebre de 2019", mes.between("2019-01", "2019-08"), "#c9c5b8", "o"),
+                  ("2019-09 a 2020-02: base prepandemia", mes.between("2019-09", "2020-02"), "#33658a", "o"),
+                  ("2020-03: transición", mes == "2020-03", "#9db7cc", "o"),
+                  ("2020-04 a 2020-06: confinamiento", mes.between("2020-04", "2020-06"), "#b3412c", "s"),
+                  ("2020-07 a 2021-12", mes.between("2020-07", "2021-12"), "#e08a3c", "o"),
+                  ("2022-01 a 2024-12", mes >= "2022-01", "#777777", "o")]
+        for etiqueta, m, c, marca in grupos:
+            a_.scatter(s.loc[m, "entradas"] / 1e6, s.loc[m, "robos_denunciados"], color=c, s=22, marker=marca, label=etiqueta)
+        base = mes.between("2019-09", "2020-02")
+        k = s.loc[base, "robos_denunciados"].sum() / s.loc[base, "entradas"].sum()
         xs = np.array([0, s["entradas"].max() / 1e6])
-        a_.plot(xs, k * xs * 1e6, color="#33658a", lw=0.8, ls=":", label="tasa de 2019 constante")
+        a_.plot(xs, k * xs * 1e6, color="#33658a", lw=0.9, ls=":", label=f"tasa de la base constante ({1e6 * k:.2f} por millón)")
         a_.set_xlabel("Entradas (millones al mes)")
         a_.set_ylabel("Robos denunciados (carpetas al mes)")
         a_.set_xlim(left=0)
@@ -239,7 +247,7 @@ def c3(panel: pd.DataFrame, den: pd.DataFrame) -> None:
         a_.set_title(nombre, fontsize=10, loc="left")
         a_.legend(frameon=False, fontsize=8)
         a_.spines[["top", "right"]].set_visible(False)
-    fig.suptitle("C3. Con exposición lineal, los meses caerían sobre la recta punteada", fontsize=10, x=0.01, ha="left")
+    fig.suptitle("C3. Con exposición lineal, los meses caerían sobre la recta punteada (tasa de la base prepandemia)", fontsize=10, x=0.01, ha="left")
     fig.tight_layout()
     fig.savefig(FIGURAS / "c3_denuncias_vs_entradas.png", dpi=150)
     plt.close(fig)

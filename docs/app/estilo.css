@@ -30,7 +30,8 @@ header { display: flex; gap: 1rem; align-items: flex-end; justify-content: space
 
 main { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(20rem, 1fr); gap: 1rem; padding: 1rem; align-items: start; }
 #mapa-caja { position: sticky; top: .5rem; background: var(--papel); border: 1px solid var(--linea); border-radius: 8px; overflow: hidden; }
-#mapa { display: block; width: 100%; height: min(78vh, 760px); touch-action: none; cursor: grab; background: var(--papel); }
+#mapa { display: block; width: 100%; height: auto; max-height: 86vh; touch-action: pan-y; cursor: grab; background: var(--papel); }
+#mapa.acercado { touch-action: none; }  /* con la red completa a la vista, un dedo desplaza la página */
 #mapa.arrastrando { cursor: grabbing; }
 .mapa-controles { position: absolute; top: .5rem; right: .5rem; display: flex; flex-direction: column; gap: .25rem; z-index: 2; }
 .mapa-controles button { width: 2.2rem; height: 2.2rem; font-size: 1.1rem; border: 1px solid var(--linea); background: var(--papel); border-radius: 6px; cursor: pointer; }
@@ -46,7 +47,7 @@ main { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(20rem, 1fr
 .anillo { fill: none; stroke: #f0a500; stroke-width: 2.2; opacity: 0; pointer-events: none; }
 body.modo-tasa .anillo.se-mueve { opacity: 1; animation: pulso 1.6s ease-out 3; }
 @keyframes pulso { 0% { stroke-width: 6; opacity: .2; } 60% { opacity: 1; } 100% { stroke-width: 2.2; opacity: 1; } }
-.rotulo { font-size: 11px; font-weight: 700; paint-order: stroke; stroke: #fff; stroke-width: 3px; pointer-events: none; }
+.rotulo { font-size: 13px; font-weight: 700; paint-order: stroke; stroke: #fff; stroke-width: 3px; pointer-events: none; }
 
 #leyenda { display: flex; flex-wrap: wrap; gap: .35rem 1rem; padding: .5rem .7rem; border-top: 1px solid var(--linea); font-size: .74rem; color: var(--tinta-2); align-items: center; }
 #leyenda .item { display: inline-flex; align-items: center; gap: .35rem; }
@@ -76,6 +77,7 @@ body.modo-tasa .anillo.se-mueve { opacity: 1; animation: pulso 1.6s ease-out 3; 
 .etiqueta.insuf { background: #eee; color: #555; }
 .etiqueta.nomedible { background: #e4e2dc; color: #333; }
 .nota { font-size: .8rem; color: var(--tinta-2); margin: .4rem 0 0; }
+.serie { max-width: 400px; display: block; margin-top: .5rem; }
 .serie text { font-size: 10px; fill: var(--tinta-2); }
 
 .lista-cabeza { margin-bottom: .4rem; }
@@ -99,8 +101,8 @@ footer { padding: .4rem 1rem 1.5rem; font-size: .72rem; color: var(--tinta-2); }
 
 @media (max-width: 860px) {
   main { grid-template-columns: 1fr; padding: .6rem; gap: .6rem; }
-  #mapa-caja { position: static; }
-  #mapa { height: 62vh; }
+  #mapa-caja { position: relative; top: 0; }
+  #mapa { max-height: 70vh; }
   header { padding: .6rem; }
   h1 { font-size: 1rem; }
   .interruptor { width: 100%; }

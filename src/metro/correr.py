@@ -19,7 +19,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-PASOS = ["01_llave_estaciones.py", "02_panel_estacion.py", "03_pruebas.py", "04_agencias.py", "05_estrato_paso.py"]
+PASOS = ["01_llave_estaciones.py", "02_panel_estacion.py", "03_pruebas.py", "04_agencias.py", "05_estrato_paso.py",
+         "06_app_datos.py"]
 SIGUE_AUNQUE_FALLE_LA_PRUEBA = {"03_pruebas.py", "04_agencias.py"}
 
 

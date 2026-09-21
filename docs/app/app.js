@@ -57,6 +57,7 @@ function dibujaMapa() {
   vistaTotal = { x: 0, y: 0, w, h };
   vista = { ...vistaTotal };
   ponVista();
+  svg.style.aspectRatio = `${w} / ${h}`;
   const defs = el("defs", {}, svg);
   const trama = el("pattern", { id: "trama", width: 4, height: 4, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" }, defs);
   el("rect", { width: 4, height: 4, fill: "#d9d7d0" }, trama);
@@ -78,7 +79,7 @@ function dibujaMapa() {
     } else if (s.estrato === "edomex") {
       nodo = el("circle", { class: "est est-edomex", cx: x, cy: y, r: 3 }, ge);
     } else {
-      const r = radio(s.denuncias) * 0.95;
+      const r = s.estrato === "c" ? 7.5 : 3.6 + 0.32 * Math.sqrt(s.denuncias);  // chicas a propósito: no se miden, no deben dominar
       nodo = el("rect", { class: "est est-" + s.estrato, x: x - r, y: y - r, width: 2 * r, height: 2 * r, transform: `rotate(45 ${x} ${y})` }, ge);
       if (s.estrato === "c") el("text", { class: "rotulo", x: x + r + 6, y: y + 4 }, ge).textContent = s.nombre;
     }
@@ -131,7 +132,11 @@ function zoom(f, centro) {
   vista = { x: cx - (cx - vista.x) * k, y: cy - (cy - vista.y) * k, w, h: vista.h * k };
   ponVista();
 }
-function ponVista() { $("#mapa").setAttribute("viewBox", `${vista.x} ${vista.y} ${vista.w} ${vista.h}`); }
+function ponVista() {
+  const svg = $("#mapa");
+  svg.setAttribute("viewBox", `${vista.x} ${vista.y} ${vista.w} ${vista.h}`);
+  svg.classList.toggle("acercado", vista.w < vistaTotal.w * 0.98);
+}
 
 function muestraTooltip(ev, s) {
   const t = $("#tooltip");
@@ -170,6 +175,7 @@ function dibujaLista() {
   const clave = modo === "conteo" ? "pos_conteo" : "pos_tasa";
   const filas = D.estaciones.filter((s) => s.estrato === "a" && (verInsuf || !s.evidencia_insuficiente))
     .sort((p, q) => p[clave] - q[clave] || q.denuncias - p.denuncias);
+  $("#lista-nota").textContent = verInsuf ? "" : `El lugar es entre las ${D.meta.estrato_a.estaciones} estaciones; se saltan números porque ${D.meta.estrato_a.estaciones - filas.length} con menos de ${D.meta.min_denuncias_para_recomendar} denuncias no se listan.`;
   $("#lista-titulo").textContent = modo === "conteo"
     ? `Por CONTEO de robos denunciados · ${filas.length} estaciones sin correspondencia`
     : `Por TASA de denuncias por millón de entradas · ${filas.length} estaciones sin correspondencia`;
@@ -294,16 +300,21 @@ function byar(d) {
 function serieSvg(s) {
   const W = 320, H = 130, m = { l: 30, r: 8, t: 12, b: 30 };
   const abiertas = s.serie.filter((a) => !a.cerrada);
-  const max = Math.max(D.meta.estrato_a.tasa_denuncias_mm * 1.5, ...abiertas.map((a) => a.tasa_ic95[1]));
+  // el techo lo fija la tasa, no un intervalo enorme de un año con dos denuncias; los bigotes que no caben se recortan
+  const max = Math.max(D.meta.estrato_a.tasa_denuncias_mm * 1.5, 1.8 * Math.max(...abiertas.map((a) => a.tasa_denuncias_mm)));
   const x = (i) => m.l + (i + 0.5) * ((W - m.l - m.r) / s.serie.length);
   const y = (v) => H - m.b - (v / max) * (H - m.t - m.b);
+  const ref = D.meta.estrato_a.tasa_denuncias_mm;
   let g = `<line x1="${m.l}" y1="${y(0)}" x2="${W - m.r}" y2="${y(0)}" stroke="#bbb"/>`;
+  g += `<line x1="${m.l}" y1="${y(ref)}" x2="${W - m.r}" y2="${y(ref)}" stroke="#b3412c" stroke-dasharray="3 3" stroke-width=".8"/><text x="${W - m.r}" y="${y(ref) - 3}" text-anchor="end" fill="#b3412c">conjunto del periodo: ${num(ref, 2)}</text>`;
   [0, max].forEach((v) => (g += `<text x="${m.l - 4}" y="${y(v) + 3}" text-anchor="end">${num(v, 1)}</text>`));
   s.serie.forEach((a, i) => {
     g += `<text x="${x(i)}" y="${H - m.b + 12}" text-anchor="middle">${a.anio}</text>`;
     if (a.cerrada) { g += `<text x="${x(i)}" y="${H - m.b + 23}" text-anchor="middle">cerrada</text>`; return; }
     g += `<text x="${x(i)}" y="${H - m.b + 23}" text-anchor="middle">${a.denuncias} den.</text>`;
-    g += `<line x1="${x(i)}" y1="${y(a.tasa_ic95[0])}" x2="${x(i)}" y2="${y(a.tasa_ic95[1])}" stroke="#555" stroke-width="1.4"/>`;
+    const tope = Math.min(a.tasa_ic95[1], max);
+    g += `<line x1="${x(i)}" y1="${y(a.tasa_ic95[0])}" x2="${x(i)}" y2="${y(tope)}" stroke="#555" stroke-width="1.4"/>`;
+    if (a.tasa_ic95[1] > max) g += `<text x="${x(i) + 4}" y="${y(max) + 8}">↑ ${num(a.tasa_ic95[1], 1)}</text>`;
     g += `<circle cx="${x(i)}" cy="${y(a.tasa_denuncias_mm)}" r="3.4" fill="#1d1d1b"/>`;
   });
   return `<svg class="serie" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Denuncias por millón de entradas por año, con intervalo de Poisson al 95 %">
