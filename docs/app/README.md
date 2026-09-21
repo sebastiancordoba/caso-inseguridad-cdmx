@@ -33,6 +33,14 @@ las 163 estaciones, el interruptor reordena y las fichas abren. **Al cambiar cua
 archivo hay que subir `VERSION` en `sw.js`**, o los navegadores que ya la abrieron pueden
 quedarse con la versión anterior cuando no tengan red.
 
+**Ojo con la caché HTTP de GitHub Pages (`max-age=600`).** Encontrado el 2026-09-20 al
+verificar una publicación: el servidor ya tenía el `app.js` nuevo y el navegador seguía
+sirviendo el viejo desde su caché HTTP. Desde la versión 6, `sw.js` pide todo con
+`cache: "no-cache"`, que revalida siempre contra el servidor. Aun así, **quien ya había
+abierto la página puede tardar hasta diez minutos en recibir un `sw.js` nuevo**, porque ese
+archivo también sale con `max-age=600`. Para la demo: publicar al menos diez minutos antes,
+y abrirla una vez con red.
+
 ## Publicación
 
 **Hoy (temporal):** <https://sebastiancordoba.github.io/metro-denuncias-cdmx/>, servida desde
