@@ -143,12 +143,30 @@ FUENTES: dict[str, list[tuple[str, str]]] = {
             "carpetas-de-investigacion-fgj-de-la-ciudad-de-mexico/carpetas_ss_junio2020.csv",
         ),
     ],
+    # Metro (docs/fase1-encuadres.md, encuadre 1): afluencia diaria por estación y línea,
+    # su diccionario, y los puntos de las estaciones
+    "metro": [
+        (
+            "afluencia_metro_simple.csv",
+            "https://datos.cdmx.gob.mx/dataset/f2046fd5-51b5-4876-b008-bd65d95f9a02/resource/0e8ffe58-28bb-4dde-afcd-e5f5b4de4ccb/download/0e8ffe58-28bb-4dde-afcd-e5f5b4de4ccb.csv",
+        ),
+        (
+            "afluencia_metro_simple_diccionario.csv",
+            "https://datos.cdmx.gob.mx/dataset/f2046fd5-51b5-4876-b008-bd65d95f9a02/resource/7abf61db-a045-4b72-b5cd-c22ea0de6467/download/7abf61db-a045-4b72-b5cd-c22ea0de6467.csv",
+        ),
+        (
+            "stc_metro_shp.zip",
+            "https://datos.cdmx.gob.mx/dataset/1b014317-ddb1-46c7-ac79-7330c652abe3/resource/288b10dd-4f21-4338-b1ed-239487820512/download/288b10dd-4f21-4338-b1ed-239487820512.zip",
+        ),
+    ],
 }
 
 # Conjuntos predefinidos
 GRUPOS = {
     # Todo lo necesario para el problema acotado (docs/problema.md)
     "acotado": ["fgj", "ensu", "censo", "geografia", "notas_fgj"],
+    # El encuadre del Metro: carpetas de la FGJ más afluencia y estaciones
+    "estaciones": ["fgj", "metro"],
     # Todas las fuentes disponibles
     "todas": list(FUENTES.keys()),
 }

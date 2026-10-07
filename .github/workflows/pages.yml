@@ -1,0 +1,33 @@
+# Publica SOLO docs/app en GitHub Pages. No compila nada: sube la carpeta tal cual.
+# Se usa esto y no «Pages sobre docs/» porque docs/ trae material que no debe quedar
+# público por accidente (el texto del caso del ITAM, las notas de las reuniones).
+name: Publica la app
+
+on:
+  push:
+    branches: [main]
+    paths: ["docs/app/**", ".github/workflows/pages.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  publica:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.despliega.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/app
+      - id: despliega
+        uses: actions/deploy-pages@v4

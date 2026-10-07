@@ -49,3 +49,11 @@ archivo por debajo y eso hay que decirlo en el escrito.
   origen: https://www.inegi.org.mx/contenidos/programas/ensu/doc/ensu_fd_2023_pdf.zip
 - `ensu_fd_2024_pdf.zip` — 10.6 MB — sha256 `b2f47ed6de7054b0…`
   origen: https://www.inegi.org.mx/contenidos/programas/ensu/doc/ensu_fd_2024_pdf.zip
+
+## 2026-09-20
+- `afluencia_metro_simple.csv` — 57.1 MB — sha256 `2d328ec615ae1249…`
+  origen: https://datos.cdmx.gob.mx/dataset/f2046fd5-51b5-4876-b008-bd65d95f9a02/resource/0e8ffe58-28bb-4dde-afcd-e5f5b4de4ccb/download/0e8ffe58-28bb-4dde-afcd-e5f5b4de4ccb.csv
+- `afluencia_metro_simple_diccionario.csv` — 0.0 MB — sha256 `62f4ce5279609082…`
+  origen: https://datos.cdmx.gob.mx/dataset/f2046fd5-51b5-4876-b008-bd65d95f9a02/resource/7abf61db-a045-4b72-b5cd-c22ea0de6467/download/7abf61db-a045-4b72-b5cd-c22ea0de6467.csv
+- `stc_metro_shp.zip` — 0.0 MB — sha256 `e762497f0c366d3e…`
+  origen: https://datos.cdmx.gob.mx/dataset/1b014317-ddb1-46c7-ac79-7330c652abe3/resource/288b10dd-4f21-4338-b1ed-239487820512/download/288b10dd-4f21-4338-b1ed-239487820512.zip
