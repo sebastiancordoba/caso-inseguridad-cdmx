@@ -3,10 +3,8 @@
 # público por accidente (el texto del caso del ITAM, las notas de las reuniones).
 name: Publica la app
 
+# Solo a mano (Actions → «Publica la app» → Run workflow): Sebastián decide cuándo queda pública.
 on:
-  push:
-    branches: [main]
-    paths: ["docs/app/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
 permissions:
