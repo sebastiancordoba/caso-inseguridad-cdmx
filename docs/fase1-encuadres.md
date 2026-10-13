@@ -44,9 +44,16 @@ esa tasa en vez de por conteo?
 
 **Quién decide qué.** La SSC (Policía Bancaria e Industrial y Auxiliar, que custodian el
 Metro) y la gerencia de seguridad del STC deciden en qué estaciones y en qué franja horaria
-poner elementos. Hoy la lista pública —la de la FGJ que reproduce la prensa: Pantitlán,
-Hidalgo, Pino Suárez, Tacubaya— es un ordenamiento por conteo, que en buena parte es un
-ordenamiento por afluencia. Si la tasa señala estaciones medianas que el conteo esconde, el
+poner elementos. Hoy la lista pública —la de la FGJ que reproduce la prensa:
+~~Pantitlán, Hidalgo, Pino Suárez, Tacubaya~~ **Pantitlán, Hidalgo, Tacuba, Guerrero, Pino
+Suárez, Tacubaya, Balderas, Universidad, Indios Verdes, Cuatro Caminos y Constitución de
+1917**— es un ordenamiento por conteo, que en buena parte es un ordenamiento por afluencia.
+
+> **Corregido el 2026-10-13.** Los cuatro nombres tachados no son los de ninguna nota: son
+> las cuatro primeras por conteo de este repo. La lista de Infobae del 11 de enero de 2024,
+> abierta y capturada ese día, trae once estaciones y en otro orden. La captura y lo que
+> dice, literal, están en `figuras/fuentes/capturas.md`; el error y su corrección, en la
+> decisión 55. Si la tasa señala estaciones medianas que el conteo esconde, el
 despliegue por conteo está sobreatendiendo las terminales y dejando sin cubrir estaciones
 donde el riesgo por usuario es mayor.
 
