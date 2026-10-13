@@ -53,6 +53,9 @@ def main() -> int:
     den = pd.read_csv(DENUNCIAS, dtype={"agencia": str, "fiscalia": str})
     a = panel[~panel["es_correspondencia"] & ~panel["fuera_cdmx"] & (panel["entradas"] > 0)].copy()
     estrato = set(a["estacion"])
+    # `a` solo trae los meses con afluencia, porque la tasa necesita denominador; `da` son TODAS
+    # las denuncias asignadas al estrato. De ahí 2,954 contra 2,945: nueve caen en 8 meses-estación
+    # cerrados (decisión 8). Los perfiles horarios (4 y 4b) son conteos y usan `da`; el resto, `a`.
     da = den[den["asignada"] & den["estacion_mas_cercana"].isin(estrato)].copy()
     firmes_arriba = pd.read_csv(TABLAS / "t5_firmes_arriba.csv")
     firmes_abajo = pd.read_csv(TABLAS / "t5_firmes_abajo.csv")

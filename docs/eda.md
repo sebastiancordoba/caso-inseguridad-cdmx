@@ -86,7 +86,17 @@ de las entradas de esos meses, no de doce. Así se construye el panel anual.
 
 | | 6 a 9 h | 10 a 13 h | 14 a 17 h | 18 a 21 h | 22 a 5 h | Fin de semana |
 |---|---|---|---|---|---|---|
-| Estrato (a), % de sus 2,954 denuncias | **39.2** | 15.8 | 15.5 | 17.4 | 12.1 | 19.7 |
+| Estrato (a), % de sus **2,954** denuncias asignadas | **39.2** | 15.8 | 15.5 | 17.4 | 12.1 | 19.7 |
+
+**Por qué aquí son 2,954 y en el resto del trabajo 2,945** (verificado el 2026-10-07 contra
+`datos/procesados/panel_estacion.csv`). Las dos cifras están bien y cuentan cosas distintas.
+Este perfil son CONTEOS y no necesita denominador, así que incluye **las 9 denuncias que
+caen en 8 meses-estación con cero entradas**: Isabel La Católica (2023-11, 2024-02, 2024-04,
+2024-07), Cuauhtémoc (2024-04, 2024-11), Insurgentes Sur (2022-06) —los cierres de la Línea
+1— y Culhuacán (2021-06, Línea 12). Todo lo que lleva tasa las deja fuera, porque sin
+afluencia no hay denominador (decisión 8): la tabla de regímenes de arriba, la sección 1, la
+fase 2, la fase 3 y el modelo trabajan sobre **2,945**. Los dos perfiles horarios (4 y 4b,
+«19.7 % del estrato» incluido) son los únicos que usan 2,954.
 
 Cuatro de cada diez denuncias del estrato declaran un hecho entre las 6 y las 9 de la mañana;
 lunes (18.3 %) y viernes (18.1 %) son los días con más, domingo (8.2 %) el de menos. **La
