@@ -82,8 +82,14 @@ def ajusta_y_prueba(panel: pd.DataFrame, entrena: range, prueba: int) -> pd.Data
     """Una fila por estación abierta en el año de prueba, con lo sabido al entrenar y lo observado."""
     d_tr = modelo.panel_anual(panel, excluye_r2=True, anios=entrena)
     d_te = modelo.panel_anual(panel, excluye_r2=True, anios=range(prueba, prueba + 1)).set_index("estacion")
-    aj = modelo.Ajuste(d_tr, "NB").ajusta()
+    # «nb» en minúsculas: con cualquier otra cadena Ajuste cae en la Poisson sin avisar. El
+    # assert de phi existe porque eso pasó (15 de octubre): el primer corte de este script
+    # evaluó la Poisson creyendo que era la binomial negativa, y lo delató el orden del
+    # top-10 por tasa, que no coincidía con el de modelo_fuera_de_muestra.csv.
+    aj = modelo.Ajuste(d_tr, "nb").ajusta()
     assert aj.convergio, f"el ajuste {entrena} no convergió"
+    _, _, _, phi = aj.desempaca(aj.th)
+    assert np.isfinite(phi), "el ajuste salió Poisson: la familia tiene que ser «nb»"
     post = aj.posterior().set_index("estacion")
     crudo = d_tr.groupby("estacion").agg(y=("y", "sum"), E=("E", "sum"), anios=("anio", "nunique"))
     v = pd.DataFrame({"tasa": post["razon_encogida"], "conteo": crudo["y"], "E_tr": crudo["E"],
