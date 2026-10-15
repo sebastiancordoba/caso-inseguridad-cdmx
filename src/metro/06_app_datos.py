@@ -143,6 +143,22 @@ def main() -> int:
                           "tasa_ic95": [r(1e6 * byar(f.d)[0] / f.e), r(1e6 * byar(f.d)[1] / f.e)]} for k, f in mes.iterrows()],
                "meses_estacion": len(ma), "pct_meses_estacion_0_a_2": r(100 * (ma["robos_denunciados_total"] <= 2).mean(), 1),
                "max_denuncias_estacion_mes": int(ma["robos_denunciados_total"].max())}
+    # --- pestaña «Gráficas»: tablas que ya dejaron 03, 05 y 07, tal cual (más su intervalo de Byar)
+    c3 = pd.read_csv(TABLAS / "c3_por_anio.csv")
+    anual = [{"anio": int(f.anio), "serie": f.serie, "denuncias": int(f.robos_denunciados), "tasa_denuncias_mm": r(f.tasa_denuncias_mm),
+              "tasa_ic95": [r(1e6 * byar(f.robos_denunciados)[0] / f.entradas), r(1e6 * byar(f.robos_denunciados)[1] / f.entradas)]}
+             for f in c3.itertuples()]
+    assert sum(x["denuncias"] for x in anual if x["serie"].startswith("estrato")) == sum(s["denuncias"] for s in ea)
+    est_mes = pd.read_csv(TABLAS / "eda_estacionalidad.csv")
+    hd = pd.read_csv(TABLAS / "eda_hora_dia_estrato.csv").set_index("dia_semana")
+    crit = pd.read_csv(TABLAS / "t5_criterio.csv")
+    crit = crit[(crit["umbral_m"] == 150) & (crit["minimo_de_robos_denunciados"] == 0)].iloc[0]
+    assert int(crit["estaciones"]) == len(ea)
+    mensual["anual"] = anual
+    mensual["estacionalidad"] = [{"mes": int(f.mes), "denuncias": int(f.denuncias), "n_meses": int(f.n_meses), "tasa_denuncias_mm": r(f.tasa_denuncias_mm),
+                                  "tasa_ic95": [r(f.ic95_inf), r(f.ic95_sup)]} for f in est_mes.itertuples()]
+    mensual["hora_dia"] = hd.reindex(index=range(7)).astype(int).values.tolist()  # filas: lunes a domingo; columnas: hora 0 a 23
+    mensual["spearman_conteo_tasa"] = float(crit["spearman"])
     corr = [s for s in estaciones if s["estrato"] in ("b", "c")]
     meta = {
         "generado": pd.Timestamp.today().strftime("%Y-%m-%d"),

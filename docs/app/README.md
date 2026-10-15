@@ -82,6 +82,11 @@ gh repo delete sebastiancordoba/metro-denuncias-cdmx     # y actualizar la URL d
   ese año con intervalo de Byar. Lugares con empates compartidos. Los avisos de cambio y el mapa
   son siempre del periodo completo. Con 15 denuncias como mínimo, en un año casi nada alcanza
   (2019: 21 estaciones; 2020: 0; 2021: 2; 2022: 3; 2023: 1; 2024: 1).
+- **Pestaña «En el tiempo»** (abre en «Estaciones», la de la demo): siete gráficas SVG a mano,
+  interactivas (tooltip con valor e intervalo, leyenda que aísla, rango de fechas en la mensual).
+  Datos en `datos.json` → `mensual`: `serie` (mes), `anual` (`c3_por_anio.csv` + Byar),
+  `estacionalidad` (`eda_estacionalidad.csv`, régimen R0), `hora_dia` (`eda_hora_dia_estrato.csv`,
+  conteos; filas lunes a domingo) y `spearman_conteo_tasa` (`t5_criterio.csv`, 150 m, sin mínimo).
 - **Por mes** solo va la serie del estrato (a), `mensual.serie` en `datos.json`, que
   `06_app_datos.py` calcula del panel y compara contra `eda_serie_mensual_estrato.csv`. Por
   estación no se ordena: el 98 % de los 8,280 meses-estación tiene 0 a 2 denuncias (máximo 10).
