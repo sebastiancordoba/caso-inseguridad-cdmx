@@ -90,3 +90,11 @@ gh repo delete sebastiancordoba/metro-denuncias-cdmx     # y actualizar la URL d
 - **Por mes** solo va la serie del estrato (a), `mensual.serie` en `datos.json`, que
   `06_app_datos.py` calcula del panel y compara contra `eda_serie_mensual_estrato.csv`. Por
   estación no se ordena: el 98 % de los 8,280 meses-estación tiene 0 a 2 denuncias (máximo 10).
+
+## Dónde desplegar (decisión 65)
+
+Pestaña con tres listas (conteo, tasa y la que proponemos), de `09_lista_propuesta.py`. Dos vistas que
+**no se mezclan**: «Probadas en 2024» (`tres_listas_fuera_de_muestra.csv`: elegidas con 2019–2023, con
+lo que cubrieron en 2024) y «Para desplegar hoy» (`tres_listas.csv`: 2019–2024, **sin** cifra de
+cobertura, porque 2024 ya está dentro de la lista). `06_app_datos.py` compara las sumas contra
+`tres_listas_cobertura_2024.csv` (10 y 20 estaciones) y la tercera fila del bloque «tres reglas».

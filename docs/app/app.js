@@ -629,54 +629,51 @@ function graficaHora() {
 }
 
 /* ------------------------------------------------------------------ pestaña «Dónde desplegar» */
-// Tres listas de 10 elegidas con 2019–2023 y lo que cubren en 2024. Conteo y tasa salen de 08_modelo.py.
-// La tercera la define el método que se valide aparte; mientras no exista (desplegar.propuesta = null) se muestra
-// una lista de EJEMPLO, marcada como tal: no es un método.
-let colDesplegar = 0;
+// Tres listas (decisión 65). Dos vistas que no se mezclan: «probadas» (elegidas con 2019–2023, con lo que cubrieron
+// en 2024) y «hoy» (2019–2024 completo, sin cifra de cobertura: 2024 ya está dentro de la lista).
+let colDesplegar = 0, vistaDesp = "probadas", kDesp = 10;
 function listasDesplegar() {
-  const P = D.desplegar;
-  let prop = P.propuesta, ejemplo = false;
-  if (!prop) {
-    ejemplo = true;
-    const vistas = new Set(), l = [];
-    for (let i = 0; l.length < 10; i++) [P.conteo[i], P.tasa[i]].forEach((x) => { if (x && l.length < 10 && !vistas.has(x.estacion)) { vistas.add(x.estacion); l.push(x); } });
-    prop = l;
-  }
+  const P = D.desplegar, fuente = vistaDesp === "probadas" ? P.probadas : P.hoy;
+  const filas = (c) => fuente[c].slice(0, kDesp).map((x) => (typeof x === "string" ? { estacion: x } : x));
   return [
-    { clave: "conteo", titulo: "Por conteo", sub: "las 10 con más denuncias en 2019–2023", filas: P.conteo },
-    { clave: "tasa", titulo: "Por tasa", sub: "las 10 con mayor tasa predicha por el modelo", filas: P.tasa },
-    { clave: "propuesta", titulo: "La que proponemos", sub: ejemplo ? "EJEMPLO: alterna las dos listas. No es el método." : "combina conteo y tasa", filas: prop, ejemplo },
+    { titulo: "Por conteo", sub: "más denuncias", filas: filas("conteo") },
+    { titulo: "Por tasa", sub: "mayor tasa del modelo", filas: filas("tasa") },
+    { titulo: "La que proponemos", sub: P.regla_propuesta, filas: filas("propuesta") },
   ];
 }
+function botonesDesp(caja, opciones, actual, poner) {
+  caja.innerHTML = opciones.map(([v, t]) => `<button type="button" aria-pressed="${v === actual}" data-v="${v}">${t}</button>`).join("");
+  caja.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => { poner(b.dataset.v); dibujaDesplegar(); }));
+}
 function dibujaDesplegar() {
-  const L = listasDesplegar();
+  const L = listasDesplegar(), probadas = vistaDesp === "probadas";
+  botonesDesp($("#desp-vista"), [["probadas", "Probadas en 2024"], ["hoy", "Para desplegar hoy"]], vistaDesp, (v) => (vistaDesp = v));
+  botonesDesp($("#desp-k"), [["10", "10 estaciones"], ["20", "20 estaciones"]], String(kDesp), (v) => (kDesp = +v));
+  $("#desp-nota").textContent = probadas
+    ? "Elegidas con 2019–2023; abajo, lo que cubrió cada lista en 2024."
+    : "Elegidas con 2019–2024. Sin cifra de cobertura: 2024 ya está dentro de estas listas.";
   const veces = new Map();
   L.forEach((l) => l.filas.forEach((x) => veces.set(x.estacion, (veces.get(x.estacion) || 0) + 1)));
-  const ejemplo = L[2].ejemplo;
-  $("#desp-aviso").hidden = !ejemplo;
+  const cub = L.map((l) => { const d = l.filas.reduce((a, x) => a + x.denuncias_2024, 0), e = l.filas.reduce((a, x) => a + x.entradas_2024_M, 0); return [d, d / e, e]; });
   $("#desp-cols").innerHTML = L.map((l, k) => {
-    const den = l.filas.reduce((a, x) => a + x.denuncias_2024, 0), ent = l.filas.reduce((a, x) => a + x.entradas_2024_M, 0);
     const filas = l.filas.map((x, i) => {
       const v = veces.get(x.estacion), s = porNombre[x.estacion];
       const marca = s && s.evidencia_insuficiente ? ' <span class="etiqueta insuf">evidencia insuficiente</span>' : "";
       return `<li class="en-${v}" data-n="${esc(x.estacion)}"><span class="pos">${i + 1}</span><span class="nom">${esc(x.estacion)}${marca}</span><span class="veces" title="en ${v} de las 3 listas">${"●".repeat(v)}${"○".repeat(3 - v)}</span></li>`;
     }).join("");
-    return `<section class="d-col${l.ejemplo ? " ejemplo" : ""}${k === colDesplegar ? " activa" : ""}" data-k="${k}">
-      <h3>${l.titulo}${l.ejemplo ? ' <span class="etiqueta ejemplo">ejemplo</span>' : ""}</h3><p class="sub">${l.sub}</p>
-      <ol>${filas}</ol>
-      <dl class="d-cubre"><div><dt>Denuncias de 2024 cubiertas</dt><dd>${num(den)}</dd></div>
-        <div><dt>Denuncias por millón de entradas</dt><dd>${num(den / ent, 2)}</dd></div>
-        <div><dt>Afluencia a vigilar</dt><dd>${num(ent, 0)} M</dd></div></dl>
-    </section>`;
+    const pie = probadas ? `<dl class="d-cubre"><div><dt>Denuncias de 2024 cubiertas</dt><dd>${num(cub[k][0])}</dd></div>
+        <div><dt>Denuncias por millón de entradas</dt><dd>${num(cub[k][1], 2)}</dd></div>
+        <div><dt>Afluencia a vigilar</dt><dd>${num(cub[k][2], 0)} M</dd></div></dl>` : "";
+    return `<section class="d-col${k === colDesplegar ? " activa" : ""}" data-k="${k}">
+      <h3>${l.titulo}</h3><p class="sub">${esc(l.sub)}</p><ol>${filas}</ol>${pie}</section>`;
   }).join("");
+  $("#desp-selector").innerHTML = L.map((l, k) => `<button type="button" aria-pressed="${k === colDesplegar}" data-k="${k}">${l.titulo}</button>`).join("");
+  $("#desp-selector").querySelectorAll("button").forEach((b) => b.addEventListener("click", () => { colDesplegar = +b.dataset.k; dibujaDesplegar(); }));
   // en teléfono se ve una lista a la vez: la comparación de lo que cubre cada una va en una tabla aparte
-  const cub = L.map((l) => { const d = l.filas.reduce((a, x) => a + x.denuncias_2024, 0), e = l.filas.reduce((a, x) => a + x.entradas_2024_M, 0); return [d, d / e, e]; });
-  $("#desp-resumen").innerHTML = `<table><thead><tr><th>En 2024</th>${L.map((l) => `<th>${l.titulo.replace("La que proponemos", "Propuesta")}${l.ejemplo ? "*" : ""}</th>`).join("")}</tr></thead><tbody>
+  $("#desp-resumen").innerHTML = probadas ? `<table><thead><tr><th>En 2024</th>${L.map((l) => `<th>${l.titulo.replace("La que proponemos", "Propuesta")}</th>`).join("")}</tr></thead><tbody>
     <tr><th>Denuncias</th>${cub.map((c) => `<td>${num(c[0])}</td>`).join("")}</tr>
     <tr><th>Por millón</th>${cub.map((c) => `<td>${num(c[1], 2)}</td>`).join("")}</tr>
-    <tr><th>Afluencia</th>${cub.map((c) => `<td>${num(c[2], 0)} M</td>`).join("")}</tr></tbody></table>`;
-  $("#desp-selector").innerHTML = L.map((l, k) => `<button type="button" aria-pressed="${k === colDesplegar}" data-k="${k}">${l.titulo}${l.ejemplo ? "*" : ""}</button>`).join("");
-  $("#desp-selector").querySelectorAll("button").forEach((b) => b.addEventListener("click", () => { colDesplegar = +b.dataset.k; dibujaDesplegar(); }));
+    <tr><th>Afluencia</th>${cub.map((c) => `<td>${num(c[2], 0)} M</td>`).join("")}</tr></tbody></table>` : "";
   // pasar o tocar una estación la resalta en las tres listas
   document.querySelectorAll("#desp-cols li").forEach((li) => {
     const marca = (on) => document.querySelectorAll(`#desp-cols li[data-n="${CSS.escape(li.dataset.n)}"]`).forEach((x) => x.classList.toggle("resalta", on));

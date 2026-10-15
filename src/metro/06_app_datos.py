@@ -160,15 +160,33 @@ def main() -> int:
     mensual["hora_dia"] = hd.reindex(index=range(7)).astype(int).values.tolist()  # filas: lunes a domingo; columnas: hora 0 a 23
     mensual["spearman_conteo_tasa"] = float(crit["spearman"])
 
-    # --- pestaña «Dónde desplegar»: las 10 que elige cada regla con 2019–2023 y lo que pasó en 2024 (08_modelo.py)
-    fm = pd.read_csv(TABLAS / "modelo_fuera_de_muestra.csv").set_index("estacion")
-    def lista(col: str) -> list[dict]:
-        return [{"estacion": n, "denuncias_2024": int(f.y_2024), "entradas_2024_M": r(f.E_2024, 3)} for n, f in fm.nlargest(10, col).iterrows()]
-    desplegar = {"conteo": lista("conteo_19_23"), "tasa": lista("tasa_predicha"), "propuesta": None}
+    # --- pestaña «Dónde desplegar» (decisión 65, 09_lista_propuesta.py). Dos vistas que NO se mezclan:
+    #   «probadas»: las 20 primeras de cada lista elegidas con 2019–2023, con lo que cubrieron en 2024;
+    #   «hoy»: las listas con 2019–2024 completo, SIN cifra de cobertura (no hay año fuera de muestra para ellas).
+    fdm = pd.read_csv(TABLAS / "tres_listas_fuera_de_muestra.csv")
+    cob3 = pd.read_csv(TABLAS / "tres_listas_cobertura_2024.csv").set_index(["k", "lista"])
+    tl = pd.read_csv(TABLAS / "tres_listas.csv")
+    probadas = {}
+    for clave in ("conteo", "tasa", "propuesta"):
+        l = fdm[fdm["lista"] == clave].sort_values("lugar")
+        assert list(l["lugar"]) == list(range(1, 21))
+        probadas[clave] = [{"estacion": f.estacion, "denuncias_2024": int(f.denuncias_2024), "entradas_2024_M": r(f.entradas_2024_M, 3)}
+                           for f in l.itertuples()]
+        for k in (10, 20):
+            c = cob3.loc[(k, clave)]
+            assert int(l["denuncias_2024"].head(k).sum()) == int(c["denuncias_cubiertas"])
+            assert abs(float(l["entradas_2024_M"].head(k).sum()) - float(c["entradas_M"])) < 0.2
+    # la tabla de 2024 de 08_modelo.py y la de 09 tienen que contar lo mismo para conteo y tasa
     for regla, clave in [("conteo 2019–2023", "conteo"), ("tasa predicha (modelo)", "tasa")]:
-        l = desplegar[clave]
-        assert sum(x["denuncias_2024"] for x in l) == int(cob.loc[regla, "robos_denunciados_2024_cubiertos"])
-        assert abs(sum(fm.loc[x["estacion"], "E_2024"] for x in l) - float(cob.loc[regla, "entradas_2024_M"])) < 0.1
+        assert int(cob.loc[regla, "robos_denunciados_2024_cubiertos"]) == int(cob3.loc[(10, clave), "denuncias_cubiertas"])
+    hoy = {clave: [str(n) for n in tl.sort_values(col)["estacion"].head(20)]
+           for clave, col in [("conteo", "lugar_conteo"), ("tasa", "lugar_tasa"), ("propuesta", "lugar_propuesta")]}
+    assert len(tl) == len(ea) and set(tl["estacion"]) == {s["nombre"] for s in ea}
+    desplegar = {"probadas": probadas, "hoy": hoy, "regla_propuesta": str(tl["regla_propuesta"].iloc[0])}
+    # tercera fila del bloque «tres reglas» de index.html, escrita a mano: que truene aquí si cambia
+    c_ = cob3.loc[(10, "propuesta")]
+    assert (int(c_["denuncias_cubiertas"]), round(float(c_["por_millon"]), 2), round(float(c_["entradas_M"]))) == (59, 0.75, 79), \
+        "cambió la lista propuesta: actualiza la tercera fila del bloque «tres reglas» en docs/app/index.html"
     corr = [s for s in estaciones if s["estrato"] in ("b", "c")]
     meta = {
         "generado": pd.Timestamp.today().strftime("%Y-%m-%d"),

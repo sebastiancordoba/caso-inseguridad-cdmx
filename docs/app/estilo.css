@@ -203,6 +203,8 @@ body.tab-graficas #pantalla { height: auto !important; min-height: 0 !important;
 .clave { white-space: nowrap; margin-left: .4rem; }
 .clave b { color: var(--naranja); letter-spacing: -.1em; }
 .d-selector { display: none; }
+.d-controles { display: flex; flex-wrap: wrap; gap: .3rem 1rem; margin: .5rem 0 .2rem; }
+.d-controles .periodos { margin: 0; }
 .d-resumen { display: none; }
 .d-resumen table { width: 100%; border-collapse: collapse; font-size: .85rem; background: var(--papel); border-radius: 12px; overflow: hidden; }
 .d-resumen th, .d-resumen td { padding: .4rem .5rem; text-align: right; border-bottom: 1px solid var(--regla); font-variant-numeric: tabular-nums; }
