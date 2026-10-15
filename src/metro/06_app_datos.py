@@ -176,6 +176,10 @@ def main() -> int:
             c = cob3.loc[(k, clave)]
             assert int(l["denuncias_2024"].head(k).sum()) == int(c["denuncias_cubiertas"])
             assert abs(float(l["entradas_2024_M"].head(k).sum()) - float(c["entradas_M"])) < 0.2
+    # el orden por tasa de 09 tiene que ser el de 08 (el 15 de octubre no lo era: 09 ajustaba una Poisson por un «NB»)
+    fm = pd.read_csv(TABLAS / "modelo_fuera_de_muestra.csv").set_index("estacion")
+    assert [x["estacion"] for x in probadas["tasa"]] == list(fm.nlargest(20, "tasa_predicha").index), "la lista por tasa de 09 no es la del modelo de 08"
+    assert [x["estacion"] for x in probadas["conteo"][:10]] == list(fm.nlargest(10, "conteo_19_23").index)
     # la tabla de 2024 de 08_modelo.py y la de 09 tienen que contar lo mismo para conteo y tasa
     for regla, clave in [("conteo 2019–2023", "conteo"), ("tasa predicha (modelo)", "tasa")]:
         assert int(cob.loc[regla, "robos_denunciados_2024_cubiertos"]) == int(cob3.loc[(10, clave), "denuncias_cubiertas"])
