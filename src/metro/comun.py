@@ -34,8 +34,10 @@ UTM = 32614
 
 # Las 28 estaciones de correspondencia de la red y sus líneas, escritas a mano (por la
 # herramienta de IA, de memoria del plano de la red); no se infieren de los datos.
-# Falta que Sebas las coteje contra el plano oficial. 01_llave_estaciones.py las
-# contrasta contra el campo TIPO del shapefile y avisa de cualquier diferencia.
+# Cotejadas el 2026-10-13 contra el campo TIPO del shapefile y contra la lista de
+# Wikipedia («Metro de la Ciudad de México»): coinciden las 28 y sus líneas (ver la
+# decisión 3). 01_llave_estaciones.py las contrasta contra TIPO en cada corrida y se
+# detiene ante cualquier diferencia.
 CORRESPONDENCIAS: dict[str, list[str]] = {
     "Pantitlán": ["1", "5", "9", "A"],
     "Tacubaya": ["1", "7", "9"],
