@@ -74,3 +74,14 @@ gh repo delete sebastiancordoba/metro-denuncias-cdmx     # y actualizar la URL d
   «evidencia insuficiente» y nunca se resaltan como movimiento ni como «firmes».
 - La fecha de corte va en el encabezado y en el plegable «¿Cómo se calcula?», no en el pie.
 - Texto mínimo (pedido de Sebas, 2026-10-15): títulos cortos, una línea por bloque; lo explicativo va plegado en «¿Cómo se calcula?».
+
+## Por año y por mes (2026-10-15, pedido de Sebas)
+
+- **Selector de periodo** sobre la lista: «2019–2024» (por defecto) usa el modelo; un año suelto usa
+  la serie anual que ya trae cada estación en `datos.json` (`serie`): conteo, o tasa **cruda** de
+  ese año con intervalo de Byar. Lugares con empates compartidos. Los avisos de cambio y el mapa
+  son siempre del periodo completo. Con 15 denuncias como mínimo, en un año casi nada alcanza
+  (2019: 21 estaciones; 2020: 0; 2021: 2; 2022: 3; 2023: 1; 2024: 1).
+- **Por mes** solo va la serie del estrato (a), `mensual.serie` en `datos.json`, que
+  `06_app_datos.py` calcula del panel y compara contra `eda_serie_mensual_estrato.csv`. Por
+  estación no se ordena: el 98 % de los 8,280 meses-estación tiene 0 a 2 denuncias (máximo 10).

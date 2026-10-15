@@ -134,6 +134,15 @@ def main() -> int:
         estaciones.append(s)
 
     ea = [s for s in estaciones if s["estrato"] == "a"]
+    # --- por mes: solo la serie del estrato (a). Por estación no se ordena: casi todos sus meses tienen 0 a 2 denuncias.
+    ma = abiertos[abiertos["estacion"].isin([s["nombre"] for s in ea])]
+    mes = ma.groupby("anio_mes").agg(d=("robos_denunciados_total", "sum"), e=("entradas", "sum"))
+    eda = pd.read_csv(TABLAS / "eda_serie_mensual_estrato.csv").set_index("anio_mes")
+    assert len(mes) == 72 and (mes["d"] == eda["denuncias"]).all() and int(mes["d"].sum()) == sum(s["denuncias"] for s in ea)
+    mensual = {"serie": [{"mes": k, "denuncias": int(f.d), "tasa_denuncias_mm": r(1e6 * f.d / f.e),
+                          "tasa_ic95": [r(1e6 * byar(f.d)[0] / f.e), r(1e6 * byar(f.d)[1] / f.e)]} for k, f in mes.iterrows()],
+               "meses_estacion": len(ma), "pct_meses_estacion_0_a_2": r(100 * (ma["robos_denunciados_total"] <= 2).mean(), 1),
+               "max_denuncias_estacion_mes": int(ma["robos_denunciados_total"].max())}
     corr = [s for s in estaciones if s["estrato"] in ("b", "c")]
     meta = {
         "generado": pd.Timestamp.today().strftime("%Y-%m-%d"),
@@ -160,7 +169,7 @@ def main() -> int:
                     "estaciones": "https://datos.cdmx.gob.mx/dataset/lineas-y-estaciones-del-metro"},
     }
     SALIDA.parent.mkdir(parents=True, exist_ok=True)
-    SALIDA.write_text(json.dumps({"meta": meta, "lineas": lineas, "estaciones": estaciones}, ensure_ascii=False, separators=(",", ":")),
+    SALIDA.write_text(json.dumps({"meta": meta, "lineas": lineas, "estaciones": estaciones, "mensual": mensual}, ensure_ascii=False, separators=(",", ":")),
                       encoding="utf-8")
     kb = SALIDA.stat().st_size / 1024
     assert kb < 1024, f"datos.json pesa {kb:.0f} KB: hay que recortarlo"
