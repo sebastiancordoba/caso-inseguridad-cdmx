@@ -64,7 +64,7 @@ def main() -> int:
             int(c_["robos_denunciados_2024_cubiertos"]), float(c_["denuncias_2024_por_millon_de_entradas"]),
             round(float(m_["entradas_2024_M"])), round(float(c_["entradas_2024_M"])),
             int((mod["distinguible_modelo"] == "arriba").sum()), int((mod["distinguible_modelo"] == "abajo").sum())) == (41, 0.77, 92, 0.57, 53, 160, 14, 11), \
-        "cambió el modelo: actualiza los números escritos a mano en docs/app/index.html (bloque «dos reglas» y «qué mide esto»)"
+        "cambió el modelo: actualiza los números escritos a mano en docs/app/index.html (bloque «dos reglas» y «¿Cómo se calcula?»)"
 
     # --- geometría: metros UTM → viewBox, norte arriba
     est = lee_estaciones()

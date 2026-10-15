@@ -72,4 +72,5 @@ gh repo delete sebastiancordoba/metro-denuncias-cdmx     # y actualizar la URL d
 - Ningún número puntual sin su intervalo (Poisson, aproximación de Byar, 95 %).
 - Las estaciones con menos de 15 denuncias no se listan por defecto, van marcadas como
   «evidencia insuficiente» y nunca se resaltan como movimiento ni como «firmes».
-- La fecha de corte va en el encabezado y en el panel «Qué mide esto», no en el pie.
+- La fecha de corte va en el encabezado y en el plegable «¿Cómo se calcula?», no en el pie.
+- Texto mínimo (pedido de Sebas, 2026-10-15): títulos cortos, una línea por bloque; lo explicativo va plegado en «¿Cómo se calcula?».
