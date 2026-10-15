@@ -45,6 +45,7 @@ async function inicia() {
   dibujaPeriodos();
   $("#tab-estaciones").addEventListener("click", () => ponPestana("estaciones"));
   $("#tab-graficas").addEventListener("click", () => ponPestana("graficas"));
+  $("#tab-desplegar").addEventListener("click", () => ponPestana("desplegar"));
   estadoRed();
   window.addEventListener("online", estadoRed);
   window.addEventListener("offline", estadoRed);
@@ -355,14 +356,15 @@ const PALETA = ["#d7263d", "#1b6ca8", "#e87511", "#118749", "#a02d96", "#b69c13"
 let graficasListas = false;
 
 function ponPestana(t) {
-  const g = t === "graficas";
-  document.body.classList.toggle("tab-graficas", g);
-  $("#tab-estaciones").setAttribute("aria-selected", !g);
-  $("#tab-graficas").setAttribute("aria-selected", g);
-  $("#graficas").hidden = !g;
+  const otra = t !== "estaciones";
+  document.body.classList.toggle("tab-graficas", otra); // oculta mapa, lista, interruptor y «dos reglas»
+  ["estaciones", "graficas", "desplegar"].forEach((k) => $("#tab-" + k).setAttribute("aria-selected", k === t));
+  $("#graficas").hidden = t !== "graficas";
+  $("#desplegar").hidden = t !== "desplegar";
   $("#tip-g").hidden = true;
-  if (g && !graficasListas) { graficasListas = true; dibujaGraficas(); }
-  if (!g) ponRotulos();
+  if (t === "graficas" && !graficasListas) { graficasListas = true; dibujaGraficas(); }
+  if (t === "desplegar") dibujaDesplegar();
+  if (!otra) ponRotulos();
   window.scrollTo(0, 0);
 }
 
@@ -624,6 +626,64 @@ function graficaHora() {
     tip(ev, `<b>${DIAS[d]}, ${h}:00 a ${h}:59</b><br>${num(M[d][h])} denuncias`);
   });
   svg.addEventListener("pointerleave", () => marco.setAttribute("visibility", "hidden"));
+}
+
+/* ------------------------------------------------------------------ pestaña «Dónde desplegar» */
+// Tres listas de 10 elegidas con 2019–2023 y lo que cubren en 2024. Conteo y tasa salen de 08_modelo.py.
+// La tercera la define el método que se valide aparte; mientras no exista (desplegar.propuesta = null) se muestra
+// una lista de EJEMPLO, marcada como tal: no es un método.
+let colDesplegar = 0;
+function listasDesplegar() {
+  const P = D.desplegar;
+  let prop = P.propuesta, ejemplo = false;
+  if (!prop) {
+    ejemplo = true;
+    const vistas = new Set(), l = [];
+    for (let i = 0; l.length < 10; i++) [P.conteo[i], P.tasa[i]].forEach((x) => { if (x && l.length < 10 && !vistas.has(x.estacion)) { vistas.add(x.estacion); l.push(x); } });
+    prop = l;
+  }
+  return [
+    { clave: "conteo", titulo: "Por conteo", sub: "las 10 con más denuncias en 2019–2023", filas: P.conteo },
+    { clave: "tasa", titulo: "Por tasa", sub: "las 10 con mayor tasa predicha por el modelo", filas: P.tasa },
+    { clave: "propuesta", titulo: "La que proponemos", sub: ejemplo ? "EJEMPLO: alterna las dos listas. No es el método." : "combina conteo y tasa", filas: prop, ejemplo },
+  ];
+}
+function dibujaDesplegar() {
+  const L = listasDesplegar();
+  const veces = new Map();
+  L.forEach((l) => l.filas.forEach((x) => veces.set(x.estacion, (veces.get(x.estacion) || 0) + 1)));
+  const ejemplo = L[2].ejemplo;
+  $("#desp-aviso").hidden = !ejemplo;
+  $("#desp-cols").innerHTML = L.map((l, k) => {
+    const den = l.filas.reduce((a, x) => a + x.denuncias_2024, 0), ent = l.filas.reduce((a, x) => a + x.entradas_2024_M, 0);
+    const filas = l.filas.map((x, i) => {
+      const v = veces.get(x.estacion), s = porNombre[x.estacion];
+      const marca = s && s.evidencia_insuficiente ? ' <span class="etiqueta insuf">evidencia insuficiente</span>' : "";
+      return `<li class="en-${v}" data-n="${esc(x.estacion)}"><span class="pos">${i + 1}</span><span class="nom">${esc(x.estacion)}${marca}</span><span class="veces" title="en ${v} de las 3 listas">${"●".repeat(v)}${"○".repeat(3 - v)}</span></li>`;
+    }).join("");
+    return `<section class="d-col${l.ejemplo ? " ejemplo" : ""}${k === colDesplegar ? " activa" : ""}" data-k="${k}">
+      <h3>${l.titulo}${l.ejemplo ? ' <span class="etiqueta ejemplo">ejemplo</span>' : ""}</h3><p class="sub">${l.sub}</p>
+      <ol>${filas}</ol>
+      <dl class="d-cubre"><div><dt>Denuncias de 2024 cubiertas</dt><dd>${num(den)}</dd></div>
+        <div><dt>Denuncias por millón de entradas</dt><dd>${num(den / ent, 2)}</dd></div>
+        <div><dt>Afluencia a vigilar</dt><dd>${num(ent, 0)} M</dd></div></dl>
+    </section>`;
+  }).join("");
+  // en teléfono se ve una lista a la vez: la comparación de lo que cubre cada una va en una tabla aparte
+  const cub = L.map((l) => { const d = l.filas.reduce((a, x) => a + x.denuncias_2024, 0), e = l.filas.reduce((a, x) => a + x.entradas_2024_M, 0); return [d, d / e, e]; });
+  $("#desp-resumen").innerHTML = `<table><thead><tr><th>En 2024</th>${L.map((l) => `<th>${l.titulo.replace("La que proponemos", "Propuesta")}${l.ejemplo ? "*" : ""}</th>`).join("")}</tr></thead><tbody>
+    <tr><th>Denuncias</th>${cub.map((c) => `<td>${num(c[0])}</td>`).join("")}</tr>
+    <tr><th>Por millón</th>${cub.map((c) => `<td>${num(c[1], 2)}</td>`).join("")}</tr>
+    <tr><th>Afluencia</th>${cub.map((c) => `<td>${num(c[2], 0)} M</td>`).join("")}</tr></tbody></table>`;
+  $("#desp-selector").innerHTML = L.map((l, k) => `<button type="button" aria-pressed="${k === colDesplegar}" data-k="${k}">${l.titulo}${l.ejemplo ? "*" : ""}</button>`).join("");
+  $("#desp-selector").querySelectorAll("button").forEach((b) => b.addEventListener("click", () => { colDesplegar = +b.dataset.k; dibujaDesplegar(); }));
+  // pasar o tocar una estación la resalta en las tres listas
+  document.querySelectorAll("#desp-cols li").forEach((li) => {
+    const marca = (on) => document.querySelectorAll(`#desp-cols li[data-n="${CSS.escape(li.dataset.n)}"]`).forEach((x) => x.classList.toggle("resalta", on));
+    li.addEventListener("pointerenter", () => marca(true));
+    li.addEventListener("pointerleave", () => marca(false));
+    li.addEventListener("click", () => { document.querySelectorAll("#desp-cols li.resalta").forEach((x) => x.classList.remove("resalta")); marca(true); });
+  });
 }
 
 /* ------------------------------------------------------------------ detalle */

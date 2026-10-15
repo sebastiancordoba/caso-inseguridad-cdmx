@@ -159,6 +159,16 @@ def main() -> int:
                                   "tasa_ic95": [r(f.ic95_inf), r(f.ic95_sup)]} for f in est_mes.itertuples()]
     mensual["hora_dia"] = hd.reindex(index=range(7)).astype(int).values.tolist()  # filas: lunes a domingo; columnas: hora 0 a 23
     mensual["spearman_conteo_tasa"] = float(crit["spearman"])
+
+    # --- pestaña «Dónde desplegar»: las 10 que elige cada regla con 2019–2023 y lo que pasó en 2024 (08_modelo.py)
+    fm = pd.read_csv(TABLAS / "modelo_fuera_de_muestra.csv").set_index("estacion")
+    def lista(col: str) -> list[dict]:
+        return [{"estacion": n, "denuncias_2024": int(f.y_2024), "entradas_2024_M": r(f.E_2024, 3)} for n, f in fm.nlargest(10, col).iterrows()]
+    desplegar = {"conteo": lista("conteo_19_23"), "tasa": lista("tasa_predicha"), "propuesta": None}
+    for regla, clave in [("conteo 2019–2023", "conteo"), ("tasa predicha (modelo)", "tasa")]:
+        l = desplegar[clave]
+        assert sum(x["denuncias_2024"] for x in l) == int(cob.loc[regla, "robos_denunciados_2024_cubiertos"])
+        assert abs(sum(fm.loc[x["estacion"], "E_2024"] for x in l) - float(cob.loc[regla, "entradas_2024_M"])) < 0.1
     corr = [s for s in estaciones if s["estrato"] in ("b", "c")]
     meta = {
         "generado": pd.Timestamp.today().strftime("%Y-%m-%d"),
@@ -185,7 +195,7 @@ def main() -> int:
                     "estaciones": "https://datos.cdmx.gob.mx/dataset/lineas-y-estaciones-del-metro"},
     }
     SALIDA.parent.mkdir(parents=True, exist_ok=True)
-    SALIDA.write_text(json.dumps({"meta": meta, "lineas": lineas, "estaciones": estaciones, "mensual": mensual}, ensure_ascii=False, separators=(",", ":")),
+    SALIDA.write_text(json.dumps({"meta": meta, "lineas": lineas, "estaciones": estaciones, "mensual": mensual, "desplegar": desplegar}, ensure_ascii=False, separators=(",", ":")),
                       encoding="utf-8")
     kb = SALIDA.stat().st_size / 1024
     assert kb < 1024, f"datos.json pesa {kb:.0f} KB: hay que recortarlo"

@@ -22,6 +22,7 @@
 <nav class="pestanas" role="tablist" aria-label="Vistas">
   <button id="tab-estaciones" role="tab" type="button" aria-selected="true">Estaciones</button>
   <button id="tab-graficas" role="tab" type="button" aria-selected="false">En el tiempo</button>
+  <button id="tab-desplegar" role="tab" type="button" aria-selected="false">Dónde desplegar</button>
 </nav>
 <div class="cinta" aria-hidden="true"><span style="background:#e9468f"></span><span style="background:#00599f"></span><span style="background:#b69c13"></span><span style="background:#6cbab1"></span><span style="background:#fdd200"></span><span style="background:#d81c23"></span><span style="background:#e87511"></span><span style="background:#118749"></span><span style="background:#512826"></span><span style="background:#a02d96"></span><span style="background:#118751"></span><span style="background:#b99e51"></span></div>
 
@@ -105,6 +106,16 @@
     <p class="sub">Conteos de denuncias, no tasas: no hay afluencia por hora.</p>
     <div class="g-svg"></div>
   </div>
+</section>
+<section id="desplegar" aria-label="Dónde desplegar" hidden>
+  <p id="desp-aviso" class="desp-aviso" hidden><strong>Datos de ejemplo.</strong> La tercera lista es un relleno para ver el diseño; el método todavía no está.</p>
+  <div class="d-cabeza">
+    <h2>Tres formas de elegir 10 estaciones</h2>
+    <p class="sub">Elegidas con 2019–2023; abajo, lo que cubre cada lista en 2024. <span class="clave"><b>●●●</b> en las tres · <b>●●○</b> en dos · <b>●○○</b> solo en esa</span></p>
+  </div>
+  <div id="desp-selector" class="periodos d-selector" role="group" aria-label="Lista"></div>
+  <div id="desp-cols" class="d-cols"></div>
+  <div id="desp-resumen" class="d-resumen"></div>
 </section>
 <div id="tip-g" hidden></div>
 
