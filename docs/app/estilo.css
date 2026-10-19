@@ -214,10 +214,8 @@ body.tab-graficas #pantalla { height: auto !important; min-height: 0 !important;
 .d-col { background: var(--papel); border: 1px solid var(--regla); border-top: 6px solid var(--tinta); border-radius: 14px; padding: .8rem .9rem; display: flex; flex-direction: column; }
 .d-col[data-k="1"] { border-top-color: var(--alto); }
 .d-col[data-k="2"] { border-top-color: var(--naranja); }
-.d-col.ejemplo { border-style: dashed; border-top-style: solid; }
 .d-col h3 { margin: 0; font-size: 1.15rem; font-weight: 800; }
 .d-col .sub { margin: .1rem 0 .5rem; font-size: .78rem; color: var(--tinta-2); min-height: 2.2em; }
-.etiqueta.ejemplo { background: #fff1d6; color: #9a3a0a; border: 1px dashed var(--naranja); }
 .d-col ol { list-style: none; margin: 0; padding: 0; flex: 1; }
 .d-col li { display: grid; grid-template-columns: 1.8rem minmax(0, 1fr) auto; gap: .5rem; align-items: center; padding: .35rem .4rem; border-radius: 8px; margin-bottom: .2rem; font-size: .9rem; cursor: default; }
 .d-col li .pos { font-weight: 800; color: var(--tinta-2); text-align: right; font-variant-numeric: tabular-nums; }
