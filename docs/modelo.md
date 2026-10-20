@@ -290,3 +290,8 @@ Chapultepec 0.42 (0.28–0.61).
 - Los intervalos no propagan la incertidumbre de los hiperparámetros.
 - El efecto de estación se supone constante en los seis años: una estación que cambió (una
   obra, un operativo) queda promediada.
+- **Más información sobre cada estación no lo mejora** (añadido el 2026-10-20): con línea,
+  entorno de delitos a 500 m, tamaño o una tendencia por estación como covariables, la
+  predicción del año siguiente no mejora fuera de muestra con el criterio escrito antes de
+  correrlo (decisiones 66 y 67; detalle en [`covariables.md`](covariables.md)). El límite
+  está en el ruido del fenómeno medido con denuncias, no en lo que se sabe de la estación.

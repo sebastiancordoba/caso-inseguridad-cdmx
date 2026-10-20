@@ -20,7 +20,7 @@ import sys
 from pathlib import Path
 
 PASOS = ["01_llave_estaciones.py", "02_panel_estacion.py", "03_pruebas.py", "04_agencias.py", "05_estrato_paso.py",
-         "06_app_datos.py", "07_eda.py", "08_modelo.py"]
+         "06_app_datos.py", "07_eda.py", "08_modelo.py", "09_lista_propuesta.py", "10_covariables.py", "11_modelo_covariables.py"]
 SIGUE_AUNQUE_FALLE_LA_PRUEBA = {"03_pruebas.py", "04_agencias.py"}
 
 
