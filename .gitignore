@@ -31,3 +31,7 @@ package-lock.json
 
 # Archivos temporales de Office (se crean al abrir un .pptx o .docx)
 ~$*
+docs/escrito/*.log
+docs/escrito/*.blg
+docs/escrito/*.aux
+docs/escrito/*.bbl
