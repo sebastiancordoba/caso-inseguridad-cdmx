@@ -186,6 +186,20 @@ def main() -> int:
     hoy = {clave: [str(n) for n in tl.sort_values(col)["estacion"].head(20)]
            for clave, col in [("conteo", "lugar_conteo"), ("tasa", "lugar_tasa"), ("propuesta", "lugar_propuesta")]}
     assert len(tl) == len(ea) and set(tl["estacion"]) == {s["nombre"] for s in ea}
+    # --- botón «Prioridad (volumen y riesgo)» (2026-10-24): cada estación lleva su lugar y su puntaje en la lista
+    # combinada de la decisión 65, tal cual los dejó 09. Se comprueba que se reproducen desde los dos lugares que ya
+    # trae la app (promedio; empates por lugar por tasa; las de evidencia insuficiente al final, por lugar por tasa).
+    tli = tl.set_index("estacion")
+    for s in ea:
+        f = tli.loc[s["nombre"]]
+        assert int(f["lugar_conteo"]) == s["pos_conteo"] and int(f["lugar_tasa"]) == s["pos_encogida"]
+        s["pos_prioridad"] = int(f["lugar_propuesta"])
+        s["puntaje_prioridad"] = r(f["puntaje_propuesta"], 1)
+    con = sorted((s for s in ea if not s["evidencia_insuficiente"]), key=lambda s: ((s["pos_conteo"] + s["pos_encogida"]) / 2, s["pos_encogida"]))
+    sin = sorted((s for s in ea if s["evidencia_insuficiente"]), key=lambda s: s["pos_encogida"])
+    assert [s["nombre"] for s in con + sin] == [s["nombre"] for s in sorted(ea, key=lambda s: s["pos_prioridad"])], \
+        "el lugar por prioridad no se reproduce desde los lugares por conteo y por tasa"
+    assert [s["nombre"] for s in con[:20]] == hoy["propuesta"]
     desplegar = {"probadas": probadas, "hoy": hoy, "regla_propuesta": str(tl["regla_propuesta"].iloc[0])}
     # tercera fila del bloque «tres reglas» de index.html, escrita a mano: que truene aquí si cambia
     c_ = cob3.loc[(10, "propuesta")]

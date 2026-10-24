@@ -93,8 +93,25 @@ gh repo delete sebastiancordoba/metro-denuncias-cdmx     # y actualizar la URL d
 
 ## Dónde desplegar (decisión 65)
 
-Pestaña con tres listas (conteo, tasa y la que proponemos), de `09_lista_propuesta.py`. Dos vistas que
+Pestaña con tres listas (conteo, tasa y **Prioridad (volumen y riesgo)**, la combinada de la decisión 65), de `09_lista_propuesta.py`. Dos vistas que
 **no se mezclan**: «Probadas en 2024» (`tres_listas_fuera_de_muestra.csv`: elegidas con 2019–2023, con
 lo que cubrieron en 2024) y «Para desplegar hoy» (`tres_listas.csv`: 2019–2024, **sin** cifra de
 cobertura, porque 2024 ya está dentro de la lista). `06_app_datos.py` compara las sumas contra
 `tres_listas_cobertura_2024.csv` (10 y 20 estaciones) y la tercera fila del bloque «tres reglas».
+
+## Prioridad (volumen y riesgo): tercer botón del selector (2026-10-24, pedido de Sebas)
+
+El selector del encabezado tiene tres segmentos: «CONTEO · denuncias», «TASA · por millón de entradas» y
+«PRIORIDAD · volumen y riesgo», y la página **abre en Prioridad**. Es la misma lista combinada de la
+pestaña «Dónde desplegar» (promedio del lugar por conteo y del lugar por tasa encogida, solo entre
+estaciones con 15 denuncias o más; las demás van al final, ordenadas por tasa). Cada estación del estrato
+trae en `datos.json` su `pos_prioridad` y su `puntaje_prioridad`, copiados de `tres_listas.csv` por
+`06_app_datos.py`, que comprueba con `assert` que se reproducen desde los dos lugares y que las 20 primeras
+son las de `desplegar.hoy.propuesta`. En ese modo:
+
+- la lista ordena por `pos_prioridad` y en la columna de valor muestra los dos lugares («conteo 2 · tasa 7»);
+- el plano pone un distintivo numerado sobre las 20 primeras (sin nombres: no caben) y un anillo naranja;
+- el aviso explica la regla en una línea y lo que cubrieron en 2024 las 20 primeras de cada lista, sumado
+  en el navegador de `desplegar.probadas` (los mismos datos de la pestaña), no escrito a mano;
+- los años se apagan: la prioridad solo existe con 2019–2024 completo (en un año suelto casi ninguna
+  estación llega a 15 denuncias); al pulsar Prioridad desde un año, la página vuelve a 2019–2024.
