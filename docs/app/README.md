@@ -20,10 +20,10 @@ Hace falta un servidor (aunque sea ese) porque el navegador no deja leer `datos.
 
 ```bash
 python src/descarga.py --fuente estaciones   # una vez
-python src/metro/correr.py                   # 01 a 06; el último escribe docs/app/datos.json
+python src/metro/correr.py                   # 01 a 11 y al final 06, que escribe docs/app/datos.json
 ```
 
-`datos.json` pesa unos 140 KB y se versiona: la página publicada no recalcula nada.
+`datos.json` pesa unos 170 KB (eran 140 hasta antes del modelo y las tres listas) y se versiona: la página publicada no recalcula nada.
 
 ## Sin conexión
 

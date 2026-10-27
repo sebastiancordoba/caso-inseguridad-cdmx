@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Junta en UN solo JSON lo que la app estática necesita → docs/app/datos.json.
 
-No calcula nada nuevo: lee el panel y las tablas que dejaron 02 a 05 (hay que correrlos
-antes; `python src/metro/correr.py` lo hace en orden) y las coordenadas del shapefile.
+No calcula nada nuevo: lee el panel, las tablas que dejaron 02 a 05, 07 (EDA), 08 (modelo) y
+09 (tres listas), y las coordenadas del shapefile. Por eso es el ÚLTIMO paso de
+`python src/metro/correr.py`, aunque lleve el número 06.
 El numerador son DENUNCIAS; todas las claves lo dicen (`denuncias`, `tasa_denuncias_mm`).
 
 Estratos:
