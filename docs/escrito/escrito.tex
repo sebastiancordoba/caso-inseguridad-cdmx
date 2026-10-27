@@ -18,8 +18,7 @@
 \title{Denuncias por pasajero: qué estaciones de paso del Metro de la Ciudad de México concentran más robo denunciado por millón de entradas, y cuánto cambia el orden frente al conteo}
 
 \author{\IEEEauthorblockN{Sebastián Córdoba}
-\IEEEauthorblockA{Ciencia de Datos Aplicada, Instituto Tecnológico Autónomo de México\\
-Caso de titulación 2 (inseguridad urbana en la CDMX), grupo 3 \\
+\IEEEauthorblockA{Licenciatura en Ciencia de Datos, ITAM\\
 jcordob5@itam.mx}}
 
 \maketitle
@@ -89,7 +88,7 @@ M7 & Excluir abril--junio de 2020 no cambia el orden & $\rho < 0.98$ & $\rho = 0
 
 \section{Supuestos}
 
-La tabla~\ref{tab:supuestos} reúne los supuestos del planteamiento, de los datos y del modelo, con cómo se verificó cada uno o qué costó. Las decisiones completas, fechadas y con la alternativa descartada, son 67 y están en el repositorio \cite{repo_caso}.
+La tabla~\ref{tab:supuestos} reúne los supuestos del planteamiento, de los datos y del modelo, con cómo se verificó cada uno o qué costó. Las decisiones completas, fechadas y con la alternativa descartada, son 70 y están en el repositorio \cite{repo_caso}.
 
 \begin{table*}[t]
 \centering
@@ -293,7 +292,7 @@ python src/descarga.py --fuente estaciones
 python src/metro/correr.py
 bash docs/escrito/compila.sh
 \end{verbatim}
-El primer comando baja las carpetas de la FGJ (534~MB), la afluencia y el shapefile, y escribe su hash en \texttt{datos/crudos/MANIFIESTO.md}. El segundo corre en orden la llave de estaciones, el panel, las pruebas C1--C3, las agencias, T5, el EDA, el modelo, las tres listas, las covariables y, al final, los datos de la aplicación, que se arman con lo anterior; cada paso contiene sus comprobaciones (\texttt{assert}) y se detiene si una falla o si una prueba manda parar. Las figuras de este escrito salen de esos scripts; el escrito se compila con \texttt{tectonic}. Las 67 decisiones analíticas, con fecha, alternativa descartada y razón, están en \texttt{docs/decisiones.md}; las hipótesis congeladas, en \texttt{docs/hipotesis.md}.
+El primer comando baja las carpetas de la FGJ (534~MB), la afluencia y el shapefile, y escribe su hash en \texttt{datos/crudos/MANIFIESTO.md}. El segundo corre en orden la llave de estaciones, el panel, las pruebas C1--C3, las agencias, T5, el EDA, el modelo, las tres listas, las covariables y, al final, los datos de la aplicación, que se arman con lo anterior; cada paso contiene sus comprobaciones (\texttt{assert}) y se detiene si una falla o si una prueba manda parar. Las figuras de este escrito salen de esos scripts; el escrito se compila con \texttt{tectonic}. Las 70 decisiones, con fecha, alternativa descartada y razón, están en \texttt{docs/decisiones.md}; las hipótesis congeladas, en \texttt{docs/hipotesis.md}.
 
 \section{Registro de uso de IA generativa}
 
