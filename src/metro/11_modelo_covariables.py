@@ -5,7 +5,7 @@ La binomial negativa de 08_modelo.py predice la tasa del año siguiente con ρ �
 script prueba si covariables de estación —línea, entorno de delitos de la FGJ a 500 m,
 tamaño— o una tendencia por estación mejoran esa predicción FUERA DE MUESTRA, con años de
 prueba rodantes (2022, 2023, 2024) y las métricas y el criterio de mejora fijados ANTES de
-correrlo (decisión 66, commit ac09e27). No se buscan reglas nuevas: las tres listas (conteo,
+correrlo (decisión 66, commit 60e5c59). No se buscan reglas nuevas: las tres listas (conteo,
 tasa, combinada) se reevalúan con el modelo ganador, si lo hay.
 
 El modelo general, con u(s) de dimensión 1 (solo intercepto) o 2 (intercepto y pendiente):

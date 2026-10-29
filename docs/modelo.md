@@ -1,7 +1,7 @@
 # El modelo: tasa de denuncias por entrada, encogida
 
 *Corrido el 2026-09-20 con `python src/metro/08_modelo.py`, **después** de congelar las
-hipótesis M1 a M7 en [`hipotesis.md`](hipotesis.md) (commit `ccb6aa2`, 19:43, que no contiene
+hipótesis M1 a M7 en [`hipotesis.md`](hipotesis.md) (commit `60b826d`, 19:43, que no contiene
 ningún modelo). El numerador son DENUNCIAS. Tabla final para la app:
 `datos/procesados/modelo_estaciones.csv`. Diagnósticos: `metro_tablas/modelo_*.csv` y
 `modelo_diagnostico.json`.*

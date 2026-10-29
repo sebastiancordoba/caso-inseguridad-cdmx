@@ -24,7 +24,7 @@ __pycache__/
 # Documentos del ITAM y datos de otros alumnos: locales, nunca públicos
 referencias/itam/
 
-# Node: solo para src/metro/genera_presentacion.js (npm install pptxgenjs)
+# Node
 node_modules/
 package.json
 package-lock.json

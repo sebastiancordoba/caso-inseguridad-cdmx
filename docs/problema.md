@@ -1,7 +1,7 @@
 # El problema, acotado
 
 *Versión vigente desde el 2026-09-14. Sustituye a las secciones 1 a 3 de
-[`entrega-2026-09-14.md`](entrega-2026-09-14.md), que quedan como registro de lo que se
+`entrega-2026-09-14.md` (archivo de trabajo, no publicado), que quedan como registro de lo que se
 llevó a la reunión. Por qué cambió: los sinodales pidieron acotar la pregunta a ciertos
 delitos, y la rúbrica pide una pregunta «acotada y factible» (§1.1). Todo lo que aquí se
 afirma sobre los datos se verificó el 2026-09-14; el detalle está en

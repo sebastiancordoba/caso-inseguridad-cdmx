@@ -43,28 +43,14 @@ y abrirla una vez con red.
 
 ## Publicación
 
-**Hoy (temporal):** <https://sebastiancordoba.github.io/metro-denuncias-cdmx/>, servida desde
-un repositorio público aparte, `sebastiancordoba/metro-denuncias-cdmx` (rama `gh-pages`),
-que es solo un espejo de esta carpeta. Existe porque este repo es privado y el plan de
-GitHub no permite Pages en repos privados. Para volver a publicar después de un cambio:
+La app se publica con GitHub Pages desde este repositorio: `.github/workflows/pages.yml`
+sube **solo esta carpeta** (Actions → «Publica la app» → Run workflow). No se usa «Pages
+sobre `docs/`» para que el sitio sea solo la app. Antes de publicar un cambio, sube
+`VERSION` en `sw.js`.
 
-```bash
-bash src/metro/publica_espejo.sh     # antes, sube VERSION en docs/app/sw.js
-```
-
-En el espejo no se edita nada a mano: la fuente es siempre esta carpeta.
-
-**Después (un solo repo con todo):** cuando este repo se abra, `.github/workflows/pages.yml`
-publica **solo esta carpeta** al cambiar en `main`, y el espejo se borra. No se usa «Pages
-sobre `docs/`» porque `docs/` trae material que no debe quedar público por accidente (el
-texto del caso del ITAM, las notas de las reuniones). Pasos de ese día:
-
-```bash
-gh repo edit --visibility public
-gh api -X POST repos/sebastiancordoba/caso-inseguridad-cdmx/pages -f build_type=workflow
-gh workflow run "Publica la app"
-gh repo delete sebastiancordoba/metro-denuncias-cdmx     # y actualizar la URL donde se cite
-```
+Mientras este repositorio fue privado, la app se sirvió desde un repositorio espejo,
+`sebastiancordoba/metro-denuncias-cdmx`, en
+<https://sebastiancordoba.github.io/metro-denuncias-cdmx/> (decisiones 35 y 36).
 
 ## Reglas de contenido que el código respeta
 

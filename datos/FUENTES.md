@@ -238,7 +238,7 @@ explícito, verificable, y de los que la rúbrica premia — no una preferencia 
   que estima la **cifra negra** directamente — el porcentaje de delitos no denunciados.
   Es la pieza que permite hablar de subregistro con un número en vez de con un adjetivo.
   Anual y de menor desagregación geográfica que la ENSU. *(El encabezado de este punto se
-  perdió en el commit `7b57566` y quedaron sueltas las líneas de abajo; restituido el
+  perdió en el commit `1de8827` y quedaron sueltas las líneas de abajo; restituido el
   2026-09-13.)*
   **Leído en la fuente primaria el 2026-09-13**, en el [descriptor de microdatos 2025](https://www.inegi.org.mx/contenidos/programas/envipe/2025/doc/fd_envipe2025.pdf)
   y el [diseño muestral 2025](https://www.inegi.org.mx/contenidos/programas/envipe/2025/doc/889463926689.pdf):
@@ -249,7 +249,7 @@ explícito, verificable, y de los que la rúbrica premia — no una preferencia 
     por 34 áreas urbanas, con la CDMX en las mismas cuatro regiones. Muestra de la CDMX:
     6,400 viviendas. No hay producto oficial con cifra negra por alcaldía; la de la CDMX
     completa es de 93 % en la ENVIPE 2024.
-  - Para el encuadre elegido (A, ver `docs/entrega-2026-09-14.md`) la ENVIPE no entra al
+  - Para el encuadre elegido (A, el de la entrega del 14 de septiembre) la ENVIPE no entra al
     panel —es anual y no llega a alcaldía—: da el contexto del subregistro, no una variable.
 
 ## 3. C5

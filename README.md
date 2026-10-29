@@ -1,51 +1,67 @@
-# Caso 2 — Inseguridad urbana en la Ciudad de México
+# Denuncias por pasajero en el Metro de la Ciudad de México
 
-Titulación por caso, ITAM.
+Caso 2 (inseguridad urbana en la Ciudad de México) de la titulación por caso de la
+Licenciatura en Ciencia de Datos, ITAM. Autor: Sebastián Córdoba.
 
-**Este repositorio guarda el trabajo.**
+**La pregunta.** En las 124 estaciones de paso del Metro de la Ciudad de México, ¿cuáles
+concentran más denuncias de robo a pasajero por millón de entradas —2019 a 2024, tasa
+encogida— y cuánto cambia el orden frente al conteo?
 
-## Los tres entregables
+Todo es sobre **denuncias** (carpetas de investigación de la Fiscalía), no sobre robos: la
+mayoría de los delitos no se denuncia.
 
-| # | Qué | Cuándo | Dónde vive aquí |
-|---|---|---|---|
-| 1 | Trabajo escrito, IEEE doble columna, 5–8 pp. | una semana antes de la presentación | `docs/escrito/` |
-| 2 | Aplicación funcional con **repo público** e instrucciones de instalación | demo en vivo el día de la presentación | `app/`, este README |
-| 3 | Presentación oral, 15–20 min + 10 de preguntas | slides a los sinodales 24 h antes | `docs/presentacion/` |
+## Entregables
 
-Los tres son condición de piso: falta cualquiera y es No Acredita, sin importar la calificación.
+| Qué | Dónde |
+|---|---|
+| Escrito, formato IEEE | [`docs/escrito/escrito.pdf`](docs/escrito/escrito.pdf) (fuente: `escrito.tex` y `referencias.bib`) |
+| Aplicación | [`docs/app/`](docs/app/): página estática, sin servidor ni dependencias. Publicada en <https://sebastiancordoba.github.io/metro-denuncias-cdmx/> |
+| Código | [`src/`](src/) |
 
-## Estructura
+## Reconstruir todo desde cero
 
-```
-docs/        entregables escritos y notas de decisión
-datos/
-  crudos/       descargas tal cual, sin tocar (fuera de git)
-  intermedios/  limpiezas parciales (fuera de git)
-  procesados/   tablas finales que alimentan el análisis (fuera de git)
-notebooks/   exploración; lo que sobreviva se muda a src/
-src/         código reutilizable: descarga, limpieza, modelos
-app/         la aplicación funcional que se demuestra en vivo
-referencias/ PDFs del caso, rúbrica, plantilla IEEE, papers
-```
-
-Los datos no se versionan: se reconstruyen con `src/descarga.py`, que deja constancia
-de qué se bajó y cuándo en `datos/crudos/MANIFIESTO.md`. Un CSV de 2 GB en git es un
-repositorio que nadie puede clonar el día de la demo.
-
-## Reconstruir desde cero
+Python 3.13.
 
 ```bash
-git clone <url>
-cd caso-inseguridad-cdmx
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-python src/descarga.py --fuente fgj
+python src/descarga.py --fuente estaciones   # carpetas de la FGJ (534 MB), afluencia y estaciones del STC
+python src/metro/correr.py                   # el pipeline completo; al final escribe docs/app/datos.json
+bash docs/escrito/compila.sh                 # el escrito, con tectonic
 ```
 
-*(Las instrucciones completas de instalación son parte calificada del entregable 2.
-Se terminan cuando exista la app, no antes.)*
+`descarga.py` deja el hash de cada archivo en `datos/crudos/MANIFIESTO.md`. Los datos no se
+versionan: se reconstruyen. `correr.py` corre los pasos en orden y cada uno trae sus
+comprobaciones (`assert`); se detiene si una prueba manda parar.
 
-## Fuentes
+Para ver la app en tu máquina:
 
-Ver `datos/FUENTES.md`: URLs verificadas, columnas reales, y las inconsistencias
-documentadas que el caso pide caracterizar explícitamente.
+```bash
+cd docs/app && python3 -m http.server 8000   # y abrir http://localhost:8000
+```
+
+## Qué hay en cada lugar
+
+| Archivo | Qué es |
+|---|---|
+| `datos/FUENTES.md` | Las fuentes: URL, qué trae cada una, sus defectos y cómo se verificó |
+| `src/descarga.py` | Descarga reproducible, con manifiesto de hashes |
+| `src/metro/01_*.py` a `11_*.py` | El pipeline: llave de estaciones, panel, pruebas de viabilidad, agencias, estrato de paso, EDA, modelo, tres listas, covariables y datos de la app |
+| `docs/caso-2.md` | Resumen del caso entregado por el ITAM y su lectura |
+| `docs/problema.md` | Pregunta, hipótesis, supuestos y objetivos |
+| `docs/hipotesis.md` | Hipótesis con su criterio de rechazo; las del modelo, congeladas antes de ajustarlo |
+| `docs/decisiones.md` | Cada decisión del método, con fecha, la alternativa descartada y por qué |
+| `docs/fase*.md`, `eda.md`, `modelo.md`, `covariables.md` | Resultados de cada fase |
+| `docs/revision-literatura.md`, `docs/fuentes-conteo.md` | Literatura y listas publicadas por la prensa |
+| `docs/uso-ia.md` | Registro del uso de IA generativa |
+
+## Historial
+
+El historial de este repositorio se reescribió al hacerlo público, para quitar el texto del
+caso (que es del ITAM) y archivos de trabajo que no son parte del método. Las fechas y el
+orden de los commits se conservan. Detalle en la decisión 71 de `docs/decisiones.md`.
+
+## Licencia
+
+El código está bajo licencia MIT ([`LICENSE`](LICENSE)). Los datos son de sus fuentes
+públicas (FGJ de la Ciudad de México, STC Metro, INEGI), con sus propias condiciones de uso.

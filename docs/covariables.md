@@ -1,6 +1,6 @@
 # ¿Más información mejora la predicción? Covariables de estación y tendencia
 
-*Protocolo prerregistrado en la decisión 66 (commit `ac09e27`, 2026-10-20, antes de correr
+*Protocolo prerregistrado en la decisión 66 (commit `60e5c59`, 2026-10-20, antes de correr
 nada); resultado y lectura en la decisión 67. Código: `src/metro/10_covariables.py` (el
 entorno) y `src/metro/11_modelo_covariables.py` (modelos, evaluación, bootstrap). Todas las
 cifras de esta página salen de las tablas `covariables_*.csv` que escribe el segundo script;

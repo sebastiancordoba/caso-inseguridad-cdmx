@@ -4,4 +4,5 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 tectonic escrito.tex
-"$(cd ../.. && pwd)/.venv/bin/python" -c "import pymupdf; d = pymupdf.open('escrito.pdf'); print('escrito.pdf:', len(d), 'páginas')"
+# Cuenta de páginas, si hay pymupdf (no es parte de requirements.txt: solo sirve para esto).
+"$(cd ../.. && pwd)/.venv/bin/python" -c "import pymupdf; d = pymupdf.open('escrito.pdf'); print('escrito.pdf:', len(d), 'páginas')" 2>/dev/null || true

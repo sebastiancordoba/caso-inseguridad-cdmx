@@ -8,7 +8,7 @@
 \usepackage{array}
 \usepackage{xurl}
 \usepackage[hidelinks]{hyperref}
-\graphicspath{{../figuras/metro/}{../figuras/fuentes/}}
+\graphicspath{{../figuras/metro/}}
 \renewcommand{\IEEEkeywordsname}{Palabras clave}
 \newcommand{\pme}{por millón de entradas}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
@@ -59,7 +59,7 @@ No se encontró una tasa de denuncias por afluencia y estación para el Metro de
 
 \subsection{Hipótesis y objetivos}
 
-Las hipótesis se escribieron con su criterio de rechazo antes de calcular nada, y las del modelo quedaron fechadas en el historial de versiones del repositorio (git), en un registro propio (\emph{commit} \texttt{ccb6aa2}, 20 de septiembre de 2026, 19:43) anterior a cualquier ajuste. La tabla~\ref{tab:hipotesis} las lista con su resultado. Los objetivos: (1) construir el panel estación por mes con denuncias y entradas, documentando cada inconsistencia; (2) probar si la tasa es comparable en toda la red y, si no, acotar; (3) ordenar las estaciones de paso por una tasa que descuente la poca evidencia y validar el orden fuera de muestra; (4) entregar una aplicación que muestre el conteo y la tasa lado a lado para quien decide.
+Las hipótesis se escribieron con su criterio de rechazo antes de calcular nada, y las del modelo quedaron fechadas en el historial de versiones del repositorio (git), en un registro propio (\emph{commit} \texttt{60b826d}, 20 de septiembre de 2026, 19:43) anterior a cualquier ajuste. La tabla~\ref{tab:hipotesis} las lista con su resultado. Los objetivos: (1) construir el panel estación por mes con denuncias y entradas, documentando cada inconsistencia; (2) probar si la tasa es comparable en toda la red y, si no, acotar; (3) ordenar las estaciones de paso por una tasa que descuente la poca evidencia y validar el orden fuera de muestra; (4) entregar una aplicación que muestre el conteo y la tasa lado a lado para quien decide.
 
 \begin{table*}[t]
 \centering
@@ -88,7 +88,7 @@ M7 & Excluir abril--junio de 2020 no cambia el orden & $\rho < 0.98$ & $\rho = 0
 
 \section{Supuestos}
 
-La tabla~\ref{tab:supuestos} reúne los supuestos del planteamiento, de los datos y del modelo, con cómo se verificó cada uno o qué costó. Las decisiones completas, fechadas y con la alternativa descartada, son 70 y están en el repositorio \cite{repo_caso}.
+La tabla~\ref{tab:supuestos} reúne los supuestos del planteamiento, de los datos y del modelo, con cómo se verificó cada uno o qué costó. Las decisiones completas, fechadas y con la alternativa descartada, son 71 y están en el repositorio \cite{repo_caso}.
 
 \begin{table*}[t]
 \centering
@@ -292,7 +292,7 @@ python src/descarga.py --fuente estaciones
 python src/metro/correr.py
 bash docs/escrito/compila.sh
 \end{verbatim}
-El primer comando baja las carpetas de la FGJ (534~MB), la afluencia y el shapefile, y escribe su hash en \texttt{datos/crudos/MANIFIESTO.md}. El segundo corre en orden la llave de estaciones, el panel, las pruebas C1--C3, las agencias, T5, el EDA, el modelo, las tres listas, las covariables y, al final, los datos de la aplicación, que se arman con lo anterior; cada paso contiene sus comprobaciones (\texttt{assert}) y se detiene si una falla o si una prueba manda parar. Las figuras de este escrito salen de esos scripts; el escrito se compila con \texttt{tectonic}. Las 70 decisiones, con fecha, alternativa descartada y razón, están en \texttt{docs/decisiones.md}; las hipótesis congeladas, en \texttt{docs/hipotesis.md}.
+El primer comando baja las carpetas de la FGJ (534~MB), la afluencia y el shapefile, y escribe su hash en \texttt{datos/crudos/MANIFIESTO.md}. El segundo corre en orden la llave de estaciones, el panel, las pruebas C1--C3, las agencias, T5, el EDA, el modelo, las tres listas, las covariables y, al final, los datos de la aplicación, que se arman con lo anterior; cada paso contiene sus comprobaciones (\texttt{assert}) y se detiene si una falla o si una prueba manda parar. Las figuras de este escrito salen de esos scripts; el escrito se compila con \texttt{tectonic}. Las 71 decisiones, con fecha, alternativa descartada y razón, están en \texttt{docs/decisiones.md}; las hipótesis congeladas, en \texttt{docs/hipotesis.md}.
 
 \section{Registro de uso de IA generativa}
 

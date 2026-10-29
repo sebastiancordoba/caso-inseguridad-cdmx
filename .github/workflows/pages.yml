@@ -1,6 +1,5 @@
 # Publica SOLO docs/app en GitHub Pages. No compila nada: sube la carpeta tal cual.
-# Se usa esto y no «Pages sobre docs/» porque docs/ trae material que no debe quedar
-# público por accidente (el texto del caso del ITAM, las notas de las reuniones).
+# Se usa esto y no «Pages sobre docs/» para que el sitio sea solo la app.
 name: Publica la app
 
 # Solo a mano (Actions → «Publica la app» → Run workflow): Sebastián decide cuándo queda pública.
