@@ -164,7 +164,7 @@ pie(s, [fuerte("Denuncia: ", GRIS), { text: "aquí, una carpeta de investigació
 /* 3 · por qué contar no basta, y la pregunta */
 s = nueva({
   seccion: "El problema", titulo: "Contar denuncias es, en buena parte, contar pasajeros",
-  dice: "Contar no basta: una estación por la que entra mucha gente junta más denuncias aunque cada pasajero corra el mismo riesgo. En la lista de Infobae, cuatro de las once estaciones están entre las siete por donde entra más gente de toda la red, y Cuatro Caminos no tiene ni una denuncia en la Fiscalía de la Ciudad porque está en el Estado de México. De ahí sale mi pregunta: por cada millón de entradas, qué estaciones concentran más denuncias y cuánto cambia el orden frente al conteo.",
+  dice: "Contar no basta, porque una estación por la que entra mucha gente junta más denuncias aunque cada pasajero corra el mismo riesgo. En la lista de Infobae, cuatro de las once estaciones están entre las siete por donde entra más gente de toda la red, y Cuatro Caminos no tiene ni una denuncia en la Fiscalía de la Ciudad porque está en el Estado de México. De ahí sale mi pregunta. Por cada millón de entradas, ¿qué estaciones concentran más denuncias y cuánto cambia el orden frente al conteo?",
 });
 titulo(s, "Contar denuncias es, en buena parte, contar pasajeros");
 bajada(s, "Una estación por la que entra mucha gente junta más denuncias aunque cada pasajero corra el mismo riesgo.");
@@ -190,7 +190,7 @@ pie(s, [fuerte("Entradas: ", GRIS), { text: "personas que cruzan el torniquete d
 /* 4 · los datos */
 s = nueva({
   seccion: "Los datos", titulo: "Tres archivos abiertos dan las denuncias, las entradas y el lugar",
-  dice: "Los datos son tres archivos abiertos. Las denuncias vienen de las carpetas de investigación de la Fiscalía: tomo un solo delito, robo a pasajero a bordo del metro, y son 8,366 carpetas en seis años, contadas por la fecha del robo. Las entradas vienen de la afluencia diaria que publica el Metro. Y el mapa de estaciones dice a qué estación pertenece cada denuncia: a la más cercana, si está a 150 metros o menos. Con eso, la tasa es denuncias entre millones de entradas, por estación y por año.",
+  dice: "Los datos son tres archivos abiertos. Las denuncias vienen de las carpetas de investigación de la Fiscalía. Tomo un solo delito, robo a pasajero a bordo del metro, y son 8,366 carpetas en seis años, contadas por la fecha del robo. Las entradas vienen de la afluencia diaria que publica el Metro. Y el mapa de estaciones dice a qué estación pertenece cada denuncia, que es la más cercana si está a 150 metros o menos. Con eso, la tasa es denuncias entre millones de entradas, por estación y por año.",
 });
 titulo(s, "Tres archivos abiertos dan las denuncias, las entradas y el lugar");
 bajada(s, "Los tres son públicos: cualquiera puede descargarlos y repetir el cálculo.");
@@ -215,7 +215,7 @@ txt(s, "Se lee como denuncias por millón de entradas.", { x: 0.6, y: 4.97, w: 8
 /* 5 · correspondencias y el universo */
 s = nueva({
   seccion: "Los datos", titulo: "Donde se cambia de línea, el torniquete no cuenta a todos y la tasa no sirve",
-  dice: "Antes de comparar hay que ver dónde la tasa sirve. Las diez estaciones con más denuncias de toda la red son de correspondencia, donde se cruzan líneas, y su tasa sale casi tres veces más alta. Pero quien llega transbordando no cruzó el torniquete de esa estación, así que el denominador se queda corto: con casi dos transbordos por cada entrada se explicaría toda la diferencia. Aquí se cayó mi primera hipótesis, que bastaba dividir para comparar toda la red. Dejo fuera esas 28 y las 11 del Estado de México, y quedan 124 estaciones de paso con 2,945 denuncias.",
+  dice: "Antes de comparar hay que ver dónde la tasa sirve. Las diez estaciones con más denuncias de toda la red son de correspondencia, donde se cruzan líneas, y su tasa sale casi tres veces más alta. Pero quien llega transbordando no cruzó el torniquete de esa estación, así que el denominador se queda corto. Con casi dos transbordos por cada entrada se explicaría toda la diferencia. Aquí se cayó mi primera hipótesis, que bastaba dividir para comparar toda la red. Dejo fuera esas 28 y las 11 del Estado de México, y quedan 124 estaciones de paso con 2,945 denuncias.",
 });
 titulo(s, "Donde se cambia de línea, el torniquete no cuenta a todos y la tasa no sirve");
 bajada(s, "Estación de correspondencia: donde se cruzan dos o más líneas y se puede transbordar sin salir.");
@@ -244,7 +244,7 @@ txt(s, "Las 28 correspondencias quedan fuera porque su tasa no se puede medir co
 /* 6 · hallazgo 1: dividir cambia el orden */
 s = nueva({
   seccion: "Lo que encontré", titulo: "Dividir cambia el orden: de las 10 primeras por conteo, solo 3 siguen arriba por tasa",
-  dice: "Primer hallazgo: dividir sí cambia el orden. La correlación de Spearman compara posiciones: uno es el mismo orden y cero, ninguna relación. Entre conteo y tasa sale 0.454, y de las diez primeras por conteo solo tres siguen arriba por tasa. Antes de calcular escribí qué me haría aceptar que el conteo bastaba, 0.9 y nueve de diez, y no se acerca. Bajan las grandes terminales: Indios Verdes es la primera por conteo y la 73 por tasa, porque tiene muchísima afluencia y una tasa ordinaria. Suben estaciones medianas como Villa de Aragón, Nativitas y Portales, que no aparecen en ninguna lista publicada.",
+  dice: "El primer hallazgo es que dividir sí cambia el orden. La correlación de Spearman compara posiciones. Uno es el mismo orden y cero, ninguna relación. Entre conteo y tasa sale 0.454, y de las diez primeras por conteo solo tres siguen arriba por tasa. Antes de calcular escribí qué me haría aceptar que el conteo bastaba, 0.9 y nueve de diez, y no se acerca. Bajan las grandes terminales. Indios Verdes es la primera por conteo y la 73 por tasa, porque tiene muchísima afluencia y una tasa ordinaria. Suben estaciones medianas como Villa de Aragón, Nativitas y Portales, que no aparecen en ninguna lista publicada.",
 });
 titulo(s, "Dividir cambia el orden: de las 10 primeras por conteo, solo 3 siguen arriba por tasa");
 bajada(s, "Las 124 estaciones de paso, 2019–2024. Aquí la tasa es la cruda: denuncias entre entradas, todavía sin modelo.");
@@ -261,7 +261,7 @@ bloque(s, 5.9, y + 0.08, 3.5, "Quién se mueve",
 /* 7 · hallazgo 2: pocas denuncias, el modelo */
 s = nueva({
   seccion: "Lo que encontré", titulo: "Con pocas denuncias la tasa engaña; el modelo la ajusta según la evidencia",
-  dice: "Segundo hallazgo: con pocas denuncias la tasa engaña. Tlaltenco tiene cinco denuncias y una tasa de casi el doble del conjunto, pero su intervalo va de 0.44 a 3.20: no se sabe cuál es su tasa. Por eso uso un modelo de conteos que acerca la tasa de cada estación a la de una estación típica, y la acerca más cuanto menos evidencia tiene. A eso le llamo tasa encogida. Con ella, 25 estaciones se distinguen de la típica, no las 39 de las pruebas una por una. Y con menos de quince denuncias, la estación se marca como evidencia insuficiente.",
+  dice: "El segundo hallazgo es que con pocas denuncias la tasa engaña. Tlaltenco tiene cinco denuncias y una tasa de casi el doble del conjunto, pero su intervalo va de 0.44 a 3.20, así que no se sabe cuál es su tasa. Por eso uso un modelo de conteos que acerca la tasa de cada estación a la de una estación típica, y la acerca más cuanto menos evidencia tiene. A eso le llamo tasa encogida. Con ella, 25 estaciones se distinguen de la típica, no las 39 de las pruebas una por una. Y con menos de quince denuncias, la estación se marca como evidencia insuficiente.",
 });
 titulo(s, "Con pocas denuncias la tasa engaña; el modelo la ajusta según la evidencia");
 bajada(s, "Intervalo al 95 %: el rango de tasas compatibles con los datos. Mientras menos denuncias, más ancho.");
@@ -280,7 +280,7 @@ txt(s, [fuerte("25 estaciones se distinguen de la típica "), { text: "(su inter
 /* 8 · hallazgo 3: dos objetivos */
 s = nueva({
   seccion: "Lo que encontré", titulo: "Conteo y tasa sirven a objetivos distintos",
-  dice: "Tercer hallazgo: la lista que sirve depende de para qué se use. Elegí diez estaciones con los datos de 2019 a 2023 y medí qué pasó en 2024, un año que el modelo no vio. Las diez por conteo cubren 92 denuncias, más del doble que las diez por tasa. Pero las diez por tasa cubren 0.77 denuncias por millón de entradas contra 0.57: un 35 por ciento más por pasajero, con un tercio de la afluencia que vigilar. Cubrir volumen y proteger igual a cada pasajero son objetivos distintos, y hoy solo se publica la primera lista sin decir cuál se persigue.",
+  dice: "El tercer hallazgo es que la lista que sirve depende de para qué se use. Elegí diez estaciones con los datos de 2019 a 2023 y medí qué pasó en 2024, un año que el modelo no vio. Las diez por conteo cubren 92 denuncias, más del doble que las diez por tasa. Pero las diez por tasa cubren 0.77 denuncias por millón de entradas contra 0.57, un 35 por ciento más por pasajero, con un tercio de la afluencia que vigilar. Cubrir volumen y proteger igual a cada pasajero son objetivos distintos, y hoy solo se publica la primera lista sin decir cuál se persigue.",
 });
 titulo(s, "Conteo y tasa sirven a objetivos distintos");
 bajada(s, "Prueba fuera de muestra: elegí 10 estaciones con los datos de 2019 a 2023 y medí qué pasó en 2024, un año que el modelo no vio.");
@@ -300,7 +300,7 @@ txt(s, "Hoy solo se publica la lista por conteo, y nadie dice qué objetivo pers
 /* 9 · la lista de prioridad */
 s = nueva({
   seccion: "Qué recomiendo", titulo: "La lista de prioridad junta los dos objetivos",
-  dice: "En la presentación anterior me pidieron una lista que juntara las dos. Es la de prioridad y cabe en tres frases. Cada estación tiene un lugar por conteo y otro por tasa. Su prioridad es el promedio de los dos. Y solo entran estaciones con quince denuncias o más. Zócalo es segunda por conteo y séptima por tasa: promedio 4.5, primera en prioridad. Indios Verdes es primera y 67: promedio 34, lugar 26. Probada igual que las otras, con veinte estaciones cubre 99 denuncias en 2024 y más denuncias por pasajero que las otras dos. Se calcula a mano y no pierde frente a ninguna, aunque no digo que sea la mejor posible.",
+  dice: "En la presentación anterior me pidieron una lista que juntara las dos. Es la de prioridad y cabe en tres frases. Cada estación tiene un lugar por conteo y otro por tasa. Su prioridad es el promedio de los dos. Y solo entran estaciones con quince denuncias o más. Zócalo es segunda por conteo y séptima por tasa, con promedio 4.5, y queda primera en prioridad. Indios Verdes es primera y 67, con promedio 34, y queda en el lugar 26. Probada igual que las otras, con veinte estaciones cubre 99 denuncias en 2024 y más denuncias por pasajero que las otras dos. Se calcula a mano y no pierde frente a ninguna, aunque no digo que sea la mejor posible.",
 });
 titulo(s, "La lista de prioridad junta los dos objetivos");
 bajada(s, "En la aplicación se llama Prioridad (volumen y riesgo). La regla tiene tres pasos.");
@@ -329,7 +329,7 @@ txt(s, [{ text: "Cubre " }, fuerte("99 denuncias"), { text: ", entre las 73 de l
 s = nueva({
   seccion: "Qué recomiendo", titulo: "Para desplegar hoy: tres listas, y cuatro estaciones están en las tres",
   escena: "DEMOSTRACIÓN EN VIVO, unos 40 segundos. Si la aplicación no carga, sigo con esta lámina.",
-  dice: "Esto es lo que entregaría hoy, ya con los seis años: las tres listas lado a lado. Zócalo, Merced, Portales y Etiopía están en las tres. En la aplicación se ve así. Abre en la lista de prioridad. Si cambio a conteo, Indios Verdes queda arriba. Si cambio a tasa, que es la encogida, baja al lugar 67. Las estaciones con menos de quince denuncias se dibujan huecas, como Hangares, que está entre las diez primeras por tasa con solo doce. Y la pestaña Dónde desplegar tiene las tres listas con lo que cubrió cada una en 2024.",
+  dice: "Esto es lo que entregaría hoy, ya con los seis años. Son las tres listas lado a lado. Zócalo, Merced, Portales y Etiopía están en las tres. En la aplicación se ve así. Abre en la lista de prioridad. Si cambio a conteo, Indios Verdes queda arriba. Si cambio a tasa, que es la encogida, baja al lugar 67. Las estaciones con menos de quince denuncias se dibujan huecas, como Hangares, que está entre las diez primeras por tasa con solo doce. Y la pestaña Dónde desplegar tiene las tres listas con lo que cubrió cada una en 2024.",
   extra: 20,
 });
 titulo(s, "Para desplegar hoy: tres listas, y cuatro estaciones están en las tres");
@@ -364,7 +364,7 @@ txt(s, [fuerte("Aplicación: "), { text: APP + ". " },
 /* 11 · recomendaciones */
 s = nueva({
   seccion: "Qué recomiendo", titulo: "Tres recomendaciones",
-  dice: "Tres recomendaciones, en orden de lo que cambia con menos esfuerzo. Publicar las tres listas y decir qué objetivo se persigue; no hacen falta datos nuevos, todo se rehace con un comando. Elegir la lista según el objetivo: si se busca que cada pasajero tenga la misma protección, la tasa, o la de prioridad si también importa el volumen; si se busca cubrir más denuncias, el conteo es una buena regla. Y no mover policías por estaciones con poca evidencia o cuyo intervalo incluye la tasa típica.",
+  dice: "Tres recomendaciones, en orden de lo que cambia con menos esfuerzo. Publicar las tres listas y decir qué objetivo se persigue; no hacen falta datos nuevos, todo se rehace con un comando. Elegir la lista según el objetivo. Si se busca que cada pasajero tenga la misma protección, sirve la tasa, o la de prioridad si también importa el volumen; si se busca cubrir más denuncias, el conteo es una buena regla. Y no mover policías por estaciones con poca evidencia o cuyo intervalo incluye la tasa típica.",
 });
 titulo(s, "Tres recomendaciones");
 bajada(s, "En orden de lo que cambia con menos esfuerzo.");
@@ -386,7 +386,7 @@ txt(s, "Cada lista debe llevar su fecha de corte (en este trabajo, 31 de enero d
 /* 12 · límites */
 s = nueva({
   seccion: "Límites", titulo: "Todo se mide con denuncias, y la mayoría de los delitos no se denuncia",
-  dice: "Los límites. El más grande es que todo esto son denuncias. La cifra negra en la Ciudad es de 93 por ciento: de cada cien delitos, siete llegan a una carpeta. Si eso cambia de una estación a otra, una tasa alta puede ser más disposición a denunciar y no más robo. Descarté la causa más obvia, una agencia del Ministerio Público dentro de la estación, pero no todas. Las 28 correspondencias quedan fuera porque no hay datos de transbordos. Y más información sobre cada estación no predice mejor el año siguiente: de un año a otro domina el ruido.",
+  dice: "Los límites. El más grande es que todo esto son denuncias. La cifra negra en la Ciudad es de 93 por ciento. De cada cien delitos, siete llegan a una carpeta. Si eso cambia de una estación a otra, una tasa alta puede ser más disposición a denunciar y no más robo. Descarté la causa más obvia, una agencia del Ministerio Público dentro de la estación, pero no todas. Las 28 correspondencias quedan fuera porque no hay datos de transbordos. Y más información sobre cada estación no predice mejor el año siguiente, porque de un año a otro domina el ruido.",
 });
 titulo(s, "Todo se mide con denuncias, y la mayoría de los delitos no se denuncia");
 bajada(s, "Lo que este trabajo no puede decir.");
@@ -426,7 +426,7 @@ s = nueva({ titulo: "Anexo: índice", anexo: true, respuesta: "Índice del anexo
 const indice = s;
 
 anexo("Las cuatro listas publicadas, de cerca", "Las cuatro listas publicadas",
-  "Si preguntan de dónde salen las listas: son las cuatro que se pudieron abrir y leer completas. Expansión coincide exactamente con las diez primeras por conteo de los datos abiertos, y eso confirma que esas listas son conteos. El reporte del Consejo de Evaluación que citan no está publicado o no se encontró.");
+  "Si preguntan de dónde salen las listas, son las cuatro que se pudieron abrir y leer completas. Expansión coincide exactamente con las diez primeras por conteo de los datos abiertos, y eso confirma que esas listas son conteos. El reporte del Consejo de Evaluación que citan no está publicado o no se encontró.");
 s = diapositivas[diapositivas.length - 1].slide;
 bajada(s, "Ninguna declara método ni divide entre cuánta gente pasa por cada estación.");
 tabla(s, [
@@ -439,7 +439,7 @@ tabla(s, [
 pie(s, "Infobae y Expansión dicen basarse en un reporte del Consejo de Evaluación de la Ciudad de México. Ninguna lo enlaza y no se encontró publicado.", 4.85, 0.35);
 
 anexo("Hipótesis de viabilidad: el criterio de rechazo se escribió antes de calcular", "Hipótesis de viabilidad (C1–C3, T1–T5)",
-  "Si preguntan cómo sé que no acomodé el criterio: cada prueba tenía su criterio escrito antes de correrla, y la regla era parar en la primera que fallara. C2 falló y por eso el trabajo se acotó a las 124 estaciones de paso.");
+  "Si preguntan cómo sé que no acomodé el criterio, cada prueba tenía su criterio escrito antes de correrla, y la regla era parar en la primera que fallara. C2 falló y por eso el trabajo se acotó a las 124 estaciones de paso.");
 s = diapositivas[diapositivas.length - 1].slide;
 tabla(s, [
   ["", "Afirmación", "Se rechaza si", "Resultado", "Veredicto"],
@@ -452,7 +452,7 @@ tabla(s, [
 pie(s, "ρ: correlación de Spearman entre dos órdenes (1, mismo orden; 0, sin relación). C3 comparaba contra un 2019 que tiene su propio quiebre; la diapositiva de los tres regímenes lo explica.", 4.85, 0.38);
 
 anexo("Hipótesis del modelo, registradas antes de ajustarlo", "Hipótesis del modelo (M1–M7)",
-  "Si preguntan por qué creerle a estas pruebas: las siete quedaron escritas y fechadas en git antes del primer ajuste. M3 se rechazó y se reporta; M5 pasa por tres milésimas y así se dice.");
+  "Si preguntan por qué creerle a estas pruebas, las siete quedaron escritas y fechadas en git antes del primer ajuste. M3 se rechazó y se reporta; M5 pasa por tres milésimas y así se dice.");
 s = diapositivas[diapositivas.length - 1].slide;
 tabla(s, [
   ["", "Afirmación", "Se rechaza si", "Resultado"],
@@ -468,7 +468,7 @@ tabla(s, [
 pie(s, "Registradas en git en el commit 60b826d (20 de septiembre de 2026, 19:43), antes del primer ajuste del modelo (7ca9635, 19:50). LR: razón de verosimilitudes. AIC: criterio de Akaike. σv: cuánto difieren las estaciones entre sí.", 4.82, 0.4);
 
 anexo("El modelo, término por término", "El modelo, término por término",
-  "Si preguntan por qué no usé una librería: ninguna de las instaladas ajustaba una binomial negativa con efecto aleatorio; son nueve parámetros y una integral por estación. Si preguntan por qué 0.63 y no 0.71: 0.71 es el total de denuncias entre el total de entradas, que pesa más a las estaciones grandes; 0.63 es la estación típica del modelo en un año promedio.");
+  "Si preguntan por qué no usé una librería, ninguna de las instaladas ajustaba una binomial negativa con efecto aleatorio; son nueve parámetros y una integral por estación. Si preguntan por qué 0.63 y no 0.71, es porque 0.71 es el total de denuncias entre el total de entradas, que pesa más a las estaciones grandes; 0.63 es la estación típica del modelo en un año promedio.");
 s = diapositivas[diapositivas.length - 1].slide;
 txt(s, [{ text: "y(s,t) ~ NB(μ(s,t), φ),  con  v(s) ~ Normal(0, σv²)", options: { breakLine: true } },
         { text: "log μ(s,t) = log E(s,t) + α + v(s) + γ(t)" }],
@@ -487,7 +487,7 @@ regla(s, 0.6, 4.65, 8.8);
 pie(s, "Se publica exp(α + v(s)), la tasa encogida. La binomial negativa gana a la Poisson (LR = 21.4; AIC 19.4 menor), y la diferencia importa: la Poisson daría 37 estaciones distinguibles y la binomial negativa, 25. Ajuste por máxima verosimilitud con cuadratura de Gauss–Hermite, escrito sobre scipy.", 4.72, 0.5);
 
 anexo("Encoger en vez de corregir por comparaciones múltiples", "Encoger y comparaciones múltiples",
-  "Si preguntan por qué no corregí por comparaciones múltiples: esa corrección ensancha todos los intervalos por igual y trata igual a Merced, con 90 denuncias, que a Hangares, con 12. El modelo estima cuánto varían de verdad las estaciones y encoge a cada una según su evidencia.");
+  "Si preguntan por qué no corregí por comparaciones múltiples, es porque esa corrección ensancha todos los intervalos por igual y trata igual a Merced, con 90 denuncias, que a Hangares, con 12. El modelo estima cuánto varían de verdad las estaciones y encoge a cada una según su evidencia.");
 s = diapositivas[diapositivas.length - 1].slide;
 cifra(s, 0.6, 1.4, 2.6, "39 → 25", "estaciones distinguibles de la típica: con pruebas una por una y con el modelo. Por azar se esperaban unas 6.", 34, 0.85);
 y = bloque(s, 3.6, 1.45, 5.8, "Qué conserva y qué descarta",
@@ -502,7 +502,7 @@ txt(s, [fuerte("Encoger no basta (M3): "), { text: "Hangares, con 12 denuncias, 
 pie(s, "Tasqueña, Indios Verdes y Constitución de 1917 no se distinguen por abajo (0.83, 1.01 y 0.88 veces la típica, con intervalos que incluyen 1): son terminales con tasa en la media.", 4.85, 0.35);
 
 anexo("Las correspondencias, en números", "Las correspondencias, en números",
-  "Si preguntan por Hidalgo y Guerrero: necesitarían ocho y siete transbordos por cada entrada para bajar a la tasa de las de paso. Ahí el transbordo no alcanza a explicarlo, y queda como hallazgo abierto.");
+  "Si preguntan por Hidalgo y Guerrero, necesitarían ocho y siete transbordos por cada entrada para bajar a la tasa de las de paso. Ahí el transbordo no alcanza a explicarlo, y queda como hallazgo abierto.");
 s = diapositivas[diapositivas.length - 1].slide;
 bajada(s, "Las 10 estaciones con más denuncias de toda la red, 2019–2024. Las diez son de correspondencia.");
 tabla(s, [
@@ -522,7 +522,7 @@ bloque(s, 6.0, y + 0.08, 3.4, "Lo que no alcanza a explicar",
 txt(s, "Tasa: denuncias por millón de entradas. Entradas en millones, 2019–2024.", { x: 0.6, y: 4.72, w: 5.0, h: 0.22, fontSize: 10, color: GRIS });
 
 anexo("Una agencia del Ministerio Público en la estación no explica el exceso", "La agencia del Ministerio Público",
-  "Si preguntan si la tasa mide dónde se puede denunciar: era la sospecha natural, y se probó por cuatro vías con los datos de la FGJ, que traen la agencia que abrió cada carpeta. Las cuatro dicen que no.");
+  "Si preguntan si la tasa mide dónde se puede denunciar, era la sospecha natural, y se probó por cuatro vías con los datos de la FGJ, que traen la agencia que abrió cada carpeta. Las cuatro dicen que no.");
 s = diapositivas[diapositivas.length - 1].slide;
 bajada(s, "Hidalgo tiene una agencia dentro y 6.38 denuncias por millón, 2.7 veces la mediana de correspondencias comparables; Guerrero, 5.79 y 3.0 veces.");
 const via = (yy, n, t) => {
@@ -536,7 +536,7 @@ via(3.9, 4, "El exceso sube de 2.6 a 4.7 veces entre 2019 y 2024, mientras las a
 pie(s, "El filtro de agencia se quitó del análisis. El exceso de Hidalgo y Guerrero queda como hallazgo abierto.", 4.8, 0.3);
 
 anexo("En el tiempo hay tres regímenes, y el modelo los respeta", "Tres regímenes en el tiempo",
-  "Si preguntan por la pandemia: con los vagones vacíos la tasa cae a la mitad, así que abril a junio de 2020 sale del modelo, y el orden es el mismo con y sin esos meses. Si preguntan por 2019: el quiebre no tiene explicación en estos datos; el efecto de año lo absorbe.");
+  "Si preguntan por la pandemia, con los vagones vacíos la tasa cae a la mitad, así que abril a junio de 2020 sale del modelo, y el orden es el mismo con y sin esos meses. Si preguntan por 2019, el quiebre no tiene explicación en estos datos y el efecto de año lo absorbe.");
 s = diapositivas[diapositivas.length - 1].slide;
 y = imagen(s, "c3_tasa_vs_afluencia.png", 0.6, 1.35, 3.6,
   "Serie mensual de denuncias por millón de entradas y de entradas en la red, 2019 a 2024.");
@@ -548,7 +548,7 @@ bloque(s, 4.6, y + 0.08, 4.8, "Tasa de las 124 en cada régimen",
   "1.24 de enero a agosto de 2019, 0.35 en el confinamiento y 0.61 el resto del tiempo.", 0.45, 12);
 
 anexo("Fuera de muestra, completo: 10 y 20 estaciones, con su techo", "Fuera de muestra, completo",
-  "Si preguntan qué tan buena es la regla por conteo: casi tan buena como el oráculo para cubrir volumen (92 contra 100). Por eso no se recomienda cambiarla cuando el objetivo es volumen.");
+  "Si preguntan qué tan buena es la regla por conteo, es casi tan buena como el oráculo para cubrir volumen (92 contra 100). Por eso no se recomienda cambiarla cuando el objetivo es volumen.");
 s = diapositivas[diapositivas.length - 1].slide;
 bajada(s, "Estaciones elegidas con 2019–2023 y lo que cubrieron en 2024. Ese año hubo 341 denuncias y 747 millones de entradas en el conjunto.");
 tabla(s, [
@@ -561,7 +561,7 @@ tabla(s, [
 pie(s, "Oráculo: la lista que se armaría con el conteo real de 2024; es el techo. Con 10 estaciones, la tasa encogida también supera a la tasa cruda (28 denuncias y 0.69).", 4.8, 0.38);
 
 anexo("Cómo se eligió la regla de prioridad", "Cómo se eligió la regla de prioridad",
-  "Si preguntan si la regla se eligió después de ver los resultados: en parte sí, y se dice. El criterio principal se escribió antes y no lo cumplió ninguna regla; se aplicó la regla de reserva, y la exigencia de ganar en los cuatro casos se fijó después de ver la tabla.");
+  "Si preguntan si la regla se eligió después de ver los resultados, en parte sí, y se dice. El criterio principal se escribió antes y no lo cumplió ninguna regla; se aplicó la regla de reserva, y la exigencia de ganar en los cuatro casos se fijó después de ver la tabla.");
 s = diapositivas[diapositivas.length - 1].slide;
 via(1.5, 1, "Se probaron 13 reglas fuera de muestra en dos años: 2023, con ajuste 2019–2022, y 2024, con ajuste 2019–2023; con 10 y con 20 estaciones.");
 via(2.2, 2, "Criterio escrito antes de ver la tabla: cubrir al menos el 60 % de lo que cubre el conteo con la mayor tasa, con 10 y 20 estaciones y en los dos años. No lo cumplió ninguna: la mejor regla cambia de año y de tamaño.");
@@ -569,7 +569,7 @@ via(3.05, 3, "Regla de reserva: la más simple de decir entre las que superan al
 via(3.9, 4, "Con remuestreo de estaciones (bootstrap), su ventaja sobre el conteo es positiva en el 99.4 % de las remuestras en 2024 con 20 estaciones, y en el 78 % en 2023.");
 
 anexo("Predecir el año siguiente tiene un techo bajo, y más información no lo sube", "Predecir el año siguiente",
-  "Si preguntan si se podría predecir mejor: se probó con un protocolo escrito antes, siete modelos y tres años de prueba. Ninguno cumplió el criterio de mejora. Lo que cambia de un año al siguiente es ruido de conteos pequeños.");
+  "Si preguntan si se podría predecir mejor, se probó con un protocolo escrito antes, siete modelos y tres años de prueba. Ninguno cumplió el criterio de mejora. Lo que cambia de un año al siguiente es ruido de conteos pequeños.");
 s = diapositivas[diapositivas.length - 1].slide;
 bloque(s, 0.6, 1.4, 3.6, "Con el modelo base",
   "ρ entre la tasa predicha con 2019–2023 y la observada en 2024: 0.303 (bootstrap: 0.117 a 0.464), contra 0.261 de la tasa cruda y 0.289 del conteo. Si la tasa predicha fuera la verdadera, el puro ruido de un año daría 0.376.", 1.55, 12);
@@ -585,7 +585,7 @@ tabla(s, [
 pie(s, "Covariables: línea; carpetas de cualquier delito y de robo a transeúnte a 500 m (entorno); tamaño; tendencia propia de cada estación. Explican el 51 % de la varianza entre estaciones, pero no mejoran la lista del año siguiente. La tendencia empeora: 0.56 contra 0.77 en 2024, con 10 estaciones.", 4.6, 0.6);
 
 anexo("Lo que falta en los datos, y hacia dónde sesga", "Lo que falta en los datos",
-  "Si preguntan por qué no imputé las carpetas sin coordenadas: repartirlas supondría que faltan al azar entre estaciones, y eso es justo lo que no se sabe. El sesgo es a la baja en los años recientes, y se declara.");
+  "Si preguntan por qué no imputé las carpetas sin coordenadas, es porque repartirlas supondría que faltan al azar entre estaciones, y eso es justo lo que no se sabe. El sesgo es a la baja en los años recientes, y se declara.");
 s = diapositivas[diapositivas.length - 1].slide;
 via(1.45, 1, "1,041 carpetas sin coordenadas, que no se imputan. No faltan al azar: van de 47 en 2019 a 455 en 2023, y 715 son de la Denuncia Digital. Los años recientes salen bajos.");
 via(2.2, 2, "559 carpetas con coordenadas caen a más de 150 m de cualquier estación. Con 100 y 250 m, el orden por tasa se parece al de 150 m con ρ de 0.99 o más.");
@@ -594,7 +594,7 @@ via(3.7, 4, "El archivo de afluencia trae 395 grafías para 195 puntos estación
 pie(s, "Lo ocurrido a fines de 2024 y denunciado después del 31 de enero de 2025 no está en el archivo.", 4.75, 0.3);
 
 anexo("Los supuestos que sostienen el resultado", "Los supuestos",
-  "Si preguntan por un supuesto en particular: la tabla de supuestos completa, con cómo se verificó cada uno, está en el escrito.");
+  "Si preguntan por un supuesto en particular, la tabla de supuestos completa, con cómo se verificó cada uno, está en el escrito.");
 s = diapositivas[diapositivas.length - 1].slide;
 tabla(s, [
   ["Supuesto", "Por qué vale aquí", "Qué cuesta o cómo se verificó"],
@@ -607,7 +607,7 @@ tabla(s, [
 ], { x: 0.6, y: 1.4, w: 8.8, colW: [2.7, 3.0, 3.1], fontSize: 10.5, valign: "top" });
 
 anexo("Qué cambiaría la recomendación, y qué sigue", "Qué cambiaría la recomendación",
-  "Si preguntan qué haría con más tiempo: reconstruir los transbordos con la Encuesta Origen-Destino y pedir la afluencia por hora.");
+  "Si preguntan qué haría con más tiempo, reconstruiría los transbordos con la Encuesta Origen-Destino y pediría la afluencia por hora.");
 s = diapositivas[diapositivas.length - 1].slide;
 y = bloque(s, 0.6, 1.4, 4.2, "Si cambian estos supuestos",
   "Si el subregistro variara mucho entre estaciones, el orden por tasa mediría dónde se denuncia y no dónde se roba. Con una matriz de transbordos, las 28 correspondencias entrarían al orden. Si las carpetas sin coordenadas faltaran más en unas estaciones que en otras, el efecto de año no bastaría.", 2.0, 12);
@@ -618,7 +618,7 @@ txt(s, [fuerte("La franja de la mañana: "), { text: "cuatro de cada diez denunc
     { x: 0.6, y: 4.08, w: 8.8, h: 0.75, fontSize: 12 });
 
 anexo("La aplicación", "La aplicación (captura)",
-  "Si la demostración en vivo falla: esta captura muestra la pestaña Dónde desplegar. La aplicación también funciona sin conexión.");
+  "Si la demostración en vivo falla, esta captura muestra la pestaña Dónde desplegar. La aplicación también funciona sin conexión.");
 s = diapositivas[diapositivas.length - 1].slide;
 y = imagen(s, "app_captura_listas.png", 0.6, 1.35, 5.0,
   "Captura de la aplicación, pestaña Dónde desplegar, con las tres listas y lo que cubrió cada una en 2024.");
@@ -635,7 +635,7 @@ txt(s, [
 pie(s, APP, 5.0, 0.22);
 
 anexo("Cómo se reproduce todo, y cómo usé IA generativa", "Reproducir todo, y el uso de IA",
-  "Si preguntan qué hizo la IA y qué hice yo: la herramienta escribió el código y redactó los documentos de cada fase; las decisiones de encuadre, supuestos y qué se afirma son mías, y cada cifra se recalculó sobre los archivos del repositorio. Todo está registrado sesión por sesión.");
+  "Si preguntan qué hizo la IA y qué hice yo, la herramienta escribió el código y redactó los documentos de cada fase; las decisiones de encuadre, supuestos y qué se afirma son mías, y cada cifra se recalculó sobre los archivos del repositorio. Todo está registrado sesión por sesión.");
 s = diapositivas[diapositivas.length - 1].slide;
 y = bloque(s, 0.6, 1.4, 4.2, "Cuatro comandos",
   [{ text: "python src/descarga.py --fuente estaciones", options: { bold: true, breakLine: true } },
