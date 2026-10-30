@@ -238,7 +238,7 @@ paso(3.6, "8,366", "denuncias, 2019–2024");
 paso(3.88, "6,766", "ubicadas en alguna estación");
 paso(4.16, "2,945", "en las 124 de paso", true);
 regla(s, 0.6, 4.6, 8.8);
-txt(s, "Las 28 correspondencias quedan fuera porque su tasa no se puede medir con datos abiertos. Eso no las vuelve seguras.",
+txt(s, "Las 28 correspondencias quedan fuera porque su tasa no se puede medir con datos abiertos, lo cual no quiere decir que sean seguras.",
     { x: 0.6, y: 4.7, w: 8.8, h: 0.45, fontSize: 13, bold: true });
 
 /* 6 · hallazgo 1: dividir cambia el orden */
@@ -261,7 +261,7 @@ bloque(s, 5.9, y + 0.08, 3.5, "Quién se mueve",
 /* 7 · hallazgo 2: pocas denuncias, el modelo */
 s = nueva({
   seccion: "Lo que encontré", titulo: "Con pocas denuncias la tasa engaña; el modelo la ajusta según la evidencia",
-  dice: "Segundo hallazgo: con pocas denuncias la tasa engaña. Tlaltenco tiene cinco denuncias y una tasa de casi el doble del conjunto, pero su intervalo va de 0.44 a 3.20: no se sabe cuál es su tasa. Por eso uso un modelo de conteos que acerca la tasa de cada estación a la de una estación típica, y la acerca más cuanto menos evidencia tiene. A eso le llamo tasa encogida. Con ella, 25 estaciones se distinguen de la típica, no las 39 que salían probando una por una. Y con menos de quince denuncias, la estación se marca como evidencia insuficiente.",
+  dice: "Segundo hallazgo: con pocas denuncias la tasa engaña. Tlaltenco tiene cinco denuncias y una tasa de casi el doble del conjunto, pero su intervalo va de 0.44 a 3.20: no se sabe cuál es su tasa. Por eso uso un modelo de conteos que acerca la tasa de cada estación a la de una estación típica, y la acerca más cuanto menos evidencia tiene. A eso le llamo tasa encogida. Con ella, 25 estaciones se distinguen de la típica, no las 39 de las pruebas una por una. Y con menos de quince denuncias, la estación se marca como evidencia insuficiente.",
 });
 titulo(s, "Con pocas denuncias la tasa engaña; el modelo la ajusta según la evidencia");
 bajada(s, "Intervalo al 95 %: el rango de tasas compatibles con los datos. Mientras menos denuncias, más ancho.");
@@ -274,7 +274,7 @@ y = bloque(s, 5.9, 1.88, 3.5, "El problema",
 bloque(s, 5.9, y + 0.1, 3.5, "Lo que hace el modelo",
   "Un modelo de conteos (binomial negativo, con un efecto propio de cada estación) acerca la tasa de cada estación a la de una estación típica, y la acerca más cuanto menos denuncias tiene. A eso le llamo tasa encogida.", 1.2, 12);
 regla(s, 0.6, 4.6, 8.8);
-txt(s, [fuerte("25 estaciones se distinguen de la típica "), { text: "(su intervalo no la incluye): 14 por arriba y 11 por abajo. Probando una por una salían 39. Además, una estación con menos de 15 denuncias se marca como «evidencia insuficiente»." }],
+txt(s, [fuerte("25 estaciones se distinguen de la típica "), { text: "(su intervalo no la incluye): 14 por arriba y 11 por abajo. Con pruebas una por una salían 39. Además, una estación con menos de 15 denuncias se marca como «evidencia insuficiente»." }],
     { x: 0.6, y: 4.7, w: 8.8, h: 0.5, fontSize: 12 });
 
 /* 8 · hallazgo 3: dos objetivos */
@@ -300,7 +300,7 @@ txt(s, "Hoy solo se publica la lista por conteo, y nadie dice qué objetivo pers
 /* 9 · la lista de prioridad */
 s = nueva({
   seccion: "Qué recomiendo", titulo: "La lista de prioridad junta los dos objetivos",
-  dice: "En la presentación anterior me pidieron una lista que juntara las dos. Es la de prioridad y cabe en tres frases. Cada estación tiene un lugar por conteo y otro por tasa. Su prioridad es el promedio de los dos. Y solo entran estaciones con quince denuncias o más. Zócalo es segunda por conteo y séptima por tasa: promedio 4.5, primera en prioridad. Indios Verdes es primera y 67: promedio 34, lugar 26. Probada igual que las otras, con veinte estaciones cubre 99 denuncias en 2024 y más denuncias por pasajero que las otras dos. No afirmo que sea la mejor posible, pero se calcula a mano y no pierde frente a ninguna.",
+  dice: "En la presentación anterior me pidieron una lista que juntara las dos. Es la de prioridad y cabe en tres frases. Cada estación tiene un lugar por conteo y otro por tasa. Su prioridad es el promedio de los dos. Y solo entran estaciones con quince denuncias o más. Zócalo es segunda por conteo y séptima por tasa: promedio 4.5, primera en prioridad. Indios Verdes es primera y 67: promedio 34, lugar 26. Probada igual que las otras, con veinte estaciones cubre 99 denuncias en 2024 y más denuncias por pasajero que las otras dos. Se calcula a mano y no pierde frente a ninguna, aunque no digo que sea la mejor posible.",
 });
 titulo(s, "La lista de prioridad junta los dos objetivos");
 bajada(s, "En la aplicación se llama «Prioridad (volumen y riesgo)». La regla tiene tres pasos.");
@@ -322,7 +322,7 @@ tabla(s, [
 regla(s, 0.6, 3.95, 8.8, NARANJA);
 antetitulo(s, 0.6, 4.04, 8.8, "Probada igual que las otras dos: 20 estaciones elegidas con 2019–2023, medidas en 2024");
 txt(s, [{ text: "Cubre " }, fuerte("99 denuncias"), { text: ", entre las 73 de la tasa y las 135 del conteo, y " }, fuerte("0.68 por millón de entradas"),
-        { text: ", más que las dos (0.61 y 0.58). No afirmo que sea la mejor posible: se calcula a mano y no pierde frente a ninguna de las otras dos." }],
+        { text: ", más que las dos (0.61 y 0.58). Se calcula a mano y no pierde frente a ninguna de las otras dos, aunque no afirmo que sea la mejor posible." }],
     { x: 0.6, y: 4.32, w: 8.8, h: 0.75, fontSize: 13 });
 
 /* 10 · las tres listas de hoy, y la demostración */
@@ -489,7 +489,7 @@ pie(s, "Se publica exp(α + v(s)), la tasa encogida. La binomial negativa gana a
 anexo("Encoger en vez de corregir por comparaciones múltiples", "Encoger y comparaciones múltiples",
   "Si preguntan por qué no corregí por comparaciones múltiples: esa corrección ensancha todos los intervalos por igual y trata igual a Merced, con 90 denuncias, que a Hangares, con 12. El modelo estima cuánto varían de verdad las estaciones y encoge a cada una según su evidencia.");
 s = diapositivas[diapositivas.length - 1].slide;
-cifra(s, 0.6, 1.4, 2.6, "39 → 25", "estaciones distinguibles de la típica: probando una por una, y con el modelo. Por azar se esperaban unas 6.", 34, 0.85);
+cifra(s, 0.6, 1.4, 2.6, "39 → 25", "estaciones distinguibles de la típica: con pruebas una por una y con el modelo. Por azar se esperaban unas 6.", 34, 0.85);
 y = bloque(s, 3.6, 1.45, 5.8, "Qué conserva y qué descarta",
   "19 de las 39 seguían distinguiéndose al quitar cualquier año (las robustas). El modelo conserva las 19, descarta 14 de las 20 frágiles y no agrega ninguna nueva.", 0.65, 12);
 y = bloque(s, 3.6, y + 0.08, 5.8, "Cuánto encoge",
@@ -558,15 +558,15 @@ tabla(s, [
   ["20", "conteo", "135", "39.6", "0.58", "233"], ["20", "tasa encogida", "73", "21.4", "0.61", "120"],
   ["20", "prioridad", "99", "29.0", "0.68", "146"], ["20", "oráculo", "163", "47.8", "0.72", "227"],
 ], { x: 0.6, y: 1.9, w: 8.8, colW: [1.1, 1.7, 1.55, 1.3, 1.75, 1.4], rowH: 0.28, fontSize: 11.5 });
-pie(s, "Oráculo: la lista armada conociendo el conteo real de 2024; es el techo. Con 10 estaciones, la tasa encogida también supera a la tasa cruda (28 denuncias y 0.69).", 4.8, 0.38);
+pie(s, "Oráculo: la lista que se armaría con el conteo real de 2024; es el techo. Con 10 estaciones, la tasa encogida también supera a la tasa cruda (28 denuncias y 0.69).", 4.8, 0.38);
 
 anexo("Cómo se eligió la regla de prioridad", "Cómo se eligió la regla de prioridad",
-  "Si preguntan si la regla se eligió viendo los resultados: en parte sí, y se dice. El criterio principal se escribió antes y no lo cumplió ninguna regla; se aplicó la regla de reserva, y la exigencia de ganar en los cuatro casos se fijó ya viendo la tabla.");
+  "Si preguntan si la regla se eligió después de ver los resultados: en parte sí, y se dice. El criterio principal se escribió antes y no lo cumplió ninguna regla; se aplicó la regla de reserva, y la exigencia de ganar en los cuatro casos se fijó después de ver la tabla.");
 s = diapositivas[diapositivas.length - 1].slide;
 via(1.5, 1, "Se probaron 13 reglas fuera de muestra en dos años: 2023, con ajuste 2019–2022, y 2024, con ajuste 2019–2023; con 10 y con 20 estaciones.");
 via(2.2, 2, "Criterio escrito antes de ver la tabla: cubrir al menos el 60 % de lo que cubre el conteo con la mayor tasa, con 10 y 20 estaciones y en los dos años. No lo cumplió ninguna: la mejor regla cambia de año y de tamaño.");
-via(3.05, 3, "Regla de reserva: la más simple de decir entre las que superan al conteo en denuncias por millón y a la tasa en denuncias cubiertas en los cuatro casos. Esta exigencia se fijó ya viendo la tabla.");
-via(3.9, 4, "Remuestreando estaciones (bootstrap), su ventaja sobre el conteo es positiva en el 99.4 % de las remuestras en 2024 con 20 estaciones, y en el 78 % en 2023.");
+via(3.05, 3, "Regla de reserva: la más simple de decir entre las que superan al conteo en denuncias por millón y a la tasa en denuncias cubiertas en los cuatro casos. Esta exigencia se fijó después de ver la tabla.");
+via(3.9, 4, "Con remuestreo de estaciones (bootstrap), su ventaja sobre el conteo es positiva en el 99.4 % de las remuestras en 2024 con 20 estaciones, y en el 78 % en 2023.");
 
 anexo("Predecir el año siguiente tiene un techo bajo, y más información no lo sube", "Predecir el año siguiente",
   "Si preguntan si se podría predecir mejor: se probó con un protocolo escrito antes, siete modelos y tres años de prueba. Ninguno cumplió el criterio de mejora. Lo que cambia de un año al siguiente es ruido de conteos pequeños.");
