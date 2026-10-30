@@ -6,6 +6,8 @@
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{array}
+% \captionof, como en el paquete capt-of: un título de tabla fuera de un flotante.
+\makeatletter\newcommand\captionof[1]{\def\@captype{#1}\caption}\makeatother
 \usepackage{xurl}
 \usepackage[hidelinks]{hyperref}
 \graphicspath{{../figuras/metro/}}
@@ -33,7 +35,7 @@ robo en el transporte público, tasa de denuncias, exposición, modelo jerárqui
 
 \section{Contexto}
 
-El caso entregado describe una situación sin problema explícito: la Ciudad de México registra cientos de miles de delitos del fuero común al año, pero las cifras oficiales miden denuncias y no delitos; la percepción de inseguridad que mide la Encuesta Nacional de Seguridad Pública Urbana (ENSU) del Instituto Nacional de Estadística y Geografía (INEGI) no siempre coincide con la incidencia registrada; y las fuentes públicas ---carpetas de investigación de la Fiscalía General de Justicia (FGJ), la ENSU, los registros del C5 (el centro de monitoreo y llamadas de emergencia de la ciudad), otras encuestas del INEGI--- traen inconsistencias y brechas que el alumno debe caracterizar y manejar de forma explícita.
+La Ciudad de México registra cientos de miles de delitos del fuero común cada año, pero las cifras oficiales cuentan denuncias, no delitos. La percepción de inseguridad que mide la Encuesta Nacional de Seguridad Pública Urbana (ENSU) del Instituto Nacional de Estadística y Geografía (INEGI) no siempre coincide con la incidencia registrada. Además, las fuentes públicas tienen inconsistencias y huecos que hay que describir y tratar de forma explícita: las carpetas de investigación de la Fiscalía General de Justicia (FGJ), la propia ENSU, los registros del C5 (el centro de monitoreo y llamadas de emergencia de la ciudad) y otras encuestas del INEGI.
 
 Se leyó ese contexto desde el espacio donde la ciudad siente más inseguridad. Según la Encuesta Nacional de Victimización y Percepción sobre Seguridad Pública (ENVIPE) 2024 del INEGI, el 77.7~\% de la población de 18 años y más de la Ciudad de México se sintió insegura en el transporte público, más que en cualquier otro espacio, y el 30.5~\% dejó de usarlo por miedo a ser víctima de un delito \cite{envipe2024cdmx}. Sobre el Metro circula, además, una afirmación concreta: cada cierto tiempo la prensa publica cuáles son «las estaciones más peligrosas», atribuyéndoselo a la Fiscalía. Se abrieron esas publicaciones una por una \cite{infobae2024,expansion2024,nmas2023,adn40_2026}. Son cuatro listas que no coinciden entre sí ---Infobae da once estaciones, Expansión diez, N+ nueve y ADN40 cinco, estas últimas de detenciones y no de carpetas---, dos dicen venir de un mismo reporte del Consejo de Evaluación de la Ciudad de México que ninguna enlaza y que no se encontró publicado, ninguna declara método, y ninguna divide entre cuánta gente pasa por cada estación. N+ dice en voz alta el mecanismo que este trabajo mide: Pantitlán encabeza la lista «por la gran afluencia de personas».
 
@@ -298,15 +300,21 @@ El primer comando baja las carpetas de la FGJ (534~MB), la afluencia y el shapef
 
 El registro completo está en \texttt{docs/uso-ia.md} del repositorio: una fila por sesión, con fecha, herramienta, qué se pidió, qué produjo y qué se usó. Resumen de las diecisiete sesiones (20 de septiembre a 26 de octubre de 2026), todas con Claude Code: exploración de factibilidad de cinco encuadres y elección del Metro; llave de estaciones, panel y pruebas C1--C2; agencias del Ministerio Público (T0--T7) y registro de las listas publicadas; compuerta T5 y C3; aplicación estática y su publicación; hipótesis congeladas, EDA y modelo; dos actualizaciones de la aplicación; dos presentaciones ante los sinodales y sus guiones; la tercera lista; el protocolo de covariables y su resultado negativo; y este escrito. En cada fila se distingue lo que fue iniciativa de la herramienta de lo que pidió el autor, y se anotan los errores que la herramienta cometió y cómo se detectaron, entre ellos un ajuste que resultó Poisson por una cadena en mayúsculas y una lista de prensa mal atribuida en un borrador de presentación.
 
+% Las dos tablas van juntas arriba de una página nueva, a todo lo ancho, debajo del título
+% del apéndice: como flotantes de una columna caían solas en la última página.
+\twocolumn[{%
 \section{Dos tablas del modelo}
+\begin{center}
+\begin{minipage}{0.86\textwidth}
+\small Estas dos tablas completan las secciones~\ref{sec:modelo} y~\ref{sec:listas}: la tabla~\ref{tab:modelos} compara los cuatro modelos ajustados, y la tabla~\ref{tab:covariables} resume la prueba de covariables, cuyo detalle por año, $k$ y modelo está en \texttt{docs/covariables.md}.
+\end{minipage}
 
-La tabla~\ref{tab:modelos} compara los cuatro modelos de la sección~\ref{sec:modelo}; la tabla~\ref{tab:covariables} resume la prueba de covariables de la sección~\ref{sec:listas}, cuyo detalle por año, $k$ y modelo está en \texttt{docs/covariables.md}.
-
-\begin{table}[h]
+\vspace{1.2em}
+\begin{minipage}{0.62\textwidth}
 \centering
-\caption{Poisson contra binomial negativa (NB), con y sin efecto de estación. Todas con efecto de año. $k$: número de parámetros; log-ver.: log-verosimilitud; AIC: criterio de Akaike, menor es mejor.}
+\captionof{table}{Poisson contra binomial negativa (NB), con y sin efecto de estación. Todas con efecto de año. $k$: número de parámetros; log-ver.: log-verosimilitud; AIC: criterio de Akaike, menor es mejor.}
 \label{tab:modelos}
-\small\setlength\tabcolsep{3pt}
+\small\setlength\tabcolsep{4pt}
 \begin{tabular}{@{}lrrrrr@{}}
 \toprule
 Modelo & $k$ & log-ver. & AIC & $\sigma_v$ & $\phi$ \\
@@ -317,29 +325,31 @@ Poisson + efecto de estación & 7 & $-1\,492.9$ & 2\,999.8 & 0.427 & --- \\
 \textbf{NB + efecto de estación} & 8 & $\mathbf{-1\,482.2}$ & \textbf{2\,980.3} & 0.402 & 16.5 \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{minipage}
 
-
-\begin{table}[h]
+\vspace{1.6em}
+\begin{minipage}{0.86\textwidth}
 \centering
-\caption{Más información no mejora la predicción: modelo base contra el mejor de seis modelos con covariables, por métrica, con el criterio fijado antes de correr. Techo: el $\rho$ que se obtendría si la tasa predicha fuera la verdadera, por el solo ruido de conteo de un año. Casos: tres años de prueba por dos tamaños de lista ($k = 10$ y 20). Todas las fijas: línea, entorno y tamaño.}
+\captionof{table}{Más información no mejora la predicción: modelo base contra el mejor de seis modelos con covariables, por métrica, con el criterio fijado antes de correr. Techo: el $\rho$ que se obtendría si la tasa predicha fuera la verdadera, por el solo ruido de conteo de un año. Casos: tres años de prueba por dos tamaños de lista ($k = 10$ y 20). Todas las fijas: línea, entorno y tamaño.}
 \label{tab:covariables}
-\small
-\setlength\tabcolsep{3pt}
-\begin{tabular}{@{}L{3.4cm}rrl@{}}
+\small\setlength\tabcolsep{5pt}
+\begin{tabular}{@{}lrrl@{}}
 \toprule
 Métrica & Base & Mejor nuevo & Cuál \\
 \midrule
-$\rho$ tasa predicha--observada, 2024 & 0.303 & 0.324 & entorno \\
+$\rho$ entre tasa predicha y observada, 2024 & 0.303 & 0.324 & entorno \\
 Techo por ruido de ese $\rho$ & 0.376 & --- & --- \\
-Top-10 por tasa, 2024, \pme & 0.773 & 0.799 & línea \\
-Top-20 por tasa, 2024, \pme & 0.610 & 0.658 & entorno \\
-Top-10 por tasa, 2022, \pme & 1.220 & 1.150 & entorno \\
+Top-10 por tasa, 2024, denuncias \pme & 0.773 & 0.799 & línea \\
+Top-20 por tasa, 2024, denuncias \pme & 0.610 & 0.658 & entorno \\
+Top-10 por tasa, 2022, denuncias \pme & 1.220 & 1.150 & entorno \\
 Modelos que ganan en $\geq 4$ de los 6 casos & --- & ninguno & --- \\
 $\sigma_v$ en el ajuste completo & 0.402 & 0.282 & todas las fijas \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{minipage}
+\end{center}
+\vspace{1em}
+}]
 
 \section{Las 124 estaciones}
 
