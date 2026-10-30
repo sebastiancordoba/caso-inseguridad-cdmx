@@ -1,9 +1,9 @@
-# Robo denunciado por pasajero en el Metro de la CDMX: qué estaciones cambian de lugar al medir por millón de entradas
+# Robo denunciado por pasajero en el metro de la CDMX: qué estaciones cambian de lugar al medir por millón de entradas
 
 Caso 2 (inseguridad urbana en la Ciudad de México) de la titulación por caso de la
 Licenciatura en Ciencia de Datos, ITAM. Autor: Sebastián Córdoba.
 
-**La pregunta.** En las 124 estaciones de paso del Metro de la Ciudad de México, ¿cuáles
+**La pregunta.** En las 124 estaciones de paso del metro de la Ciudad de México, ¿cuáles
 concentran más denuncias de robo a pasajero por millón de entradas —2019 a 2024, tasa
 encogida— y cuánto cambia el orden frente al conteo?
 

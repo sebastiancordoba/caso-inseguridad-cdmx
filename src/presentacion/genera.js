@@ -45,7 +45,7 @@ const pres = new Pptx();
 pres.layout = "LAYOUT_16x9";       // 10 × 5.625 pulgadas
 pres.theme = { headFontFace: F, bodyFontFace: F };
 pres.author = "Sebastián Córdoba";
-pres.title = "Robo denunciado por pasajero en el Metro de la CDMX: qué estaciones cambian de lugar al medir por millón de entradas";
+pres.title = "Robo denunciado por pasajero en el metro de la CDMX: qué estaciones cambian de lugar al medir por millón de entradas";
 pres.subject = "Caso 2 de la titulación por caso, Licenciatura en Ciencia de Datos, ITAM";
 
 const SECCIONES = ["El problema", "Los datos", "Lo que encontré", "Qué recomiendo", "Límites"];
@@ -131,11 +131,11 @@ function nueva(d) {
 /* 1 · portada */
 let s = nueva({
   titulo: "Portada: la pregunta",
-  dice: "Buenas tardes. Soy Sebastián Córdoba. Este trabajo usa datos públicos para estudiar la inseguridad en el Metro de la Ciudad de México. Mi pregunta es qué estaciones concentran más denuncias de robo por cada millón de personas que entran, y cuánto cambia el orden si solo se cuentan las denuncias. Voy en cinco partes: el problema, los datos, lo que encontré, qué recomiendo y los límites.",
+  dice: "Buenas tardes. Soy Sebastián Córdoba. Este trabajo usa datos públicos para estudiar la inseguridad en el metro de la Ciudad de México. Mi pregunta es qué estaciones concentran más denuncias de robo por cada millón de personas que entran, y cuánto cambia el orden si solo se cuentan las denuncias. Voy en cinco partes: el problema, los datos, lo que encontré, qué recomiendo y los límites.",
 });
 regla(s, 0.6, 0.85, 1.2, NARANJA);
 antetitulo(s, 0.6, 0.98, 8.8, "Titulación por caso · Caso 2: inseguridad urbana en la Ciudad de México");
-txt(s, "Robo denunciado por pasajero en el Metro de la CDMX: qué estaciones cambian de lugar al medir por millón de entradas",
+txt(s, "Robo denunciado por pasajero en el metro de la CDMX: qué estaciones cambian de lugar al medir por millón de entradas",
     { x: 0.6, y: 1.3, w: 8.8, h: 1.45, fontSize: 28, bold: true });
 txt(s, "¿Qué estaciones concentran más denuncias de robo por cada millón de personas que entran, y cuánto cambia el orden si solo se cuentan las denuncias?",
     { x: 0.6, y: 2.95, w: 8.4, h: 0.9, fontSize: 17, color: GRIS });
@@ -146,14 +146,14 @@ txt(s, "Licenciatura en Ciencia de Datos, ITAM · jcordob5@itam.mx", { x: 0.6, y
 /* 2 · el problema */
 s = nueva({
   seccion: "El problema", titulo: "La lista pública de “estaciones peligrosas” solo cuenta denuncias",
-  dice: "Primero, el problema. La prensa publica cada cierto tiempo cuáles son las estaciones más peligrosas del Metro y se lo atribuye a la Fiscalía. Encontré cuatro listas. No coinciden entre sí, ninguna explica cómo se hizo y las cuatro cuentan casos sin dividir entre cuánta gente pasa. Importa porque el Metro es donde la gente de la ciudad se siente más insegura, el 77.7 por ciento según el INEGI, y porque quien reparte policías entre estaciones solo tiene esa lista.",
+  dice: "Primero, el problema. La prensa publica cada cierto tiempo cuáles son las estaciones más peligrosas del metro y se lo atribuye a la Fiscalía. Encontré cuatro listas. No coinciden entre sí, ninguna explica cómo se hizo y las cuatro cuentan casos sin dividir entre cuánta gente pasa. Importa porque el metro es donde la gente de la ciudad se siente más insegura, el 77.7 por ciento según el INEGI, y porque quien reparte policías entre estaciones solo tiene esa lista.",
 });
 titulo(s, "La lista pública de “estaciones peligrosas” solo cuenta denuncias");
 bajada(s, "Y es la única que tiene quien reparte la vigilancia entre estaciones.");
 let y = bloque(s, 0.6, 1.85, 5.2, "Lo que se publica",
   "La prensa publica listas de las estaciones más peligrosas y se las atribuye a la Fiscalía. Encontré cuatro: Infobae (2024, 11 estaciones), Expansión (2024, 10), N+ (2023, 9) y ADN40 (2026, 5, de detenciones). No coinciden entre sí y ninguna explica su método. Las cuatro cuentan casos sin dividir entre cuánta gente pasa por cada estación.", 1.32);
 bloque(s, 0.6, y + 0.15, 5.2, "Quién la usa",
-  "La Secretaría de Seguridad Ciudadana, cuya Policía Auxiliar y Bancaria vigila el Metro, y la gerencia de seguridad del Metro.", 0.45);
+  "La Secretaría de Seguridad Ciudadana, cuya Policía Auxiliar y Bancaria vigila el metro, y la gerencia de seguridad del Metro.", 0.45);
 y = cifra(s, 6.3, 1.8, 3.1, "77.7 %", "de las personas de 18 años o más en la Ciudad de México se siente insegura en el transporte público, más que en cualquier otro lugar.", 44, 0.9);
 txt(s, "INEGI, ENVIPE 2024", { x: 6.3, y: y + 0.05, w: 3.1, h: 0.2, fontSize: 9, color: GRIS_CLARO });
 regla(s, 0.6, 4.55, 8.8);
@@ -180,7 +180,7 @@ txt(s, "Lugar entre las 163 estaciones de la red. Cuatro de las once de Infobae 
     { x: 0.6, y: 4.02, w: 4.6, h: 0.45, fontSize: 11, color: GRIS });
 regla(s, 5.6, 1.88, 3.8, NARANJA);
 antetitulo(s, 5.6, 1.97, 3.8, "La pregunta");
-txt(s, "En las 124 estaciones de paso del Metro de la Ciudad de México, ¿cuáles concentran más denuncias de robo a pasajero por millón de entradas, de 2019 a 2024, y cuánto cambia el orden frente al conteo?",
+txt(s, "En las 124 estaciones de paso del metro de la Ciudad de México, ¿cuáles concentran más denuncias de robo a pasajero por millón de entradas, de 2019 a 2024, y cuánto cambia el orden frente al conteo?",
     { x: 5.6, y: 2.27, w: 3.8, h: 1.95, fontSize: 15, bold: true });
 regla(s, 0.6, 4.55, 8.8);
 pie(s, [fuerte("Entradas: ", GRIS), { text: "personas que cruzan el torniquete de una estación. " },
@@ -190,7 +190,7 @@ pie(s, [fuerte("Entradas: ", GRIS), { text: "personas que cruzan el torniquete d
 /* 4 · los datos */
 s = nueva({
   seccion: "Los datos", titulo: "Tres archivos abiertos dan las denuncias, las entradas y el lugar",
-  dice: "Los datos son tres archivos abiertos. Las denuncias vienen de las carpetas de investigación de la Fiscalía: tomo un solo delito, robo a pasajero a bordo del Metro, y son 8,366 carpetas en seis años, contadas por la fecha del robo. Las entradas vienen de la afluencia diaria que publica el Metro. Y el mapa de estaciones dice a qué estación pertenece cada denuncia: a la más cercana, si está a 150 metros o menos. Con eso, la tasa es denuncias entre millones de entradas, por estación y por año.",
+  dice: "Los datos son tres archivos abiertos. Las denuncias vienen de las carpetas de investigación de la Fiscalía: tomo un solo delito, robo a pasajero a bordo del metro, y son 8,366 carpetas en seis años, contadas por la fecha del robo. Las entradas vienen de la afluencia diaria que publica el Metro. Y el mapa de estaciones dice a qué estación pertenece cada denuncia: a la más cercana, si está a 150 metros o menos. Con eso, la tasa es denuncias entre millones de entradas, por estación y por año.",
 });
 titulo(s, "Tres archivos abiertos dan las denuncias, las entradas y el lugar");
 bajada(s, "Los tres son públicos: cualquiera puede descargarlos y repetir el cálculo.");
@@ -201,9 +201,9 @@ const fuenteDatos = (x, ante, valor, texto) => {
   txt(s, texto, { x, y: 2.85, w: 2.75, h: 1.25, fontSize: 12 });
 };
 fuenteDatos(0.6, "Denuncias · Fiscalía (FGJ)", "8,366",
-  "carpetas de “robo a pasajero a bordo de Metro”, con y sin violencia, de 2019 a 2024. Cada una cuenta en la fecha del robo. El archivo tiene corte al 31 de enero de 2025.");
+  "carpetas de “robo a pasajero a bordo de metro”, con y sin violencia, de 2019 a 2024. Cada una cuenta en la fecha del robo. El archivo tiene corte al 31 de enero de 2025.");
 fuenteDatos(3.625, "Entradas · Metro (STC)", "6,600 M",
-  "entradas por torniquete en toda la red de 2019 a 2024, por estación y por día. STC: Sistema de Transporte Colectivo, el organismo que opera el Metro. M: millones.");
+  "entradas por torniquete en toda la red de 2019 a 2024, por estación y por día. STC: Sistema de Transporte Colectivo, el organismo que opera el metro. M: millones.");
 fuenteDatos(6.65, "Lugar · mapa de estaciones", "150 m",
   "Cada denuncia va a la estación más cercana si su coordenada cae a 150 m o menos. La distancia mediana es de 31 m.");
 regla(s, 0.6, 4.25, 8.8, NARANJA);
@@ -391,7 +391,7 @@ s = nueva({
 titulo(s, "Todo se mide con denuncias, y la mayoría de los delitos no se denuncia");
 bajada(s, "Lo que este trabajo no puede decir.");
 y = cifra(s, 0.6, 1.8, 3.0, "93 %", "es la cifra negra en la Ciudad de México: los delitos que no se denuncian o que no llegan a carpeta. De cada 100, llegan 7.", 54, 1.05);
-txt(s, "INEGI, ENVIPE 2024. Todos los delitos de 2023, no solo los del Metro.", { x: 0.6, y: y + 0.05, w: 3.0, h: 0.4, fontSize: 9, color: GRIS_CLARO });
+txt(s, "INEGI, ENVIPE 2024. Todos los delitos de 2023, no solo los del metro.", { x: 0.6, y: y + 0.05, w: 3.0, h: 0.4, fontSize: 9, color: GRIS_CLARO });
 y = bloque(s, 4.0, 1.88, 5.4, "Si el subregistro cambia de una estación a otra",
   "una tasa alta puede ser más disposición a denunciar y no más robo. Descarté la causa más obvia, una agencia del Ministerio Público (la oficina donde se denuncia) dentro de la estación, pero no todas.", 0.85, 12.5);
 y = bloque(s, 4.0, y + 0.08, 5.4, "Sin datos de transbordos",
@@ -532,7 +532,7 @@ const via = (yy, n, t) => {
 via(1.95, 1, "Las carpetas que abre la agencia de Hidalgo caen en 97 estaciones; solo el 13.8 % es de Hidalgo.");
 via(2.6, 2, "Observatorio, la única estación de paso con agencia, está en el percentil 15 mientras tuvo agencia, y su tasa no cambia al cerrarla (0.34 y 0.35).");
 via(3.25, 3, "El exceso de Hidalgo y Guerrero sigue en la Denuncia Digital, por internet, donde no hace falta ir a ninguna agencia: 3.5 veces.");
-via(3.9, 4, "El exceso sube de 2.6 a 4.7 veces entre 2019 y 2024, mientras las agencias del Metro pasan de abrir el 57 % de las carpetas al 17 %.");
+via(3.9, 4, "El exceso sube de 2.6 a 4.7 veces entre 2019 y 2024, mientras las agencias del metro pasan de abrir el 57 % de las carpetas al 17 %.");
 pie(s, "El filtro de agencia se quitó del análisis. El exceso de Hidalgo y Guerrero queda como hallazgo abierto.", 4.8, 0.3);
 
 anexo("En el tiempo hay tres regímenes, y el modelo los respeta", "Tres regímenes en el tiempo",
