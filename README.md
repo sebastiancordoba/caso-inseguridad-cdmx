@@ -16,6 +16,7 @@ mayoría de los delitos no se denuncia.
 |---|---|
 | Escrito, formato IEEE | [`docs/escrito/escrito.pdf`](docs/escrito/escrito.pdf) (fuente: `escrito.tex` y `referencias.bib`) |
 | Aplicación | [`docs/app/`](docs/app/): página estática, sin servidor ni dependencias. Publicada en <https://sebastiancordoba.github.io/metro-denuncias-cdmx/> |
+| Presentación | [`docs/presentacion/`](docs/presentacion/): diapositivas en PDF y en PowerPoint, con el guion en las notas del orador |
 | Código | [`src/`](src/) |
 
 ## Reconstruir todo desde cero
