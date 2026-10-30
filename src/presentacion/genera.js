@@ -274,7 +274,7 @@ y = bloque(s, 5.9, 1.88, 3.5, "El problema",
 bloque(s, 5.9, y + 0.1, 3.5, "Lo que hace el modelo",
   "Un modelo de conteos (binomial negativo, con un efecto propio de cada estación) acerca la tasa de cada estación a la de una estación típica, y la acerca más cuanto menos denuncias tiene. A eso le llamo tasa encogida.", 1.2, 12);
 regla(s, 0.6, 4.6, 8.8);
-txt(s, [fuerte("25 estaciones se distinguen de la típica "), { text: "(su intervalo no la incluye): 14 por arriba y 11 por abajo. Con pruebas una por una salían 39. Además, una estación con menos de 15 denuncias se marca como " }, { text: "evidencia insuficiente", options: { italic: true } }, { text: "." }],
+txt(s, [fuerte("25 estaciones se distinguen de la típica "), { text: "(su intervalo no la incluye): 14 por arriba y 11 por abajo. Con pruebas una por una salían 39. Además, una estación con menos de 15 denuncias se marca como evidencia insuficiente." }],
     { x: 0.6, y: 4.7, w: 8.8, h: 0.5, fontSize: 12 });
 
 /* 8 · hallazgo 3: dos objetivos */
@@ -303,7 +303,7 @@ s = nueva({
   dice: "En la presentación anterior me pidieron una lista que juntara las dos. Es la de prioridad y cabe en tres frases. Cada estación tiene un lugar por conteo y otro por tasa. Su prioridad es el promedio de los dos. Y solo entran estaciones con quince denuncias o más. Zócalo es segunda por conteo y séptima por tasa: promedio 4.5, primera en prioridad. Indios Verdes es primera y 67: promedio 34, lugar 26. Probada igual que las otras, con veinte estaciones cubre 99 denuncias en 2024 y más denuncias por pasajero que las otras dos. Se calcula a mano y no pierde frente a ninguna, aunque no digo que sea la mejor posible.",
 });
 titulo(s, "La lista de prioridad junta los dos objetivos");
-bajada(s, [{ text: "En la aplicación se llama " }, { text: "Prioridad (volumen y riesgo)", options: { italic: true } }, { text: ". La regla tiene tres pasos." }]);
+bajada(s, "En la aplicación se llama Prioridad (volumen y riesgo). La regla tiene tres pasos.");
 const pasoRegla = (yy, n, t) => {
   txt(s, String(n), { x: 0.6, y: yy - 0.04, w: 0.4, h: 0.45, fontSize: 26, bold: true, color: NARANJA });
   txt(s, t, { x: 1.05, y: yy, w: 3.65, h: 0.62, fontSize: 13 });
@@ -497,7 +497,7 @@ y = bloque(s, 3.6, y + 0.08, 5.8, "Cuánto encoge",
 regla(s, 0.6, 3.55, 8.8);
 txt(s, [fuerte("Las 14 por arriba: "), { text: "Bosque de Aragón, Ciudad Deportiva, Villa de Aragón, Portales, Nativitas, Merced, Zócalo/Tenochtitlan, Etiopía, Camarones, Moctezuma, Insurgentes, Revolución, Niños Héroes y Polanco." }],
     { x: 0.6, y: 3.65, w: 8.8, h: 0.5, fontSize: 12 });
-txt(s, [fuerte("Encoger no basta (M3): "), { text: "Hangares, con 12 denuncias, queda en el lugar 10 con un intervalo de 0.90 a 2.52 veces la típica. Por eso la aplicación marca " }, { text: "evidencia insuficiente", options: { italic: true } }, { text: " todo lo que tiene menos de 15 denuncias." }],
+txt(s, [fuerte("Encoger no basta (M3): "), { text: "Hangares, con 12 denuncias, queda en el lugar 10 con un intervalo de 0.90 a 2.52 veces la típica. Por eso la aplicación marca como evidencia insuficiente todo lo que tiene menos de 15 denuncias." }],
     { x: 0.6, y: 4.25, w: 8.8, h: 0.5, fontSize: 12 });
 pie(s, "Tasqueña, Indios Verdes y Constitución de 1917 no se distinguen por abajo (0.83, 1.01 y 0.88 veces la típica, con intervalos que incluyen 1): son terminales con tasa en la media.", 4.85, 0.35);
 
@@ -622,7 +622,7 @@ anexo("La aplicación", "La aplicación (captura)",
 s = diapositivas[diapositivas.length - 1].slide;
 y = imagen(s, "app_captura_listas.png", 0.6, 1.35, 5.0,
   "Captura de la aplicación, pestaña Dónde desplegar, con las tres listas y lo que cubrió cada una en 2024.");
-txt(s, [{ text: "Pestaña " }, { text: "Dónde desplegar", options: { italic: true } }, { text: ": listas elegidas con 2019–2023 y lo que cubrieron en 2024. Captura del 24 de octubre de 2026." }],
+txt(s, "Pestaña Dónde desplegar: listas elegidas con 2019–2023 y lo que cubrieron en 2024. Captura del 24 de octubre de 2026.",
     { x: 0.6, y: y + 0.05, w: 5.0, h: 0.4, fontSize: 9.5, color: GRIS });
 txt(s, [
   { text: "Página estática: HTML, CSS y JavaScript propios y un archivo de datos de 170 KB. Sin servidor; funciona sin conexión.", options: { breakLine: true } },
