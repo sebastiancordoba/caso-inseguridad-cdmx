@@ -21,7 +21,7 @@ que aparece.
 
 | # | Diapositiva | Entra | Dura | Palabras del guion |
 |---|---|---|---|---|
-| 1 | Portada: la pregunta | 0:00 | 0:30 | 70 |
+| 1 | Portada: la pregunta | 0:00 | 0:30 | 66 |
 | 2 | La lista pública de «estaciones peligrosas» solo cuenta denuncias | 0:30 | 0:35 | 80 |
 | 3 | Contar denuncias es, en buena parte, contar pasajeros | 1:05 | 0:40 | 88 |
 | 4 | Tres archivos abiertos dan las denuncias, las entradas y el lugar | 1:45 | 0:40 | 90 |

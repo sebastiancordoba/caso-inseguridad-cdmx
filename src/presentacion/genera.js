@@ -131,7 +131,7 @@ function nueva(d) {
 /* 1 · portada */
 let s = nueva({
   titulo: "Portada: la pregunta",
-  dice: "Buenas tardes. Soy Sebastián Córdoba. El caso pedía leer la inseguridad de la Ciudad de México con datos públicos, y yo lo leí en el Metro. Mi pregunta es qué estaciones concentran más denuncias de robo por cada millón de personas que entran, y cuánto cambia el orden si solo se cuentan las denuncias. Voy en cinco partes: el problema, los datos, lo que encontré, qué recomiendo y los límites.",
+  dice: "Buenas tardes. Soy Sebastián Córdoba. Este trabajo usa datos públicos para estudiar la inseguridad en el Metro de la Ciudad de México. Mi pregunta es qué estaciones concentran más denuncias de robo por cada millón de personas que entran, y cuánto cambia el orden si solo se cuentan las denuncias. Voy en cinco partes: el problema, los datos, lo que encontré, qué recomiendo y los límites.",
 });
 regla(s, 0.6, 0.85, 1.2, NARANJA);
 antetitulo(s, 0.6, 0.98, 8.8, "Titulación por caso · Caso 2: inseguridad urbana en la Ciudad de México");
