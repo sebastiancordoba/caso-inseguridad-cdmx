@@ -22,7 +22,7 @@ que aparece.
 | # | Diapositiva | Entra | Dura | Palabras del guion |
 |---|---|---|---|---|
 | 1 | Portada: la pregunta | 0:00 | 0:30 | 66 |
-| 2 | La lista pública de «estaciones peligrosas» solo cuenta denuncias | 0:30 | 0:35 | 80 |
+| 2 | La lista pública de “estaciones peligrosas” solo cuenta denuncias | 0:30 | 0:35 | 80 |
 | 3 | Contar denuncias es, en buena parte, contar pasajeros | 1:05 | 0:40 | 88 |
 | 4 | Tres archivos abiertos dan las denuncias, las entradas y el lugar | 1:45 | 0:40 | 90 |
 | 5 | Donde se cambia de línea, el torniquete no cuenta a todos y la tasa no sirve | 2:25 | 0:45 | 100 |

@@ -145,10 +145,10 @@ txt(s, "Licenciatura en Ciencia de Datos, ITAM · jcordob5@itam.mx", { x: 0.6, y
 
 /* 2 · el problema */
 s = nueva({
-  seccion: "El problema", titulo: "La lista pública de «estaciones peligrosas» solo cuenta denuncias",
+  seccion: "El problema", titulo: "La lista pública de “estaciones peligrosas” solo cuenta denuncias",
   dice: "Primero, el problema. La prensa publica cada cierto tiempo cuáles son las estaciones más peligrosas del Metro y se lo atribuye a la Fiscalía. Encontré cuatro listas. No coinciden entre sí, ninguna explica cómo se hizo y las cuatro cuentan casos sin dividir entre cuánta gente pasa. Importa porque el Metro es donde la gente de la ciudad se siente más insegura, el 77.7 por ciento según el INEGI, y porque quien reparte policías entre estaciones solo tiene esa lista.",
 });
-titulo(s, "La lista pública de «estaciones peligrosas» solo cuenta denuncias");
+titulo(s, "La lista pública de “estaciones peligrosas” solo cuenta denuncias");
 bajada(s, "Y es la única que tiene quien reparte la vigilancia entre estaciones.");
 let y = bloque(s, 0.6, 1.85, 5.2, "Lo que se publica",
   "La prensa publica listas de las estaciones más peligrosas y se las atribuye a la Fiscalía. Encontré cuatro: Infobae (2024, 11 estaciones), Expansión (2024, 10), N+ (2023, 9) y ADN40 (2026, 5, de detenciones). No coinciden entre sí y ninguna explica su método. Las cuatro cuentan casos sin dividir entre cuánta gente pasa por cada estación.", 1.32);
@@ -201,7 +201,7 @@ const fuenteDatos = (x, ante, valor, texto) => {
   txt(s, texto, { x, y: 2.85, w: 2.75, h: 1.25, fontSize: 12 });
 };
 fuenteDatos(0.6, "Denuncias · Fiscalía (FGJ)", "8,366",
-  "carpetas de «robo a pasajero a bordo de Metro», con y sin violencia, de 2019 a 2024. Cada una cuenta en la fecha del robo. El archivo tiene corte al 31 de enero de 2025.");
+  "carpetas de “robo a pasajero a bordo de Metro”, con y sin violencia, de 2019 a 2024. Cada una cuenta en la fecha del robo. El archivo tiene corte al 31 de enero de 2025.");
 fuenteDatos(3.625, "Entradas · Metro (STC)", "6,600 M",
   "entradas por torniquete en toda la red de 2019 a 2024, por estación y por día. STC: Sistema de Transporte Colectivo, el organismo que opera el Metro. M: millones.");
 fuenteDatos(6.65, "Lugar · mapa de estaciones", "150 m",
@@ -274,7 +274,7 @@ y = bloque(s, 5.9, 1.88, 3.5, "El problema",
 bloque(s, 5.9, y + 0.1, 3.5, "Lo que hace el modelo",
   "Un modelo de conteos (binomial negativo, con un efecto propio de cada estación) acerca la tasa de cada estación a la de una estación típica, y la acerca más cuanto menos denuncias tiene. A eso le llamo tasa encogida.", 1.2, 12);
 regla(s, 0.6, 4.6, 8.8);
-txt(s, [fuerte("25 estaciones se distinguen de la típica "), { text: "(su intervalo no la incluye): 14 por arriba y 11 por abajo. Con pruebas una por una salían 39. Además, una estación con menos de 15 denuncias se marca como «evidencia insuficiente»." }],
+txt(s, [fuerte("25 estaciones se distinguen de la típica "), { text: "(su intervalo no la incluye): 14 por arriba y 11 por abajo. Con pruebas una por una salían 39. Además, una estación con menos de 15 denuncias se marca como " }, { text: "evidencia insuficiente", options: { italic: true } }, { text: "." }],
     { x: 0.6, y: 4.7, w: 8.8, h: 0.5, fontSize: 12 });
 
 /* 8 · hallazgo 3: dos objetivos */
@@ -303,7 +303,7 @@ s = nueva({
   dice: "En la presentación anterior me pidieron una lista que juntara las dos. Es la de prioridad y cabe en tres frases. Cada estación tiene un lugar por conteo y otro por tasa. Su prioridad es el promedio de los dos. Y solo entran estaciones con quince denuncias o más. Zócalo es segunda por conteo y séptima por tasa: promedio 4.5, primera en prioridad. Indios Verdes es primera y 67: promedio 34, lugar 26. Probada igual que las otras, con veinte estaciones cubre 99 denuncias en 2024 y más denuncias por pasajero que las otras dos. Se calcula a mano y no pierde frente a ninguna, aunque no digo que sea la mejor posible.",
 });
 titulo(s, "La lista de prioridad junta los dos objetivos");
-bajada(s, "En la aplicación se llama «Prioridad (volumen y riesgo)». La regla tiene tres pasos.");
+bajada(s, [{ text: "En la aplicación se llama " }, { text: "Prioridad (volumen y riesgo)", options: { italic: true } }, { text: ". La regla tiene tres pasos." }]);
 const pasoRegla = (yy, n, t) => {
   txt(s, String(n), { x: 0.6, y: yy - 0.04, w: 0.4, h: 0.45, fontSize: 26, bold: true, color: NARANJA });
   txt(s, t, { x: 1.05, y: yy, w: 3.65, h: 0.62, fontSize: 13 });
@@ -433,7 +433,7 @@ tabla(s, [
   ["Medio y fecha", "Qué lista da", "De qué", "Lo que hay que saber"],
   ["Infobae, 11 ene 2024", "11 estaciones, sin cifras", "robo a pasajeros", "Incluye Cuatro Caminos, que está en el Estado de México y tiene cero carpetas de la FGJ"],
   ["Expansión, 30 nov 2024", "10 estaciones", "robo dentro de las instalaciones", "Son exactamente las 10 primeras por conteo de los datos abiertos. Publica 902 carpetas de enero a septiembre de 2024; los datos abiertos dan 896"],
-  ["N+, 18 may 2023", "9 estaciones", "robo sin violencia", "Explica que Pantitlán encabeza «por la gran afluencia de personas»"],
+  ["N+, 18 may 2023", "9 estaciones", "robo sin violencia", "Explica que Pantitlán encabeza “por la gran afluencia de personas”"],
   ["ADN40, 12 ene 2026", "5 estaciones", "detenciones por robo de celular", "No son carpetas de investigación"],
 ], { x: 0.6, y: 1.85, w: 8.8, colW: [1.75, 1.6, 1.75, 3.7], fontSize: 11, valign: "top" });
 pie(s, "Infobae y Expansión dicen basarse en un reporte del Consejo de Evaluación de la Ciudad de México. Ninguna lo enlaza y no se encontró publicado.", 4.85, 0.35);
@@ -497,7 +497,7 @@ y = bloque(s, 3.6, y + 0.08, 5.8, "Cuánto encoge",
 regla(s, 0.6, 3.55, 8.8);
 txt(s, [fuerte("Las 14 por arriba: "), { text: "Bosque de Aragón, Ciudad Deportiva, Villa de Aragón, Portales, Nativitas, Merced, Zócalo/Tenochtitlan, Etiopía, Camarones, Moctezuma, Insurgentes, Revolución, Niños Héroes y Polanco." }],
     { x: 0.6, y: 3.65, w: 8.8, h: 0.5, fontSize: 12 });
-txt(s, [fuerte("Encoger no basta (M3): "), { text: "Hangares, con 12 denuncias, queda en el lugar 10 con un intervalo de 0.90 a 2.52 veces la típica. Por eso la aplicación marca «evidencia insuficiente» todo lo que tiene menos de 15 denuncias." }],
+txt(s, [fuerte("Encoger no basta (M3): "), { text: "Hangares, con 12 denuncias, queda en el lugar 10 con un intervalo de 0.90 a 2.52 veces la típica. Por eso la aplicación marca " }, { text: "evidencia insuficiente", options: { italic: true } }, { text: " todo lo que tiene menos de 15 denuncias." }],
     { x: 0.6, y: 4.25, w: 8.8, h: 0.5, fontSize: 12 });
 pie(s, "Tasqueña, Indios Verdes y Constitución de 1917 no se distinguen por abajo (0.83, 1.01 y 0.88 veces la típica, con intervalos que incluyen 1): son terminales con tasa en la media.", 4.85, 0.35);
 
@@ -622,7 +622,7 @@ anexo("La aplicación", "La aplicación (captura)",
 s = diapositivas[diapositivas.length - 1].slide;
 y = imagen(s, "app_captura_listas.png", 0.6, 1.35, 5.0,
   "Captura de la aplicación, pestaña Dónde desplegar, con las tres listas y lo que cubrió cada una en 2024.");
-txt(s, "Pestaña «Dónde desplegar»: listas elegidas con 2019–2023 y lo que cubrieron en 2024. Captura del 24 de octubre de 2026.",
+txt(s, [{ text: "Pestaña " }, { text: "Dónde desplegar", options: { italic: true } }, { text: ": listas elegidas con 2019–2023 y lo que cubrieron en 2024. Captura del 24 de octubre de 2026." }],
     { x: 0.6, y: y + 0.05, w: 5.0, h: 0.4, fontSize: 9.5, color: GRIS });
 txt(s, [
   { text: "Página estática: HTML, CSS y JavaScript propios y un archivo de datos de 170 KB. Sin servidor; funciona sin conexión.", options: { breakLine: true } },

@@ -25,15 +25,18 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 
 # Arial del sistema (macOS); en Linux, Liberation Sans tiene las mismas métricas.
-CANDIDATAS = [
-    (Path("/System/Library/Fonts/Supplemental/Arial.ttf"), Path("/System/Library/Fonts/Supplemental/Arial Bold.ttf")),
-    (Path("/usr/share/fonts/truetype/msttcorefonts/Arial.ttf"), Path("/usr/share/fonts/truetype/msttcorefonts/Arial_Bold.ttf")),
-    (Path("/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf"), Path("/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf")),
+MAC = Path("/System/Library/Fonts/Supplemental")
+MS = Path("/usr/share/fonts/truetype/msttcorefonts")
+LIB = Path("/usr/share/fonts/truetype/liberation")
+CANDIDATAS = [  # normal, negrita, cursiva, negrita cursiva
+    (MAC / "Arial.ttf", MAC / "Arial Bold.ttf", MAC / "Arial Italic.ttf", MAC / "Arial Bold Italic.ttf"),
+    (MS / "Arial.ttf", MS / "Arial_Bold.ttf", MS / "Arial_Italic.ttf", MS / "Arial_Bold_Italic.ttf"),
+    (LIB / "LiberationSans-Regular.ttf", LIB / "LiberationSans-Bold.ttf", LIB / "LiberationSans-Italic.ttf", LIB / "LiberationSans-BoldItalic.ttf"),
 ]
-for normal, negrita in CANDIDATAS:
-    if normal.exists() and negrita.exists():
-        pdfmetrics.registerFont(TTFont("Arial", normal))
-        pdfmetrics.registerFont(TTFont("Arial-Bold", negrita))
+for archivos in CANDIDATAS:
+    if all(a.exists() for a in archivos):
+        for nombre, archivo in zip(("Arial", "Arial-Bold", "Arial-Italic", "Arial-BoldItalic"), archivos):
+            pdfmetrics.registerFont(TTFont(nombre, archivo))
         break
 else:
     sys.exit("No encontré Arial ni Liberation Sans.")
@@ -65,7 +68,8 @@ def palabras(parrafo, tam_defecto):
     fuera = []
     for r in parrafo.runs:
         tam = r.font.size.pt if r.font.size else tam_defecto
-        fuente = "Arial-Bold" if r.font.bold else "Arial"
+        fuente = {(False, False): "Arial", (True, False): "Arial-Bold",
+                  (False, True): "Arial-Italic", (True, True): "Arial-BoldItalic"}[(bool(r.font.bold), bool(r.font.italic))]
         try:
             col = color(r.font.color.rgb)
         except Exception:
