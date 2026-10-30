@@ -1,4 +1,4 @@
-# Denuncias por pasajero en el Metro de la Ciudad de México
+# Robo denunciado por pasajero en el Metro de la CDMX: qué estaciones cambian de lugar al medir por millón de entradas
 
 Caso 2 (inseguridad urbana en la Ciudad de México) de la titulación por caso de la
 Licenciatura en Ciencia de Datos, ITAM. Autor: Sebastián Córdoba.

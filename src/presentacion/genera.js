@@ -45,7 +45,7 @@ const pres = new Pptx();
 pres.layout = "LAYOUT_16x9";       // 10 × 5.625 pulgadas
 pres.theme = { headFontFace: F, bodyFontFace: F };
 pres.author = "Sebastián Córdoba";
-pres.title = "Denuncias por pasajero en el Metro de la Ciudad de México";
+pres.title = "Robo denunciado por pasajero en el Metro de la CDMX: qué estaciones cambian de lugar al medir por millón de entradas";
 pres.subject = "Caso 2 de la titulación por caso, Licenciatura en Ciencia de Datos, ITAM";
 
 const SECCIONES = ["El problema", "Los datos", "Lo que encontré", "Qué recomiendo", "Límites"];
@@ -135,10 +135,10 @@ let s = nueva({
 });
 regla(s, 0.6, 0.85, 1.2, NARANJA);
 antetitulo(s, 0.6, 0.98, 8.8, "Titulación por caso · Caso 2: inseguridad urbana en la Ciudad de México");
-txt(s, "Denuncias por pasajero en el Metro de la Ciudad de México",
-    { x: 0.6, y: 1.4, w: 8.8, h: 1.1, fontSize: 32, bold: true });
+txt(s, "Robo denunciado por pasajero en el Metro de la CDMX: qué estaciones cambian de lugar al medir por millón de entradas",
+    { x: 0.6, y: 1.3, w: 8.8, h: 1.45, fontSize: 28, bold: true });
 txt(s, "¿Qué estaciones concentran más denuncias de robo por cada millón de personas que entran, y cuánto cambia el orden si solo se cuentan las denuncias?",
-    { x: 0.6, y: 2.65, w: 8.4, h: 0.9, fontSize: 17, color: GRIS });
+    { x: 0.6, y: 2.95, w: 8.4, h: 0.9, fontSize: 17, color: GRIS });
 regla(s, 0.6, 4.05, 8.8);
 txt(s, "Sebastián Córdoba", { x: 0.6, y: 4.2, w: 8.8, h: 0.3, fontSize: 15, bold: true });
 txt(s, "Licenciatura en Ciencia de Datos, ITAM · jcordob5@itam.mx", { x: 0.6, y: 4.53, w: 8.8, h: 0.26, fontSize: 12, color: GRIS });
