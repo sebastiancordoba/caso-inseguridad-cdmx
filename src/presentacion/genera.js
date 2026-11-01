@@ -449,7 +449,7 @@ tabla(s, [
   ["T5", "En las 124 de paso, conteo y tasa ordenan distinto", "ρ ≥ 0.9 y 9 de 10 en común", "ρ = 0.454; 3 en común; igual en nueve variantes", "se sostiene"],
   ["C3", "Las denuncias crecen en proporción a las entradas", "2020 o 2021 fuera de ±25 % de la tasa de 2019", "0.50 y 0.68 veces la de 2019", "no se sostiene"],
 ], { x: 0.6, y: 1.5, w: 8.8, colW: [0.6, 2.55, 2.35, 2.2, 1.1], fontSize: 10.5, valign: "top" });
-pie(s, "ρ: correlación de Spearman entre dos órdenes (1, mismo orden; 0, sin relación). C3 comparaba contra un 2019 que tiene su propio quiebre; la diapositiva de los tres regímenes lo explica.", 4.85, 0.38);
+pie(s, "ρ: correlación de Spearman entre dos órdenes (1, mismo orden; 0, sin relación). C3 comparaba contra un 2019 que tiene su propio quiebre; la diapositiva de los tres periodos lo explica.", 4.85, 0.38);
 
 anexo("Hipótesis del modelo, registradas antes de ajustarlo", "Hipótesis del modelo (M1–M7)",
   "Si preguntan por qué creerle a estas pruebas, las siete quedaron escritas y fechadas en git antes del primer ajuste. M3 se rechazó y se reporta; M5 pasa por tres milésimas y así se dice.");
@@ -484,7 +484,7 @@ termino(3.24, "exp(α)", "0.633 denuncias por millón de entradas (0.580 a 0.691
 termino(3.67, "v(s), σv", "el efecto de cada estación. σv = 0.402: el 95 % de las estaciones cae entre 0.45 y 2.2 veces la típica");
 termino(4.1, "exp(γ(t))", "el efecto de año: 1.67 en 2019; 0.96, 1.11, 1.11 y 0.73; 0.70 en 2024");
 regla(s, 0.6, 4.65, 8.8);
-pie(s, "Se publica exp(α + v(s)), la tasa encogida. La binomial negativa gana a la Poisson (LR = 21.4; AIC 19.4 menor), y la diferencia importa: la Poisson daría 37 estaciones distinguibles y la binomial negativa, 25. Ajuste por máxima verosimilitud con cuadratura de Gauss–Hermite, escrito sobre scipy.", 4.72, 0.5);
+pie(s, "Se publica exp(α + v(s)), la tasa encogida. La binomial negativa gana a la Poisson (LR = 21.4; AIC 19.4 menor), y la diferencia importa: la Poisson daría 37 estaciones distinguibles y la binomial negativa, 25. Ajuste por máxima verosimilitud marginal con cuadratura de Gauss–Hermite.", 4.72, 0.5);
 
 anexo("Encoger en vez de corregir por comparaciones múltiples", "Encoger y comparaciones múltiples",
   "Si preguntan por qué no corregí por comparaciones múltiples, es porque esa corrección ensancha todos los intervalos por igual y trata igual a Merced, con 90 denuncias, que a Hangares, con 12. El modelo estima cuánto varían de verdad las estaciones y encoge a cada una según su evidencia.");
@@ -535,7 +535,7 @@ via(3.25, 3, "El exceso de Hidalgo y Guerrero sigue en la Denuncia Digital, por 
 via(3.9, 4, "El exceso sube de 2.6 a 4.7 veces entre 2019 y 2024, mientras las agencias del metro pasan de abrir el 57 % de las carpetas al 17 %.");
 pie(s, "El filtro de agencia se quitó del análisis. El exceso de Hidalgo y Guerrero queda como hallazgo abierto.", 4.8, 0.3);
 
-anexo("En el tiempo hay tres regímenes, y el modelo los respeta", "Tres regímenes en el tiempo",
+anexo("En el tiempo hay tres periodos, y el modelo los respeta", "Tres periodos en el tiempo",
   "Si preguntan por la pandemia, con los vagones vacíos la tasa cae a la mitad, así que abril a junio de 2020 sale del modelo, y el orden es el mismo con y sin esos meses. Si preguntan por 2019, el quiebre no tiene explicación en estos datos y el efecto de año lo absorbe.");
 s = diapositivas[diapositivas.length - 1].slide;
 y = imagen(s, "c3_tasa_vs_afluencia.png", 0.6, 1.35, 3.6,
@@ -544,7 +544,7 @@ y = bloque(s, 4.6, 1.4, 4.8, "El quiebre de 2019",
   "Las denuncias de la red caen de unas 330 al mes (enero a mayo de 2019) a unas 135 desde septiembre, con la afluencia plana. No tiene explicación en estos datos.", 0.85, 12);
 y = bloque(s, 4.6, y + 0.08, 4.8, "El confinamiento",
   "De abril a junio de 2020 la tasa cae a 0.55 veces la base: con vagones vacíos, las denuncias no crecen en proporción a las entradas. Esos meses salen del modelo, y con y sin ellos el orden es el mismo (ρ = 0.9985).", 1.05, 12);
-bloque(s, 4.6, y + 0.08, 4.8, "Tasa de las 124 en cada régimen",
+bloque(s, 4.6, y + 0.08, 4.8, "Tasa de las 124 en cada periodo",
   "1.24 de enero a agosto de 2019, 0.35 en el confinamiento y 0.61 el resto del tiempo.", 0.45, 12);
 
 anexo("Fuera de muestra, completo: 10 y 20 estaciones, con su techo", "Fuera de muestra, completo",
