@@ -15,7 +15,8 @@ ver resultados.*
 cada fase, el criterio de falla y el resultado entraron a git **en el mismo commit**, así
 que git no prueba que el criterio se fijó antes: lo que lo afirma es el texto de
 `decisiones.md` («fijado antes de correr») y el orden de la sesión de trabajo, que quedó en
-`uso-ia.md`. Donde el criterio venía del encargo de Sebas, era anterior a cualquier
+el registro por sesión de `uso-ia.md` (versión de `135889b`; desde el 2026-10-31 ese archivo
+resume el uso por tipo). Donde el criterio venía del encargo de Sebas, era anterior a cualquier
 cómputo. Donde un criterio se fijó habiendo visto ya algo del resultado, está marcado. La
 parte B sí tiene prueba en git.
 

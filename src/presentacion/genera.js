@@ -635,7 +635,7 @@ txt(s, [
 pie(s, APP, 5.0, 0.22);
 
 anexo("Cómo se reproduce todo, y cómo usé IA generativa", "Reproducir todo, y el uso de IA",
-  "Si preguntan qué hizo la IA y qué hice yo, la herramienta escribió el código y redactó los documentos de cada fase; las decisiones de encuadre, supuestos y qué se afirma son mías, y cada cifra se recalculó sobre los archivos del repositorio. Todo está registrado sesión por sesión.");
+  "Si preguntan qué hizo la IA y qué hice yo, la herramienta escribió el código y redactó los documentos de cada fase; las decisiones de encuadre, supuestos y qué se afirma son mías, y cada cifra se recalculó sobre los archivos del repositorio. Todo está documentado en el repositorio.");
 s = diapositivas[diapositivas.length - 1].slide;
 y = bloque(s, 0.6, 1.4, 4.2, "Cuatro comandos",
   [{ text: "python src/descarga.py --fuente estaciones", options: { bold: true, breakLine: true } },
@@ -645,7 +645,7 @@ y = bloque(s, 0.6, 1.4, 4.2, "Cuatro comandos",
    { text: "Bajan los tres archivos y anotan su hash, corren el pipeline con sus comprobaciones, compilan el escrito y arman esta presentación." }], 2.2, 11.5);
 bloque(s, 5.2, 1.4, 4.2, "Uso de IA generativa",
   "Trabajé con Claude Code (Anthropic). Escribió el código del pipeline, del modelo y de la aplicación, propuso criterios de rechazo que quedaron escritos antes de correr y redactó los documentos de cada fase. Las decisiones son mías: el encuadre, los supuestos, qué se afirma y qué se descarta. Cada cifra se recalculó sobre los archivos del repositorio.", 2.2, 11.5);
-pie(s, `Repositorio: ${REPO}. El registro del uso de IA, sesión por sesión, está en docs/uso-ia.md.`, 4.75, 0.4);
+pie(s, `Repositorio: ${REPO}. El uso de IA, por tipo, está en docs/uso-ia.md.`, 4.75, 0.4);
 
 /* el índice del anexo, ya con los números */
 titulo(indice, "Anexo", 26);
