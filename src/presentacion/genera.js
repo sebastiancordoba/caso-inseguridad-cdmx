@@ -44,7 +44,7 @@ const REPO = "github.com/sebastiancordoba/caso-inseguridad-cdmx";
 const pres = new Pptx();
 pres.layout = "LAYOUT_16x9";       // 10 × 5.625 pulgadas
 pres.theme = { headFontFace: F, bodyFontFace: F };
-pres.author = "Sebastián Córdoba";
+pres.author = "José Sebastián Córdoba Quintana";
 pres.title = "Robo denunciado por pasajero en el metro de la CDMX: qué estaciones cambian de lugar al medir por millón de entradas";
 pres.subject = "Caso 2 de la titulación por caso, Licenciatura en Ciencia de Datos, ITAM";
 
@@ -140,8 +140,8 @@ txt(s, "Robo denunciado por pasajero en el metro de la CDMX: qué estaciones cam
 txt(s, "¿Qué estaciones concentran más denuncias de robo por cada millón de personas que entran, y cuánto cambia el orden si solo se cuentan las denuncias?",
     { x: 0.6, y: 2.95, w: 8.4, h: 0.9, fontSize: 17, color: GRIS });
 regla(s, 0.6, 4.05, 8.8);
-txt(s, "Sebastián Córdoba", { x: 0.6, y: 4.2, w: 8.8, h: 0.3, fontSize: 15, bold: true });
-txt(s, "Licenciatura en Ciencia de Datos, ITAM · jcordob5@itam.mx", { x: 0.6, y: 4.53, w: 8.8, h: 0.26, fontSize: 12, color: GRIS });
+txt(s, "José Sebastián Córdoba Quintana", { x: 0.6, y: 4.2, w: 8.8, h: 0.3, fontSize: 15, bold: true });
+txt(s, "Licenciatura en Ciencia de Datos, ITAM", { x: 0.6, y: 4.53, w: 8.8, h: 0.26, fontSize: 12, color: GRIS });
 
 /* 2 · el problema */
 s = nueva({
