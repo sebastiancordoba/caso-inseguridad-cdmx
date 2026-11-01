@@ -300,7 +300,7 @@ txt(s, "Hoy solo se publica la lista por conteo, y nadie dice qué objetivo pers
 /* 9 · la lista de prioridad */
 s = nueva({
   seccion: "Qué recomiendo", titulo: "La lista de prioridad junta los dos objetivos",
-  dice: "En la presentación anterior me pidieron una lista que juntara las dos. Es la de prioridad y cabe en tres frases. Cada estación tiene un lugar por conteo y otro por tasa. Su prioridad es el promedio de los dos. Y solo entran estaciones con quince denuncias o más. Zócalo es segunda por conteo y séptima por tasa, con promedio 4.5, y queda primera en prioridad. Indios Verdes es primera y 67, con promedio 34, y queda en el lugar 26. Probada igual que las otras, con veinte estaciones cubre 99 denuncias en 2024 y más denuncias por pasajero que las otras dos. Se calcula a mano y no pierde frente a ninguna, aunque no digo que sea la mejor posible.",
+  dice: "Faltaba una lista que juntara las dos. Es la de prioridad y cabe en tres frases. Cada estación tiene un lugar por conteo y otro por tasa. Su prioridad es el promedio de los dos. Y solo entran estaciones con quince denuncias o más. Zócalo es segunda por conteo y séptima por tasa, con promedio 4.5, y queda primera en prioridad. Indios Verdes es primera y 67, con promedio 34, y queda en el lugar 26. Probada igual que las otras, con veinte estaciones cubre 99 denuncias en 2024 y más denuncias por pasajero que las otras dos. Se calcula a mano y no pierde frente a ninguna, aunque no digo que sea la mejor posible.",
 });
 titulo(s, "La lista de prioridad junta los dos objetivos");
 bajada(s, "En la aplicación se llama Prioridad (volumen y riesgo). La regla tiene tres pasos.");
@@ -402,7 +402,7 @@ bloque(s, 4.0, y + 0.08, 5.4, "Más información no predice mejor",
 /* 13 · cierre */
 s = nueva({
   titulo: "Cierre: la respuesta",
-  dice: "Cierro con la respuesta. Por pasajero, el orden de las estaciones cambia, y qué lista usar depende del objetivo, que hoy nadie declara. La aplicación y el repositorio, con el código y cada decisión, están en esas dos direcciones. Gracias.",
+  dice: "Cierro con la respuesta. Por pasajero, el orden de las estaciones cambia, y qué lista usar depende del objetivo, que hoy nadie declara. La aplicación y el repositorio, con el código y los datos, están en esas dos direcciones. Gracias.",
 });
 regla(s, 0.6, 0.85, 1.2, NARANJA);
 antetitulo(s, 0.6, 0.98, 8.8, "La respuesta");
@@ -411,7 +411,7 @@ txt(s, "Por pasajero, el orden de las estaciones cambia. Qué lista usar depende
 txt(s, "Gracias.", { x: 0.6, y: 2.75, w: 8.8, h: 0.6, fontSize: 30, bold: true, color: NARANJA });
 regla(s, 0.6, 3.6, 8.8);
 txt(s, [fuerte("Aplicación   "), { text: APP }], { x: 0.6, y: 3.75, w: 8.8, h: 0.3, fontSize: 14 });
-txt(s, [fuerte("Código, datos y decisiones   "), { text: REPO }], { x: 0.6, y: 4.12, w: 8.8, h: 0.3, fontSize: 14 });
+txt(s, [fuerte("Código y datos   "), { text: REPO }], { x: 0.6, y: 4.12, w: 8.8, h: 0.3, fontSize: 14 });
 const PRINCIPALES = diapositivas.length;
 
 /* =================================================================== ANEXO */
@@ -452,7 +452,7 @@ tabla(s, [
 pie(s, "ρ: correlación de Spearman entre dos órdenes (1, mismo orden; 0, sin relación). C3 comparaba contra un 2019 que tiene su propio quiebre; la diapositiva de los tres periodos lo explica.", 4.85, 0.38);
 
 anexo("Hipótesis del modelo, registradas antes de ajustarlo", "Hipótesis del modelo (M1–M7)",
-  "Si preguntan por qué creerle a estas pruebas, las siete quedaron escritas y fechadas en git antes del primer ajuste. M3 se rechazó y se reporta; M5 pasa por tres milésimas y así se dice.");
+  "Si preguntan por qué creerle a estas pruebas, las siete quedaron escritas y fechadas antes del primer ajuste. La de encoger se rechazó y se reporta; la de predecir 2024 pasa por tres milésimas y así se dice.");
 s = diapositivas[diapositivas.length - 1].slide;
 tabla(s, [
   ["", "Afirmación", "Se rechaza si", "Resultado"],
@@ -465,7 +465,7 @@ tabla(s, [
   ["M7", "Quitar abril a junio de 2020 no cambia el orden", "ρ < 0.98", "ρ = 0.9985; se sostiene"],
 ].map((f) => f.map((c) => Array.isArray(c) ? { text: c } : c)),
   { x: 0.6, y: 1.35, w: 8.8, colW: [0.5, 3.1, 2.65, 2.55], fontSize: 10, valign: "top" });
-pie(s, "Registradas en git en el commit 60b826d (20 de septiembre de 2026, 19:43), antes del primer ajuste del modelo (7ca9635, 19:50). LR: razón de verosimilitudes. AIC: criterio de Akaike. σv: cuánto difieren las estaciones entre sí.", 4.82, 0.4);
+pie(s, "Fijadas el 20 de septiembre de 2026 a las 19:43, antes del primer ajuste del modelo (19:50). LR: razón de verosimilitudes. AIC: criterio de Akaike. σv: cuánto difieren las estaciones entre sí.", 4.82, 0.4);
 
 anexo("El modelo, término por término", "El modelo, término por término",
   "Si preguntan por qué no usé una librería, ninguna de las instaladas ajustaba una binomial negativa con efecto aleatorio; son nueve parámetros y una integral por estación. Si preguntan por qué 0.63 y no 0.71, es porque 0.71 es el total de denuncias entre el total de entradas, que pesa más a las estaciones grandes; 0.63 es la estación típica del modelo en un año promedio.");
@@ -497,7 +497,7 @@ y = bloque(s, 3.6, y + 0.08, 5.8, "Cuánto encoge",
 regla(s, 0.6, 3.55, 8.8);
 txt(s, [fuerte("Las 14 por arriba: "), { text: "Bosque de Aragón, Ciudad Deportiva, Villa de Aragón, Portales, Nativitas, Merced, Zócalo/Tenochtitlan, Etiopía, Camarones, Moctezuma, Insurgentes, Revolución, Niños Héroes y Polanco." }],
     { x: 0.6, y: 3.65, w: 8.8, h: 0.5, fontSize: 12 });
-txt(s, [fuerte("Encoger no basta (M3): "), { text: "Hangares, con 12 denuncias, queda en el lugar 10 con un intervalo de 0.90 a 2.52 veces la típica. Por eso la aplicación marca como evidencia insuficiente todo lo que tiene menos de 15 denuncias." }],
+txt(s, [fuerte("Encoger no basta: "), { text: "Hangares, con 12 denuncias, queda en el lugar 10 con un intervalo de 0.90 a 2.52 veces la típica. Por eso la aplicación marca como evidencia insuficiente todo lo que tiene menos de 15 denuncias." }],
     { x: 0.6, y: 4.25, w: 8.8, h: 0.5, fontSize: 12 });
 pie(s, "Tasqueña, Indios Verdes y Constitución de 1917 no se distinguen por abajo (0.83, 1.01 y 0.88 veces la típica, con intervalos que incluyen 1): son terminales con tasa en la media.", 4.85, 0.35);
 
@@ -645,7 +645,7 @@ y = bloque(s, 0.6, 1.4, 4.2, "Cuatro comandos",
    { text: "Bajan los tres archivos y anotan su hash, corren el pipeline con sus comprobaciones, compilan el escrito y arman esta presentación." }], 2.2, 11.5);
 bloque(s, 5.2, 1.4, 4.2, "Uso de IA generativa",
   "Trabajé con Claude Code (Anthropic). Escribió el código del pipeline, del modelo y de la aplicación, propuso criterios de rechazo que quedaron escritos antes de correr y redactó los documentos de cada fase. Las decisiones son mías: el encuadre, los supuestos, qué se afirma y qué se descarta. Cada cifra se recalculó sobre los archivos del repositorio.", 2.2, 11.5);
-pie(s, `Repositorio: ${REPO}. El registro sesión por sesión está en docs/uso-ia.md, y las decisiones fechadas, en docs/decisiones.md.`, 4.75, 0.4);
+pie(s, `Repositorio: ${REPO}. El registro del uso de IA, sesión por sesión, está en docs/uso-ia.md.`, 4.75, 0.4);
 
 /* el índice del anexo, ya con los números */
 titulo(indice, "Anexo", 26);

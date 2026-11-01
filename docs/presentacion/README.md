@@ -9,7 +9,7 @@
 | [`presentacion.pptx`](presentacion.pptx) | La fuente, con el guion en las notas del orador |
 
 **13 diapositivas principales y 17 de anexo.** La parte principal dura unos
-**9:25** a 140 palabras por minuto, con la demostración en vivo
+**9:20** a 140 palabras por minuto, con la demostración en vivo
 incluida. El anexo no se presenta: sirve para responder preguntas, y su primera diapositiva
 es un índice.
 
@@ -29,11 +29,11 @@ que aparece.
 | 6 | Dividir cambia el orden: de las 10 primeras por conteo, solo 3 siguen arriba por tasa | 3:10 | 0:50 | 106 |
 | 7 | Con pocas denuncias la tasa engaña; el modelo la ajusta según la evidencia | 4:00 | 0:50 | 106 |
 | 8 | Conteo y tasa sirven a objetivos distintos | 4:50 | 0:50 | 106 |
-| 9 | La lista de prioridad junta los dos objetivos | 5:40 | 0:55 | 121 |
-| 10 | Para desplegar hoy: tres listas, y cuatro estaciones están en las tres | 6:35 | 1:05 | 99 |
-| 11 | Tres recomendaciones | 7:40 | 0:40 | 88 |
-| 12 | Todo se mide con denuncias, y la mayoría de los delitos no se denuncia | 8:20 | 0:45 | 101 |
-| 13 | Cierre: la respuesta | 9:05 | 0:20 | 40 |
+| 9 | La lista de prioridad junta los dos objetivos | 5:40 | 0:50 | 116 |
+| 10 | Para desplegar hoy: tres listas, y cuatro estaciones están en las tres | 6:30 | 1:05 | 99 |
+| 11 | Tres recomendaciones | 7:35 | 0:40 | 88 |
+| 12 | Todo se mide con denuncias, y la mayoría de los delitos no se denuncia | 8:15 | 0:45 | 101 |
+| 13 | Cierre: la respuesta | 9:00 | 0:20 | 40 |
 
 ## Rehacerla
 
